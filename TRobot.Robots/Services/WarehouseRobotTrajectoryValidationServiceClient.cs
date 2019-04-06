@@ -7,15 +7,16 @@ using TRobot.Communication.Trajectory;
 
 namespace TRobot.Robots.Services
 {
-    internal class WarehouseRobotValidationServiceClient
+    internal class WarehouseRobotTrajectoryValidationServiceClient
     {
         private IRobotTrajectoryValidationService validationService;        
 
-        internal WarehouseRobotValidationServiceClient(Action<RobotValidationResult> validationResultCallback)
+        internal WarehouseRobotTrajectoryValidationServiceClient(Action<RobotValidationResult> validationResultCallback)
         {
-            var callback = new WarehouseRobotTrajectoryValidationCallback(validationResultCallback);
+            var callback = new WarehouseRobotTrajectoryValidationServiceCallback(validationResultCallback);
             var context = new InstanceContext(callback);
-            var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/ValidationService"));
+            //var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:10000/ValidationService"));
+            var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));
 
             validationService = pipeFactory.CreateChannel();
         }

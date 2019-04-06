@@ -10,7 +10,8 @@ namespace TRobot.ECU.Service
     {
         public RobotDescartesTrajectoryValidationServiceHost(DescartesRobotFactory descartesRobotFactory)
         {
-            var host = new ServiceHost(new RobotDescartesTrajectoryValidationService(descartesRobotFactory), new Uri("net.pipe://localhost"));
+            //var host = new ServiceHost(new RobotDescartesTrajectoryValidationService(descartesRobotFactory), new Uri("net.tcp://localhost:10000"));
+            var host = new ServiceHost(new RobotDescartesTrajectoryValidationService(descartesRobotFactory), new Uri("net.pipe://localhost/validation"));
             host.AddServiceEndpoint(typeof(IRobotTrajectoryValidationService), new NetNamedPipeBinding(), "ValidationService");
             host.Open();
         }

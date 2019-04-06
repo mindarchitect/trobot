@@ -14,21 +14,30 @@ namespace TRobot.Robots
     {
         private WarehouseRobot robot;
         private IList<DescartesCoordinatesItem> coordinates;
-        private LinkedList<Vector> trajectory;
-        //private Thread workerProcessingThread;
-        private WarehouseRobotValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
+        private LinkedList<Vector> trajectory;        
+
+        private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
         public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
+        
         internal WarehouseRobotController(WarehouseRobot robot)
         {
             this.robot = robot;
 
-            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotValidationServiceClient(TrajectoryValidatedCallback);
+            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(TrajectoryValidatedCallback);
             
-            NetNamedPipeBinding binding = new NetNamedPipeBinding();            
-            EndpointAddress address = new EndpointAddress("net.pipe://localhost/MonitoringService");
-            warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(binding, address);
+            NetNamedPipeBinding binding = new NetNamedPipeBinding();
+            //EndpointAddress address = new EndpointAddress("net.tcp://localhost:10001/MonitoringService");
+            EndpointAddress address = new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService");
+            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback);
+            warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, binding, address);
+        }
+
+        internal async void SetupTrajectory()
+        {
+            await Task.Run(() => BuildTrajectory());
+            await Task.Run(() => SetupTrajectoryMonitoring());            
         }
 
         internal async void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
@@ -40,18 +49,14 @@ namespace TRobot.Robots
 
             this.coordinates = coordinates;
 
-            await Task.Run(() => ValidateTrajectory());
-            await Task.Run(() => BuildTrajectory());
+            await Task.Run(() => ValidateTrajectory());            
         }
 
         public void Start()
-        {
-            //ThreadStart threadDelegate = new ThreadStart(TestMethod);
-            //workerProcessingThread = new Thread(threadDelegate);
-            //workerProcessingThread.Start();
+        {            
         }
 
-        private void BuildTrajectory()
+        internal void BuildTrajectory()
         {            
             trajectory = new LinkedList<Vector>();
 
@@ -77,23 +82,7 @@ namespace TRobot.Robots
                 {
                 }                
             }             
-        }   
-        
-        private Vector GetTrajectoryVectors(Point start, Point end)
-        {
-            return Point.Subtract(end, start);
-        }
-
-        private void ValidateTrajectory()
-        {           
-            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
-            {
-                X = item.Point.X,
-                Y = item.Point.Y
-            });
-
-            warehouseRobotTrajectoryValidationServiceClient.ValidateTrajectory(robot.Id, trajectoryPoints);
-        }
+        }  
 
         protected virtual void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
         {
@@ -104,6 +93,41 @@ namespace TRobot.Robots
         private void TrajectoryValidatedCallback(RobotValidationResult robotValidationResult)
         {
             OnTrajectoryValidated(new TrajectoryValidatedEventArguments(robotValidationResult.RobotId, robotValidationResult.ValidationResult, robotValidationResult.ValidationMessage));
+        }
+
+        private void TrajectorySetupCallback()
+        {            
+        }
+
+        private void TrajectoryUpdatedCallback()
+        {
+        }
+
+        private void ValidateTrajectory()
+        {
+            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
+            {
+                X = item.Point.X,
+                Y = item.Point.Y
+            });
+
+            warehouseRobotTrajectoryValidationServiceClient.ValidateTrajectory(robot.Id, trajectoryPoints);
+        }
+
+        private void SetupTrajectoryMonitoring()
+        {
+            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
+            {
+                X = item.Point.X,
+                Y = item.Point.Y
+            });
+
+            warehouseRobotMonitoringSeviceClient.SetupTrajectory(robot.Id, trajectoryPoints);
+        }
+
+        private Vector GetTrajectoryVectors(Point start, Point end)
+        {
+            return Point.Subtract(end, start);
         }
     }
 }

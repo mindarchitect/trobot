@@ -17,24 +17,23 @@ namespace TRobot.MU.UI.ViewModels
         public MainWindowViewModel()
         {
             trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
-
             Robots = new List<RobotMonitoringItem>();
 
-            var robot1Trajectory = new PointCollection();
+            //var robot1Trajectory = new PointCollection();
 
-            robot1Trajectory.Add(new Point(10, 10));
-            robot1Trajectory.Add(new Point(20, 40));
-            robot1Trajectory.Add(new Point(40, 70));            
+            //robot1Trajectory.Add(new Point(10, 10));
+            //robot1Trajectory.Add(new Point(20, 40));
+            //robot1Trajectory.Add(new Point(40, 70));            
 
-            var robotMonitoringItem1 = new RobotMonitoringItem();
-            robotMonitoringItem1.StartPoint = new Point(0, 0);
-            robotMonitoringItem1.Trajectory = robot1Trajectory;
-            robotMonitoringItem1.Color = Colors.DarkBlue;
-            robotMonitoringItem1.CurrentPosition = new Point(30, 50);
-            robotMonitoringItem1.Guid = Guid.NewGuid();
-            robotMonitoringItem1.Title = "Robot 1";            
+            //var robotMonitoringItem1 = new RobotMonitoringItem();
+            //robotMonitoringItem1.StartPoint = new Point(0, 0);
+            //robotMonitoringItem1.Trajectory = robot1Trajectory;
+            //robotMonitoringItem1.Color = Colors.DarkBlue;
+            //robotMonitoringItem1.CurrentPosition = new Point(30, 50);
+            //robotMonitoringItem1.Guid = Guid.NewGuid();
+            //robotMonitoringItem1.Title = "Robot 1";            
 
-            Robots.Add(robotMonitoringItem1);
+            //Robots.Add(robotMonitoringItem1);
         }
     }
 }

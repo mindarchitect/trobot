@@ -50,6 +50,7 @@
     <Compile Include="Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
     <Compile Include="Monitoring\IRobotTrajectoryMonitoringService.cs" />
     <Compile Include="Contracts\Data\RobotDescartesTrajectory.cs" />
+    <Compile Include="Monitoring\IRobotTrajectoryMonitoringServiceCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trajectory\IRobotTrajectoryValidationServiceCallback.cs" />
     <Compile Include="Trajectory\IRobotTrajectoryValidationService.cs" />

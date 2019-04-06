@@ -8,29 +8,10 @@ using TRobot.Communication.Trajectory;
 
 namespace TRobot.Robots.Services
 {
-    internal class WarehouseRobotMonitoringSeviceClient : ClientBase<IRobotTrajectoryMonitoringService>
+    internal class WarehouseRobotMonitoringSeviceClient : DuplexClientBase<IRobotTrajectoryMonitoringService>
     {
-        public WarehouseRobotMonitoringSeviceClient()
-        {
-        }
-
-        public WarehouseRobotMonitoringSeviceClient(string endpointConfigurationName) : 
-            base(endpointConfigurationName)
-        {
-        }
-
-        public WarehouseRobotMonitoringSeviceClient(string endpointConfigurationName, string remoteAddress) : 
-            base(endpointConfigurationName, remoteAddress)
-        {
-        }
-
-        public WarehouseRobotMonitoringSeviceClient(string endpointConfigurationName, EndpointAddress remoteAddress) : 
-            base(endpointConfigurationName, remoteAddress)
-        {
-        }
-
-        public WarehouseRobotMonitoringSeviceClient(Binding binding, EndpointAddress remoteAddress) : 
-            base(binding, remoteAddress)
+        public WarehouseRobotMonitoringSeviceClient(object callbackInstance, Binding binding, EndpointAddress remoteAddress)
+        : base(callbackInstance, binding, remoteAddress)
         {
         }
 
