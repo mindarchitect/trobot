@@ -47,13 +47,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
     <Compile Include="Monitoring\IRobotTrajectoryMonitoringService.cs" />
-    <Compile Include="Monitoring\RobotDescartesTrajectory.cs" />
+    <Compile Include="Contracts\Data\RobotDescartesTrajectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trajectory\IRobotTrajectoryValidationServiceCallback.cs" />
     <Compile Include="Trajectory\IRobotTrajectoryValidationService.cs" />
     <Compile Include="Trajectory\RobotValidationResult.cs" />
-    <Compile Include="Trajectory\RobotDescartesTrajectoryPoints.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

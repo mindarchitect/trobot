@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using TRobot.Communication.Contracts.Data;
 
 namespace TRobot.Communication.Trajectory
 {    
@@ -10,5 +11,8 @@ namespace TRobot.Communication.Trajectory
     {
         [OperationContract]  
         void PlotRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
+
+        [OperationContract]
+        void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory);
     }
 }

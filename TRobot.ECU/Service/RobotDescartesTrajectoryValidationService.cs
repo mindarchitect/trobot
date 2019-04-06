@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using TRobot.Communication.Contracts.Data;
 using TRobot.Communication.Trajectory;
 using TRobot.Core;
 
@@ -13,12 +14,12 @@ namespace TRobot.ECU.UI.Service
             this.descartesRobotFactory = descartesRobotFactory;
         }
 
-        public void ValidateRobotTrajectory(RobotDescartesTrajectoryPoints robotTrajectory)
+        public void ValidateRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
         {
             var robotValidationResult = new RobotValidationResult();
             robotValidationResult.RobotId = robotTrajectory.RobotId;
 
-            var trajectoryPoints = robotTrajectory.TrajectoryPoints;
+            var trajectoryPoints = robotTrajectory.Trajectory;
 
             bool result = true;
 

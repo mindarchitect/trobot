@@ -1,7 +1,9 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
+using TRobot.Communication.Contracts.Data;
 using TRobot.Communication.Trajectory;
 
-namespace TRobot.MU.UI.Service
+namespace TRobot.MU.Service
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class RobotDescartesTrajectoryMonitoringService : IRobotTrajectoryMonitoringService
@@ -12,6 +14,11 @@ namespace TRobot.MU.UI.Service
 
         public void PlotRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
         {            
+        }
+
+        public void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory)
+        {
+            throw new NotImplementedException();
         }
     }
 }

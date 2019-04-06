@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using TRobot.Communication.Contracts.Data;
 
 namespace TRobot.Communication.Trajectory
 {    
@@ -10,6 +11,6 @@ namespace TRobot.Communication.Trajectory
     public interface IRobotTrajectoryValidationService
     {
         [OperationContract]  
-        void ValidateRobotTrajectory(RobotDescartesTrajectoryPoints robotTrajectory);
+        void ValidateRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using TRobot.MU.Service;
 using TRobot.MU.UI.Models;
 
 namespace TRobot.MU.UI.ViewModels
@@ -10,6 +11,8 @@ namespace TRobot.MU.UI.ViewModels
     public class MainWindowViewModel
     {
         public IList<RobotMonitoringItem> Robots { get; private set; }
+
+        private RobotDescartesTrajectoryMonitoringServiceHost trajectoryMonitoringServiceHost;
 
         public MainWindowViewModel()
         {

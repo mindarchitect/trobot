@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
+using System.Windows.Media;
+using TRobot.Communication.Contracts.Data;
 using TRobot.Communication.Trajectory;
 
 namespace TRobot.Robots.Services
@@ -20,9 +22,9 @@ namespace TRobot.Robots.Services
 
         internal void ValidateTrajectory(Guid robotId, List<Point> trajectoryPoints)
         {
-            var robotTrajectory = new RobotDescartesTrajectoryPoints();
+            var robotTrajectory = new RobotDescartesTrajectory();
             robotTrajectory.RobotId = robotId;
-            robotTrajectory.TrajectoryPoints = trajectoryPoints;
+            robotTrajectory.Trajectory = new PointCollection(trajectoryPoints);
 
             service.ValidateRobotTrajectory(robotTrajectory);
         }

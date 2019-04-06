@@ -98,6 +98,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TRobot.MU\TRobot.MU.csproj">
+      <Project>{3DEF3F3F-546E-4699-B2CD-27E65EF3DC07}</Project>
+      <Name>TRobot.MU</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

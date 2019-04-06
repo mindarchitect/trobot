@@ -25,33 +25,48 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Column="0" >
-            <!-- Canvas Containing the animated object and the path it follows during animation -->
+            <!-- Canvas Containing the robot and the path it follows during animation -->
             <Canvas Background="{StaticResource GridBrushResource}" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ActualWidth, ElementName=parentElementName}" Height="{Binding ActualHeight, ElementName=parentElementName}">
-                <ItemsControl ItemsSource="{Binding Path=Robots}">
+                <ItemsControl ItemsSource="{Binding Path=Robots, Mode=OneWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas />
                         </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    </ItemsControl.ItemsPanel>                    
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Path Stroke="Black" StrokeThickness="1">
-                                <Path.Data>
-                                    <PathGeometry>
-                                        <PathGeometry.Figures>
-                                            <PathFigureCollection>
-                                                <PathFigure StartPoint="{Binding StartPoint}" >
-                                                    <PathFigure.Segments>
-                                                        <PathSegmentCollection>
-                                                            <PolyLineSegment Points="{Binding Trajectory}" />                                                            
-                                                        </PathSegmentCollection>
-                                                    </PathFigure.Segments>
-                                                </PathFigure>
-                                            </PathFigureCollection>
-                                        </PathGeometry.Figures>
-                                    </PathGeometry>
-                                </Path.Data>
-                            </Path>                            
+                            <Canvas>
+                                <Path Stroke="Black" StrokeThickness="1" StrokeDashArray="6 6">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathGeometry.Figures>
+                                                <PathFigureCollection>
+                                                    <PathFigure StartPoint="{Binding StartPoint}" >
+                                                        <PathFigure.Segments>
+                                                            <PathSegmentCollection>
+                                                                <PolyLineSegment Points="{Binding Trajectory}" />
+                                                            </PathSegmentCollection>
+                                                        </PathFigure.Segments>
+                                                    </PathFigure>
+                                                </PathFigureCollection>
+                                            </PathGeometry.Figures>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                </Path>
+                                <Path Stroke="Black" StrokeThickness="1" >
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
+                                    </Path.Fill>
+                                    <Path.Data>
+                                        <EllipseGeometry Center="{Binding Path=StartPoint, Mode=OneWay}" RadiusX="5" RadiusY="5" />
+                                    </Path.Data>
+                                </Path>
+                                <!--<Ellipse StrokeThickness="1" Height="20" Width="20" Margin="5">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>-->
+                            </Canvas>
                         </DataTemplate>                        
                     </ItemsControl.ItemTemplate>                   
                     <ItemsControl.ItemContainerStyle>
@@ -61,11 +76,6 @@
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>                
-                <!--<Path Stroke="Black" StrokeThickness="1" Fill="blue">
-                    <Path.Data>
-                        <EllipseGeometry Center="0,0" RadiusX="5" RadiusY="5" />
-                    </Path.Data>
-                </Path>-->
             </Canvas>
         </DockPanel>       
         <GroupBox Header="Robots" Grid.Column="1" >
@@ -75,11 +85,11 @@
                         <DockPanel>
                             <Ellipse StrokeThickness="2" Height="20" Width="20" Margin="5">
                                 <Ellipse.Fill>
-                                    <SolidColorBrush Color="{Binding Path=Color}" />
+                                    <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,5,5" Text="{Binding Path=Title}"/>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Path=Guid, StringFormat={}({0})}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,5,5" Text="{Binding Path=Title, Mode=OneWay}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Path=Guid, StringFormat={}({0}), Mode=OneWay}"/>
                         </DockPanel>                        
                     </DataTemplate>
                 </ListView.ItemTemplate>                                                            

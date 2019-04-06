@@ -1,13 +1,12 @@
 ﻿using System;
 using System.ServiceModel;
 using TRobot.Communication.Trajectory;
-using TRobot.MU.UI.Service;
 
-namespace TRobot.ECU.Service
+namespace TRobot.MU.Service
 {
-    public class RobotDescartesTrajectoryValidationServiceHost
+    public class RobotDescartesTrajectoryMonitoringServiceHost
     {
-        public RobotDescartesTrajectoryValidationServiceHost()
+        public RobotDescartesTrajectoryMonitoringServiceHost()
         {
             var host = new ServiceHost(typeof(RobotDescartesTrajectoryMonitoringService), new Uri("net.pipe://localhost"));
             host.AddServiceEndpoint(typeof(IRobotTrajectoryMonitoringService), new NetNamedPipeBinding(), "PlotRobotTrajectory");
