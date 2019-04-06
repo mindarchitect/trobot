@@ -12,6 +12,10 @@ namespace TRobot.Communication.Contracts.Data
         public Guid RobotId { get; set; }
 
         [DataMember]
+        public string RobotTitle { get; set; }
+
+        [DataMember]
         public Point CurrentPosition { get; set; }
+
     }
 }

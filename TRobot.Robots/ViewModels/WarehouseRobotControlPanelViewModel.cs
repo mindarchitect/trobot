@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.UI.Commands;
@@ -18,7 +19,7 @@ namespace TRobot.Robots.ViewModels
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
             Robot = robot;
-            Robot.Controller.TrajectoryValidated += Controller_TrajectoryValidated;
+            Robot.Controller.TrajectoryValidated += OnControllerRobotTrajectoryValidated;
                  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
@@ -29,13 +30,17 @@ namespace TRobot.Robots.ViewModels
             Velocity = 10;
         }
 
-        private void Controller_TrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
+        private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
         {
             TrajectoryValidated = e.ValidationResult; 
             
             if (TrajectoryValidated)
             {
                 Robot.Controller.SetupTrajectory();
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Trajectroy validation error: {0}", e.ValidationMessage), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 

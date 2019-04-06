@@ -4,7 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Windows;
 using TRobot.Communication.Contracts.Data;
-using TRobot.Communication.Trajectory;
+using TRobot.Communication.Services.Monitoring;
 
 namespace TRobot.Robots.Services
 {
@@ -15,10 +15,11 @@ namespace TRobot.Robots.Services
         {
         }
 
-        internal void SetupTrajectory(Guid robotId, List<Point> trajectoryPoints)
+        internal void SetupTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
         {
             var robotTrajectory = new RobotDescartesTrajectory();
             robotTrajectory.RobotId = robotId;
+            robotTrajectory.RobotTitle = robotTitle;
             robotTrajectory.Trajectory = trajectoryPoints;
 
             Channel.SetupRobotTrajectory(robotTrajectory);

@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 using TRobot.Communication.Contracts.Data;
-using TRobot.Communication.Trajectory;
+using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 
 namespace TRobot.ECU.UI.Service

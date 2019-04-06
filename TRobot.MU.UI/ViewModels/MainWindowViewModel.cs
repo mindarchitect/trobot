@@ -1,8 +1,7 @@
 ﻿
-using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Media;
+using TRobot.Communication.Events;
 using TRobot.MU.Service;
 using TRobot.MU.UI.Models;
 
@@ -19,21 +18,21 @@ namespace TRobot.MU.UI.ViewModels
             trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
             Robots = new List<RobotMonitoringItem>();
 
-            //var robot1Trajectory = new PointCollection();
+            trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;           
+        }
 
-            //robot1Trajectory.Add(new Point(10, 10));
-            //robot1Trajectory.Add(new Point(20, 40));
-            //robot1Trajectory.Add(new Point(40, 70));            
+        private void OnServiceRobotTrajectorySet(object sender, TrajectorySetEventArguments e)
+        {
+            var robotMonitoringItem1 = new RobotMonitoringItem();
 
-            //var robotMonitoringItem1 = new RobotMonitoringItem();
-            //robotMonitoringItem1.StartPoint = new Point(0, 0);
-            //robotMonitoringItem1.Trajectory = robot1Trajectory;
-            //robotMonitoringItem1.Color = Colors.DarkBlue;
-            //robotMonitoringItem1.CurrentPosition = new Point(30, 50);
-            //robotMonitoringItem1.Guid = Guid.NewGuid();
-            //robotMonitoringItem1.Title = "Robot 1";            
+            robotMonitoringItem1.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
+            robotMonitoringItem1.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);
+            robotMonitoringItem1.Color = Colors.DarkBlue;
+            robotMonitoringItem1.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
+            robotMonitoringItem1.Guid = e.RobotDescartesTrajectory.RobotId;
+            robotMonitoringItem1.Title = e.RobotDescartesTrajectory.RobotTitle;
 
-            //Robots.Add(robotMonitoringItem1);
+            Robots.Add(robotMonitoringItem1);
         }
     }
 }

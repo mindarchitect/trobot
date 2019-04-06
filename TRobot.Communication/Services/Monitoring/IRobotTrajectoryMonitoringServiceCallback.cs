@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 
-namespace TRobot.Communication.Monitoring
+namespace TRobot.Communication.Services.Monitoring
 {
     public interface IRobotTrajectoryMonitoringServiceCallback
     {

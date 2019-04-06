@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TRobot.Core;
+﻿using TRobot.Core;
 using TRobot.Core.Enums;
 
 namespace TRobot.Robots

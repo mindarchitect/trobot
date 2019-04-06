@@ -48,13 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
-    <Compile Include="Monitoring\IRobotTrajectoryMonitoringService.cs" />
+    <Compile Include="Events\TrajectorySetEventArguments.cs" />
+    <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringService.cs" />
     <Compile Include="Contracts\Data\RobotDescartesTrajectory.cs" />
-    <Compile Include="Monitoring\IRobotTrajectoryMonitoringServiceCallback.cs" />
+    <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringServiceCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trajectory\IRobotTrajectoryValidationServiceCallback.cs" />
-    <Compile Include="Trajectory\IRobotTrajectoryValidationService.cs" />
-    <Compile Include="Trajectory\RobotValidationResult.cs" />
+    <Compile Include="Services\Trajectory\IRobotTrajectoryValidationServiceCallback.cs" />
+    <Compile Include="Services\Trajectory\IRobotTrajectoryValidationService.cs" />
+    <Compile Include="Services\Trajectory\RobotValidationResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

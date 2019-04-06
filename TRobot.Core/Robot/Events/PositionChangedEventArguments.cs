@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace TRobot.Core
+namespace TRobot.Core.Robot.Events
 {
     public class PositionChangedEventArguments : EventArgs
     {

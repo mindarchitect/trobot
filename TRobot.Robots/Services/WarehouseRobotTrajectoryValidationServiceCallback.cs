@@ -1,5 +1,5 @@
 ﻿using System;
-using TRobot.Communication.Trajectory;
+using TRobot.Communication.Services.Trajectory;
 
 namespace TRobot.Robots.Services
 {

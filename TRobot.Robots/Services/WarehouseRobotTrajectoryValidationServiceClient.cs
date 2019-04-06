@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Windows;
 using TRobot.Communication.Contracts.Data;
-using TRobot.Communication.Trajectory;
+using TRobot.Communication.Services.Trajectory;
 
 namespace TRobot.Robots.Services
 {
-    internal class WarehouseRobotTrajectoryValidationServiceClient
+    internal class WarehouseRobotTrajectoryValidationServiceClient : DuplexClientBase<IRobotTrajectoryValidationService>
     {
-        private IRobotTrajectoryValidationService validationService;        
-
-        internal WarehouseRobotTrajectoryValidationServiceClient(Action<RobotValidationResult> validationResultCallback)
+        public WarehouseRobotTrajectoryValidationServiceClient(object callbackInstance, Binding binding, EndpointAddress remoteAddress)
+        : base(callbackInstance, binding, remoteAddress)
         {
-            var callback = new WarehouseRobotTrajectoryValidationServiceCallback(validationResultCallback);
-            var context = new InstanceContext(callback);
-            //var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:10000/ValidationService"));
-            var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));
-
-            validationService = pipeFactory.CreateChannel();
-        }
+        }        
 
         internal void ValidateTrajectory(Guid robotId, List<Point> trajectoryPoints)
         {
@@ -27,7 +21,7 @@ namespace TRobot.Robots.Services
             robotTrajectory.RobotId = robotId;
             robotTrajectory.Trajectory = trajectoryPoints;
 
-            validationService.ValidateRobotTrajectory(robotTrajectory);
+            Channel.ValidateRobotTrajectory(robotTrajectory);
         }        
     }
 }

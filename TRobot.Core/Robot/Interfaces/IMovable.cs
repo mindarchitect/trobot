@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using TRobot.Core.Robot.Events;
 
 namespace TRobot.Core
 {

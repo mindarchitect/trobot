@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -50,6 +51,10 @@
     <ProjectReference Include="..\TRobot.Communication\TRobot.Communication.csproj">
       <Project>{896F4469-D992-442D-93E5-5CB23C0A0A86}</Project>
       <Name>TRobot.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TRobot.Core\TRobot.Core.csproj">
+      <Project>{287EAF63-201C-4CAB-8D4A-6B73FA0F50B7}</Project>
+      <Name>TRobot.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

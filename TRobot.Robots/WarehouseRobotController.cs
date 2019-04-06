@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
-using TRobot.Communication.Trajectory;
+using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.ECU.Models;
 using TRobot.Robots.Services;
@@ -25,13 +25,11 @@ namespace TRobot.Robots
         {
             this.robot = robot;
 
-            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(TrajectoryValidatedCallback);
-            
-            NetNamedPipeBinding binding = new NetNamedPipeBinding();
-            //EndpointAddress address = new EndpointAddress("net.tcp://localhost:10001/MonitoringService");
-            EndpointAddress address = new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService");
+            var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);
+            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));
+
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback);
-            warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, binding, address);
+            warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
         }
 
         internal async void SetupTrajectory()
@@ -85,9 +83,8 @@ namespace TRobot.Robots
         }  
 
         protected virtual void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
-        {
-            EventHandler<TrajectoryValidatedEventArguments> handler = TrajectoryValidated;
-            handler?.Invoke(this, e);
+        {            
+            TrajectoryValidated?.Invoke(this, e);
         }
 
         private void TrajectoryValidatedCallback(RobotValidationResult robotValidationResult)
@@ -122,7 +119,7 @@ namespace TRobot.Robots
                 Y = item.Point.Y
             });
 
-            warehouseRobotMonitoringSeviceClient.SetupTrajectory(robot.Id, trajectoryPoints);
+            warehouseRobotMonitoringSeviceClient.SetupTrajectory(robot.Id, robot.Title, trajectoryPoints);
         }
 
         private Vector GetTrajectoryVectors(Point start, Point end)

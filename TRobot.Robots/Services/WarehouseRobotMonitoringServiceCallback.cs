@@ -1,5 +1,5 @@
 ﻿using System;
-using TRobot.Communication.Monitoring;
+using TRobot.Communication.Services.Monitoring;
 
 namespace TRobot.Robots.Services
 {
