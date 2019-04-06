@@ -15,7 +15,7 @@ namespace TRobot.Robots.Services
         {
             var callback = new WarehouseRobotTrajectoryValidationCallback(validationResultCallback);
             var context = new InstanceContext(callback);
-            var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/ValidateRobotTrajectory"));
+            var pipeFactory = new DuplexChannelFactory<IRobotTrajectoryValidationService>(context, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/ValidationService"));
 
             validationService = pipeFactory.CreateChannel();
         }

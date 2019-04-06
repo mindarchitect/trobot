@@ -13,7 +13,8 @@ namespace TRobot.MU.Service
         }
 
         public void SetupRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
-        {           
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory)

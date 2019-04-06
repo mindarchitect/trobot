@@ -11,7 +11,7 @@ namespace TRobot.ECU.Service
         public RobotDescartesTrajectoryValidationServiceHost(DescartesRobotFactory descartesRobotFactory)
         {
             var host = new ServiceHost(new RobotDescartesTrajectoryValidationService(descartesRobotFactory), new Uri("net.pipe://localhost"));
-            host.AddServiceEndpoint(typeof(IRobotTrajectoryValidationService), new NetNamedPipeBinding(), "ValidateRobotTrajectory");
+            host.AddServiceEndpoint(typeof(IRobotTrajectoryValidationService), new NetNamedPipeBinding(), "ValidationService");
             host.Open();
         }
     }

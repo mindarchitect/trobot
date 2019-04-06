@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using TRobot.Communication.Trajectory;
@@ -16,6 +17,7 @@ namespace TRobot.Robots
         private LinkedList<Vector> trajectory;
         //private Thread workerProcessingThread;
         private WarehouseRobotValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
+        private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
         public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
         internal WarehouseRobotController(WarehouseRobot robot)
@@ -23,6 +25,10 @@ namespace TRobot.Robots
             this.robot = robot;
 
             warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotValidationServiceClient(TrajectoryValidatedCallback);
+            
+            NetNamedPipeBinding binding = new NetNamedPipeBinding();            
+            EndpointAddress address = new EndpointAddress("net.pipe://localhost/MonitoringService");
+            warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(binding, address);
         }
 
         internal async void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
@@ -79,9 +85,8 @@ namespace TRobot.Robots
         }
 
         private void ValidateTrajectory()
-        {            
-
-            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll<Point>(item => new Point
+        {           
+            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
             {
                 X = item.Point.X,
                 Y = item.Point.Y

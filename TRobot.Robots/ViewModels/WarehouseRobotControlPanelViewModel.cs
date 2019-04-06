@@ -31,7 +31,7 @@ namespace TRobot.Robots.ViewModels
 
         private void Controller_TrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
         {
-            TrajectoryValidated = e.ValidationResult;
+            TrajectoryValidated = e.ValidationResult;            
         }
 
         private ICommand uploadSettings;

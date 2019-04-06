@@ -9,8 +9,7 @@ namespace TRobot.MU.Service
         public RobotDescartesTrajectoryMonitoringServiceHost()
         {
             var host = new ServiceHost(typeof(RobotDescartesTrajectoryMonitoringService), new Uri("net.pipe://localhost"));
-            host.AddServiceEndpoint(typeof(IRobotTrajectoryMonitoringService), new NetNamedPipeBinding(), "SetupRobotTrajectory");
-            host.AddServiceEndpoint(typeof(IRobotTrajectoryMonitoringService), new NetNamedPipeBinding(), "UpdateRobotPosition");
+            host.AddServiceEndpoint(typeof(IRobotTrajectoryMonitoringService), new NetNamedPipeBinding(), "MonitoringService");            
             host.Open();
         }
     }
