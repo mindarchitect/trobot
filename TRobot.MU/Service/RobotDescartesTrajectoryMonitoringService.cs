@@ -12,8 +12,8 @@ namespace TRobot.MU.Service
         {            
         }
 
-        public void PlotRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
-        {            
+        public void SetupRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
+        {           
         }
 
         public void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory)

@@ -15,14 +15,14 @@ namespace TRobot.Robots
         private IList<DescartesCoordinatesItem> coordinates;
         private LinkedList<Vector> trajectory;
         //private Thread workerProcessingThread;
-        private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
+        private WarehouseRobotValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
 
         public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
         internal WarehouseRobotController(WarehouseRobot robot)
         {
             this.robot = robot;
 
-            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(TrajectoryValidatedCallback);
+            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotValidationServiceClient(TrajectoryValidatedCallback);
         }
 
         internal async void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)

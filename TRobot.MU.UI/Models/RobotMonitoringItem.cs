@@ -12,6 +12,5 @@ namespace TRobot.MU.UI.Models
         public Color Color { get; set; }
         public Guid Guid { get; set; }
         public string Title { get; set; }
-
     }
 }

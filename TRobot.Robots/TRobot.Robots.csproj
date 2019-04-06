@@ -57,8 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\WarehouseRobotMonitoringSeviceClient.cs" />
     <Compile Include="Services\WarehouseRobotTrajectoryValidationCallback.cs" />
-    <Compile Include="Services\WarehouseRobotTrajectoryValidationServiceClient.cs" />
+    <Compile Include="Services\WarehouseRobotValidationServiceClient.cs" />
     <Compile Include="WarehouseRobotController.cs" />
     <Compile Include="ViewModels\WarehouseRobotControlPanelViewModel.cs" />
     <Compile Include="WarehouseRobot.cs" />

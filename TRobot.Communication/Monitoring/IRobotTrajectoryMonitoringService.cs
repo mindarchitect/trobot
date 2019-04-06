@@ -10,7 +10,7 @@ namespace TRobot.Communication.Trajectory
     public interface IRobotTrajectoryMonitoringService
     {
         [OperationContract]  
-        void PlotRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
+        void SetupRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
 
         [OperationContract]
         void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory);

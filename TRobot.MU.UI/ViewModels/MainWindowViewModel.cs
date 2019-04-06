@@ -16,6 +16,8 @@ namespace TRobot.MU.UI.ViewModels
 
         public MainWindowViewModel()
         {
+            trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
+
             Robots = new List<RobotMonitoringItem>();
 
             var robot1Trajectory = new PointCollection();
