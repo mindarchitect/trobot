@@ -1,0 +1,115 @@
+﻿<Window x:Class="TRobot.ECU.UI.Views.DashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRobot.ECU.UI.Views"
+        xmlns:controls="clr-namespace:TRobot.ECU.UI.Controls"               
+        xmlns:viewmodels="clr-namespace:TRobot.ECU.UI.ViewModels"
+        mc:Ignorable="d"
+        Height="300"
+        Width="600"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.DataContext>
+        <viewmodels:DashboardViewControlModel/>
+    </Window.DataContext>
+    
+    <Window.Resources>
+        <!-- Main robots view -->
+        <Style TargetType="{x:Type ListBox}" x:Key="RobotsListBoxStyle">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal"
+                                   ItemHeight="{Binding ElementName=ZoomSlider, Path='Value'}"
+                                   ItemWidth="{Binding ElementName=ZoomSlider, Path='Value'}"
+                                   VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style for an individual generic item -->
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border SnapsToDevicePixels="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#445B6249" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <DataTemplate x:Key="RobotsTemplate">
+            <controls:RobotControl />
+        </DataTemplate>
+        
+        <DataTemplate x:Key="NewTabButtonContentTemplate">
+        </DataTemplate>
+
+        <DataTemplate x:Key="NewTabButtonHeaderTemplate">
+            <Button Content="+" Command="{Binding Path=DataContext.Add}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ItemContentTemplate">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ListBox IsSynchronizedWithCurrentItem="True"
+                         Name="FactoryRobots"
+                         Margin="5"
+                         Style="{StaticResource RobotsListBoxStyle}"
+                         SelectionMode="Extended"
+                         ItemTemplate="{StaticResource RobotsTemplate}"
+                         ItemsSource="{Binding Robots}"
+                         SelectedIndex="0" >
+                </ListBox>
+            </ScrollViewer>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ItemHeaderTemplate">
+            <TextBlock Text="{Binding Name}" />
+        </DataTemplate>
+
+        <local:TemplateSelector x:Key="HeaderTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonHeaderTemplate}" ItemTemplate="{StaticResource ItemHeaderTemplate}"/>
+        <local:TemplateSelector x:Key="ContentTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonContentTemplate}" ItemTemplate="{StaticResource ItemContentTemplate}"/>
+    </Window.Resources>
+
+    <!-- Master Container -->
+    <Grid Margin="10">        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="30*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+       
+        <DockPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,10" >
+            <Label DockPanel.Dock="Left" Margin="0,0,10,0">Factories: </Label>            
+        </DockPanel>
+
+        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" >            
+            <TabControl ItemsSource="{Binding RobotFactories}" ItemTemplateSelector="{StaticResource HeaderTemplateSelector}" ContentTemplateSelector="{StaticResource ContentTemplateSelector}" SelectedIndex="0" />
+        </DockPanel>
+
+        <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" >
+            <Label DockPanel.Dock="Left" Margin="0,0,10,0">Properties:</Label>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">            
+            <Button DockPanel.Dock="Right" >Add Robot</Button>                            
+        </DockPanel>
+    </Grid>
+</Window>
