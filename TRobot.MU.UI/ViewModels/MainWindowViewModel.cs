@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
 using TRobot.MU.Service;
@@ -9,14 +10,14 @@ namespace TRobot.MU.UI.ViewModels
 {
     public class MainWindowViewModel
     {
-        public IList<RobotMonitoringItem> Robots { get; private set; }
+        public ObservableCollection<RobotMonitoringItem> Robots { get; private set; }
 
         private RobotDescartesTrajectoryMonitoringServiceHost trajectoryMonitoringServiceHost;
 
         public MainWindowViewModel()
         {
             trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
-            Robots = new List<RobotMonitoringItem>();
+            Robots = new ObservableCollection<RobotMonitoringItem>();
 
             trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;           
         }

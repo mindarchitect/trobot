@@ -60,12 +60,7 @@
                                     <Path.Data>
                                         <EllipseGeometry Center="{Binding Path=StartPoint, Mode=OneWay}" RadiusX="5" RadiusY="5" />
                                     </Path.Data>
-                                </Path>
-                                <!--<Ellipse StrokeThickness="1" Height="20" Width="20" Margin="5">
-                                    <Ellipse.Fill>
-                                        <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>-->
+                                </Path>                               
                             </Canvas>
                         </DataTemplate>                        
                     </ItemsControl.ItemTemplate>                   
