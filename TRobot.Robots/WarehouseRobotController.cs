@@ -16,7 +16,7 @@ namespace TRobot.Robots
     {
         private WarehouseRobot robot;
         private IList<DescartesCoordinatesItem> coordinates;
-        private LinkedList<Vector> trajectory;
+        internal LinkedList<Vector> Trajectory { get; set; }
         public Vector CurrentVector { get; set; }        
 
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
@@ -85,7 +85,7 @@ namespace TRobot.Robots
 
         internal void BuildTrajectory()
         {            
-            trajectory = new LinkedList<Vector>();
+            Trajectory = new LinkedList<Vector>();
 
             LinkedListNode<Vector> currentNode = null;
 
@@ -98,12 +98,12 @@ namespace TRobot.Robots
                     if (i == 0)
                     {
                         currentNode = new LinkedListNode<Vector>(vector);
-                        trajectory.AddFirst(currentNode);
+                        Trajectory.AddFirst(currentNode);
                         CurrentVector = vector;
                     }
                     else
                     {
-                        currentNode = trajectory.AddAfter(currentNode, vector);
+                        currentNode = Trajectory.AddAfter(currentNode, vector);
                     }
                 }
                 catch (ArgumentOutOfRangeException)

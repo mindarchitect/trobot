@@ -61,7 +61,7 @@ namespace TRobot.Robots
             set;
         }
 
-        public uint Velocity
+        public double Velocity
         {
             get;
             set;

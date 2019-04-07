@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using TRobot.Core;
@@ -45,57 +46,56 @@ namespace TRobot.Robots
         {
             var robotVelocity = robot.Velocity;
             var robotAcceleration = robot.Acceleration;
+            var trajectory = robot.Controller.Trajectory;
 
-            while (true)
+            Vector currentVector;
+
+            for (LinkedListNode<Vector> node = trajectory.First; node != null; node = node.Next)
             {
-                var currentDriveXVelocity = DriveX.Velocity;
-                var currentDriveYVelocity = DriveY.Velocity;
-                
-                var currentVector = robot.Controller.CurrentVector;
+                currentVector = node.Value;
 
-                //var XCoordinateVector = new Vector(currentVector.X, 0);
-                //var YCoordinateVector = new Vector(0, currentVector.Y);
-                //var xAngle = Vector.AngleBetween(currentVector, XCoordinateVector);
-                //var yAngleDegrees = Vector.AngleBetween(currentVector, YCoordinateVector);
-                
-                var yAngleRadians = Math.Atan2(currentVector.Y, currentVector.X);
-
-                //double yAngleRadians = Math.PI * yAngleDegrees / 180.0;
-
-                var YDriveVelocity = robotVelocity * Math.Cos(yAngleRadians);
-                var XDriveVelocity = robotVelocity * Math.Sin(yAngleRadians);
-
-                if (YDriveVelocity > currentDriveYVelocity)
+                while (true)
                 {
-                    DriveY.Velocity += robotAcceleration;
-                }
-                else
-                {
-                    DriveY.Velocity = YDriveVelocity;
-                }
+                    var currentDriveXVelocity = DriveX.Velocity;
+                    var currentDriveYVelocity = DriveY.Velocity;
 
-                if (XDriveVelocity > currentDriveXVelocity)
-                {
-                    DriveX.Velocity += robotAcceleration;
+                    var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);
+
+                    var YDriveVelocity = robotVelocity * Math.Cos(arctangRadians);
+                    var XDriveVelocity = robotVelocity * Math.Sin(arctangRadians);
+
+                    if (YDriveVelocity > currentDriveYVelocity)
+                    {
+                        DriveY.Velocity += robotAcceleration;
+                    }
+                    else
+                    {
+                        DriveY.Velocity = YDriveVelocity;
+                    }
+
+                    if (XDriveVelocity > currentDriveXVelocity)
+                    {
+                        DriveX.Velocity += robotAcceleration;
+                    }
+                    else
+                    {
+                        DriveX.Velocity = XDriveVelocity;
+                    }
+
+                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+                    robot.Velocity = resultingVelocityVector.Length;
+
+                    if (resultingVelocityVector.Length != robotVelocity)
+                    {
+                        OnVelocityChanged(new VelocityChangedEventArguments(robot.Velocity));
+                    }
+
+                    var resultingPosition = Vector.Add(resultingVelocityVector, robot.CurrentPosition);
+                    robot.CurrentPosition = resultingPosition;
+                    OnPositionChanged(new PositionChangedEventArguments(robot.CurrentPosition));
+
+                    Thread.Sleep(1000);
                 }
-                else
-                {
-                    DriveX.Velocity = XDriveVelocity;
-                }
-
-                //var resultingVelocityVector = Vector.Add(new Vector(DriveX.Velocity, 0), new Vector(0, DriveY.Velocity));
-                var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);                
-
-                if (resultingVelocityVector.Length != robotVelocity)
-                {
-                    OnVelocityChanged(new VelocityChangedEventArguments(resultingVelocityVector.Length));
-                }
-
-                var resultingPosition = Vector.Add(resultingVelocityVector, robot.CurrentPosition);
-                robot.CurrentPosition = resultingPosition;
-                OnPositionChanged(new PositionChangedEventArguments(robot.CurrentPosition));
-
-                Thread.Sleep(1000);
             }            
         }
 
