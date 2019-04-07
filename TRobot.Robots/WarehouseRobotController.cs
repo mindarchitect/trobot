@@ -10,11 +10,11 @@ using TRobot.Robots.Services;
 
 namespace TRobot.Robots
 {    
-    internal class WarehouseRobotController
+    internal class WarehouseRobotController: IControllable
     {
         private WarehouseRobot robot;
         private IList<DescartesCoordinatesItem> coordinates;
-        private LinkedList<Vector> trajectory;        
+        private LinkedList<Vector> trajectory;
 
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
@@ -51,7 +51,18 @@ namespace TRobot.Robots
         }
 
         public void Start()
-        {            
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Stop()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Pause()
+        {
+            throw new NotImplementedException();
         }
 
         internal void BuildTrajectory()
@@ -85,20 +96,7 @@ namespace TRobot.Robots
         protected virtual void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
         {            
             TrajectoryValidated?.Invoke(this, e);
-        }
-
-        private void TrajectoryValidatedCallback(RobotValidationResult robotValidationResult)
-        {
-            OnTrajectoryValidated(new TrajectoryValidatedEventArguments(robotValidationResult.RobotId, robotValidationResult.ValidationResult, robotValidationResult.ValidationMessage));
-        }
-
-        private void TrajectorySetupCallback()
-        {            
-        }
-
-        private void TrajectoryUpdatedCallback()
-        {
-        }
+        }        
 
         private void ValidateTrajectory()
         {
@@ -125,6 +123,19 @@ namespace TRobot.Robots
         private Vector GetTrajectoryVectors(Point start, Point end)
         {
             return Point.Subtract(end, start);
+        }
+
+        private void TrajectoryValidatedCallback(RobotValidationResult robotValidationResult)
+        {
+            OnTrajectoryValidated(new TrajectoryValidatedEventArguments(robotValidationResult.RobotId, robotValidationResult.ValidationResult, robotValidationResult.ValidationMessage));
+        }
+
+        private void TrajectorySetupCallback()
+        {
+        }
+
+        private void TrajectoryUpdatedCallback()
+        {
         }
     }
 }

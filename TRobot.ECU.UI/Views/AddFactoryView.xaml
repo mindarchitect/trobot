@@ -7,7 +7,4 @@
         xmlns:viewmodels="clr-namespace:TRobot.ECU.UI.ViewModels"
         mc:Ignorable="d"
         Title="AddFactoryView" Height="300" Width="300">
-    <Window.DataContext>
-        <viewmodels:AddFactoryViewModel />
-    </Window.DataContext>
 </Window>

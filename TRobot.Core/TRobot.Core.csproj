@@ -50,6 +50,7 @@
     <Compile Include="Robot\Events\TrajectorySetEventArguments.cs" />
     <Compile Include="Robot\Events\TrajectoryValidatedEventArguments.cs" />
     <Compile Include="Robot\Interfaces\IFactoryProvider.cs" />
+    <Compile Include="Robot\Interfaces\IServiceHostProvider.cs" />
     <Compile Include="Robot\RobotDimensionalDrive.cs" />
     <Compile Include="Robot\RobotEngine.cs" />
     <Compile Include="Robot\Engine.cs" />

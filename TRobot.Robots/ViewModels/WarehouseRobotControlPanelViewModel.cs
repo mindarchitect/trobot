@@ -1,16 +1,19 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.Models;
+using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.Robots.ViewModels
 {
-    public class WarehouseRobotControlPanelViewModel
+    public class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; private set; }
-        public uint Velocity { get; set; }        
+        public uint Velocity { get; set; }
+        public uint Acceleration { get; set; }
 
         public WarehouseRobot Robot { get; private set; }
 
@@ -99,12 +102,16 @@ namespace TRobot.Robots.ViewModels
 
         private void MoveRobot()
         {
-            Robot.Move();
+            Robot.Controller.Start();
         }
 
         private void StopRobot()
         {
-            Robot.Stop();
+            Robot.Controller.Stop();
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
         }
     }
 }

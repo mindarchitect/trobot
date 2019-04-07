@@ -15,17 +15,17 @@ namespace TRobot.Core
             Drives = new List<IControllable>();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             Drives.ForEach((drive) => drive.Start());
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             Drives.ForEach((drive) => drive.Stop());
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             Drives.ForEach((drive) => drive.Pause());
         }

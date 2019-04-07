@@ -12,7 +12,10 @@ namespace TRobot.Robots
         {
             InitializeComponent();
 
-            DataContext = new WarehouseRobotControlPanelViewModel(robot);
+            var warehouseRobotControlPanelViewModel = new WarehouseRobotControlPanelViewModel(robot);
+            Closing += warehouseRobotControlPanelViewModel.OnWindowClosing;
+
+            DataContext = warehouseRobotControlPanelViewModel;
         }
     }
 }

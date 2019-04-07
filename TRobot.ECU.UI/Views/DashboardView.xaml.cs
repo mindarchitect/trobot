@@ -8,11 +8,15 @@ namespace TRobot.ECU.UI.Views
     /// Interaction logic for Dashboard.xaml
     /// </summary>
     public partial class DashboardView : Window, IView
-    {
-        
+    {        
         public DashboardView()
         {
-            InitializeComponent();           
+            InitializeComponent();
+
+            var dashboardViewControlModel = new DashboardViewControlModel();
+            Closing += dashboardViewControlModel.OnWindowClosing;
+
+            DataContext = dashboardViewControlModel;
         }                     
     }
 }

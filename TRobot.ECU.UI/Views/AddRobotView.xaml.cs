@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.ECU.UI.Views
 {
@@ -10,6 +11,7 @@ namespace TRobot.ECU.UI.Views
         public AddRobotView()
         {
             InitializeComponent();
+            DataContext = new AddRobotViewControlModel();
         }
     }
 }

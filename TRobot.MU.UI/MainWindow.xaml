@@ -10,11 +10,7 @@
         d:DesignWidth="900"        
         Title="Robots Monitoring" 
         >
-
-    <Window.DataContext>
-        <viewmodels:MainWindowViewModel/>
-    </Window.DataContext>
-
+		
     <Grid Margin="10" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

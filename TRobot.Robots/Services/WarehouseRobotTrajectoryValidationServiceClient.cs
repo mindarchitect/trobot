@@ -13,15 +13,22 @@ namespace TRobot.Robots.Services
         public WarehouseRobotTrajectoryValidationServiceClient(object callbackInstance, Binding binding, EndpointAddress remoteAddress)
         : base(callbackInstance, binding, remoteAddress)
         {
-        }        
+        }
 
         internal void ValidateTrajectory(Guid robotId, List<Point> trajectoryPoints)
         {
-            var robotTrajectory = new RobotDescartesTrajectory();
-            robotTrajectory.RobotId = robotId;
-            robotTrajectory.Trajectory = trajectoryPoints;
+            if (InnerChannel.State != CommunicationState.Faulted)
+            { 
+                var robotTrajectory = new RobotDescartesTrajectory();
+                robotTrajectory.RobotId = robotId;
+                robotTrajectory.Trajectory = trajectoryPoints;
 
-            Channel.ValidateRobotTrajectory(robotTrajectory);
+                Channel.ValidateRobotTrajectory(robotTrajectory);
+            }
+            else
+            {                
+                MessageBox.Show(string.Format("Channel is in faulted state: {0}", Channel.ToString()), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }        
     }
 }

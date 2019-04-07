@@ -10,10 +10,6 @@
         Height="300"
         Width="600"
         WindowStartupLocation="CenterOwner">
-
-    <Window.DataContext>
-        <viewmodels:DashboardViewControlModel/>
-    </Window.DataContext>
     
     <Window.Resources>
         <!-- Main robots view -->

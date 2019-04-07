@@ -21,8 +21,7 @@
         <Style x:Key="Label" TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="5,5,5,5" />
             <Setter Property="Padding" Value="5,5,5,5" />
-            <Setter Property="MinWidth" Value="60" />
-            <Setter Property="MaxWidth" Value="60" />
+            
         </Style>
 
         <Style x:Key="TextBox" TargetType="{x:Type TextBox}">
@@ -116,16 +115,16 @@
             <!-- Left panel setting grid -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />                    
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
-                    Velocity:
+                    Velocity (points/sec)
                 </Label>
                 <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Left">
                     <TextBox.Text>
@@ -136,6 +135,18 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
+                <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
+                    Acceleration (points/sec2)
+                </Label>
+                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Left">
+                    <TextBox.Text>
+                        <Binding Path="Acceleration" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:NumberValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>                
             </Grid>           
         </GroupBox>
 

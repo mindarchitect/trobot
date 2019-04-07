@@ -5,6 +5,8 @@ namespace TRobot.Robots
 {
     internal sealed class WarehouseRobotEngine : RobotEngine
     {
+        private Thread trajectoryCalculation        
+        
         internal WarehouseRobotEngine() : base()
         {
             var xdrive = new RobotDimensionalDrive(Dimension.X);
@@ -12,6 +14,11 @@ namespace TRobot.Robots
 
             Drives.Add(xdrive);
             Drives.Add(ydrive);
+        }
+
+        public override void Start()
+        {
+
         }
     }
 }

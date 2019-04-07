@@ -17,21 +17,27 @@ namespace TRobot.Robots.Services
 
         internal void SetupTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
         {
-            var robotTrajectory = new RobotDescartesTrajectory();
-            robotTrajectory.RobotId = robotId;
-            robotTrajectory.RobotTitle = robotTitle;
-            robotTrajectory.Trajectory = trajectoryPoints;
+            if (InnerChannel.State != CommunicationState.Faulted)
+            {
+                var robotTrajectory = new RobotDescartesTrajectory();
+                robotTrajectory.RobotId = robotId;
+                robotTrajectory.RobotTitle = robotTitle;
+                robotTrajectory.Trajectory = trajectoryPoints;
 
-            Channel.SetupRobotTrajectory(robotTrajectory);
+                Channel.SetupRobotTrajectory(robotTrajectory);
+            }            
         }
 
         internal void UpdatePosition(Guid robotId, Point position)
         {
-            var robotTrajectoryPosition = new RobotDescartesTrajectoryPosition();
-            robotTrajectoryPosition.RobotId = robotId;
-            robotTrajectoryPosition.CurrentPosition = position;
+            if (InnerChannel.State != CommunicationState.Faulted)
+            {
+                var robotTrajectoryPosition = new RobotDescartesTrajectoryPosition();
+                robotTrajectoryPosition.RobotId = robotId;
+                robotTrajectoryPosition.CurrentPosition = position;
 
-            Channel.UpdateRobotPosition(robotTrajectoryPosition);
+                Channel.UpdateRobotPosition(robotTrajectoryPosition);
+            }
         }
     }
 }

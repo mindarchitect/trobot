@@ -19,7 +19,7 @@ namespace TRobot.ECU.UI.ViewModels
             var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(100, 100));
 
             trajectoryValidationServiceHost = new RobotDescartesTrajectoryValidationServiceHost(descartesRobotFactory);
-            
+
             var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
             warehouseRobot1.Title = "Warehouse Robot 1";
 
@@ -38,8 +38,8 @@ namespace TRobot.ECU.UI.ViewModels
                 if (robotFactories == null)
                 {
                     robotFactories = new ObservableCollection<RobotFactory>();
-                    var itemsView = (IEditableCollectionView) CollectionViewSource.GetDefaultView(robotFactories);
-                    itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;                    
+                    var itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(robotFactories);
+                    itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
                 }
 
                 return robotFactories;
@@ -63,6 +63,11 @@ namespace TRobot.ECU.UI.ViewModels
         private void Add(RobotFactory robotFactory)
         {
             RobotFactories.Add(robotFactory);
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            trajectoryValidationServiceHost.Close();
         }
     }
 }

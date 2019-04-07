@@ -1,6 +1,6 @@
 ﻿
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
 using TRobot.MU.Service;
@@ -23,7 +23,7 @@ namespace TRobot.MU.UI.ViewModels
         }
 
         private void OnServiceRobotTrajectorySet(object sender, TrajectorySetEventArguments e)
-        {
+        {            
             var robotMonitoringItem1 = new RobotMonitoringItem();
 
             robotMonitoringItem1.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
@@ -34,6 +34,11 @@ namespace TRobot.MU.UI.ViewModels
             robotMonitoringItem1.Title = e.RobotDescartesTrajectory.RobotTitle;
 
             Robots.Add(robotMonitoringItem1);
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            trajectoryMonitoringServiceHost.Close();
         }
     }
 }
