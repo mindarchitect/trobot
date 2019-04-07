@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MonitoringUnit.UI"
         xmlns:viewmodels="clr-namespace:TRobot.MU.UI.ViewModels"
         mc:Ignorable="d"
-        d:DesignHeight="600"
+        d:DesignHeight="400"
         d:DesignWidth="900"        
         Title="Robots Monitoring" 
         >

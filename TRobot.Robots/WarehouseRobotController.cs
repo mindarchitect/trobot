@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
+using TRobot.Core.Robot.Events;
 using TRobot.ECU.Models;
 using TRobot.Robots.Services;
 
@@ -15,21 +17,34 @@ namespace TRobot.Robots
         private WarehouseRobot robot;
         private IList<DescartesCoordinatesItem> coordinates;
         private LinkedList<Vector> trajectory;
+        public Vector CurrentVector { get; set; }        
 
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
-        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
+        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;    
         
         internal WarehouseRobotController(WarehouseRobot robot)
         {
             this.robot = robot;
 
             var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);
-            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));
+            warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));            
 
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
+
+            this.robot.Engine.VelocityChanged += OnEngineVelocityChanged;
+            this.robot.Engine.PositionChanged += OnEnginePositionChanged;
+        }
+
+        private void OnEnginePositionChanged(object sender, PositionChangedEventArguments e)
+        {
+            warehouseRobotMonitoringSeviceClient.UpdatePosition(robot.Id, e.NewPosition);
+        }
+
+        private void OnEngineVelocityChanged(object sender, VelocityChangedEventArguments e)
+        {            
         }
 
         internal async void SetupTrajectory()
@@ -47,17 +62,20 @@ namespace TRobot.Robots
 
             this.coordinates = coordinates;
 
-            await Task.Run(() => ValidateTrajectory());            
+            await Task.Run(() => ValidateTrajectory());
+
+            //Testing         
+            await Task.Run(() => BuildTrajectory());
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            robot.Engine.Start();
         }
 
         public void Stop()
-        {
-            throw new NotImplementedException();
+        {         
+            robot.Engine.Stop();
         }
 
         public void Pause()
@@ -75,12 +93,13 @@ namespace TRobot.Robots
             {
                 try
                 {
-                    var vector = GetTrajectoryVectors(coordinates[i].Point, coordinates[i + 1].Point);
+                    var vector = GetTrajectoryVectors(coordinates[i].Point, coordinates[i + 1].Point);                   
 
                     if (i == 0)
                     {
                         currentNode = new LinkedListNode<Vector>(vector);
                         trajectory.AddFirst(currentNode);
+                        CurrentVector = vector;
                     }
                     else
                     {
@@ -90,7 +109,7 @@ namespace TRobot.Robots
                 catch (ArgumentOutOfRangeException)
                 {
                 }                
-            }             
+            }                      
         }  
 
         protected virtual void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
@@ -136,6 +155,6 @@ namespace TRobot.Robots
 
         private void TrajectoryUpdatedCallback()
         {
-        }
+        }               
     }
 }

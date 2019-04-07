@@ -1,23 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.Robot.Events;
 using TRobot.Core.UI.Commands;
+using TRobot.ECU.Models;
 
 namespace TRobot.Robots
 {
     public class WarehouseRobot : AbstractRobot, IMovable, IFactoryProvier<DescartesRobotFactory>
     {          
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
-        private WarehouseRobotControlPanel controlPanel;
+        private WarehouseRobotControlPanel controlPanel;       
 
         public WarehouseRobot(DescartesRobotFactory factory)
         {            
-            Factory = factory;           
+            Factory = factory;
 
-            Engine = new WarehouseRobotEngine();
-            Controller = new WarehouseRobotController(this);          
+            Engine = new WarehouseRobotEngine(this);
+            Controller = new WarehouseRobotController(this);                      
             controlPanel = new WarehouseRobotControlPanel(this);
         }       
 
@@ -94,22 +96,18 @@ namespace TRobot.Robots
             PositionChanged?.Invoke(this, e);
         }
 
-        public void Move()
-        {
-            Engine.Start();          
-        }
-
         public override void Start()
-        {           
+        {
             controlPanel.Show();
-        }
+        }      
 
         public override void Stop()
-        {      
-            if (controlPanel != null)
-            {
-                controlPanel.Hide();
-            }
+        {            
+        }
+
+        internal void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
+        {
+            Controller.UploadTrajectory(coordinates);
         }
     }
 }

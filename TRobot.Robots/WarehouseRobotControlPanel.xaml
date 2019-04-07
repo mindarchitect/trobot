@@ -153,10 +153,10 @@
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" >
             <!-- Add destination point button -->
-            <Button Style="{StaticResource Button}" Command="{Binding Path=Move}" IsEnabled="{Binding Path=TrajectoryValidated}">
-                Move
+            <Button Style="{StaticResource Button}" Command="{Binding Path=Start}" IsEnabled="{Binding Path=TrajectoryValidated}">
+                Start
                 <Button.ToolTip>
-                    <TextBlock>Move</TextBlock>
+                    <TextBlock>Start</TextBlock>
                 </Button.ToolTip>
             </Button>
             <Button Style="{StaticResource Button}" Command="{Binding Path=Stop}" IsEnabled="{Binding Path=TrajectoryValidated}" >
@@ -164,7 +164,7 @@
                 <Button.ToolTip>
                     <TextBlock>Stop</TextBlock>
                 </Button.ToolTip>
-            </Button>
+            </Button>            
             <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" >
                 Upload settings
                 <Button.ToolTip>

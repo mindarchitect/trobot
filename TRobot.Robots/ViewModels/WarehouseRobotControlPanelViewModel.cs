@@ -17,7 +17,7 @@ namespace TRobot.Robots.ViewModels
 
         public WarehouseRobot Robot { get; private set; }
 
-        public bool TrajectoryValidated { get; private set; } = false;
+        private bool trajectoryValidated;        
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -26,11 +26,12 @@ namespace TRobot.Robots.ViewModels
                  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 10, 10));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 20, 20));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 40, 100));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 30));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 70));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 80, 100));
 
             Velocity = 10;
+            Acceleration = 2;
         }
 
         private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
@@ -63,19 +64,19 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        private ICommand move;
+        private ICommand start;
 
-        public ICommand Move
+        public ICommand Start
         {
             get
             {
-                if (move == null)
+                if (start == null)
                 {
-                    move = new RelayCommand<object>(
-                        param => MoveRobot()
+                    start = new RelayCommand<object>(
+                        param => StartRobot()
                     );
                 }
-                return move;
+                return start;
             }
         }
 
@@ -97,10 +98,12 @@ namespace TRobot.Robots.ViewModels
 
         private void UploadRobotSettings()
         {
-            Robot.Controller.UploadTrajectory(TrajectoryCoordinates);                               
+            Robot.UploadTrajectory(TrajectoryCoordinates);
+            Robot.Acceleration = Acceleration;
+            Robot.Velocity = Velocity;
         }
 
-        private void MoveRobot()
+        private void StartRobot()
         {
             Robot.Controller.Start();
         }
@@ -112,6 +115,21 @@ namespace TRobot.Robots.ViewModels
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
+            Robot.Controller.Stop();
+        }
+
+        public bool TrajectoryValidated
+        {
+            get
+            {
+                return trajectoryValidated;
+            }
+
+            set
+            {
+                trajectoryValidated = value;
+                OnPropertyChanged("TrajectoryValidated");
+            }
         }
     }
 }

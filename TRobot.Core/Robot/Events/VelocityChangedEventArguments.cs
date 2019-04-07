@@ -4,12 +4,12 @@ namespace TRobot.Core
 {
     public class VelocityChangedEventArguments : EventArgs
     {
-        public VelocityChangedEventArguments(uint newVelocity)
+        public VelocityChangedEventArguments(double velocity)
         {
-            Velocity = newVelocity;
+            Velocity = velocity;
         }
 
-        public uint Velocity
+        public double Velocity
         {
             get;
             private set;

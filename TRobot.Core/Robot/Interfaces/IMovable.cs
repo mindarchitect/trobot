@@ -9,7 +9,7 @@ namespace TRobot.Core
         uint Velocity { get; set; }
         uint Acceleration { get; set; }
 
-        void Move();
+        void Start();
 
         void Stop();
 
