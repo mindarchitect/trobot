@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
+    <Compile Include="Events\RobotPositionUpdatedEventArguments.cs" />
     <Compile Include="Events\TrajectorySetEventArguments.cs" />
     <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringService.cs" />
     <Compile Include="Contracts\Data\RobotDescartesTrajectory.cs" />

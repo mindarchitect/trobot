@@ -20,6 +20,6 @@ namespace TRobot.Communication.Services.Monitoring
         void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory);
 
         event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
-        event EventHandler RobotTrajectoryUpdated;
+        event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
     }
 }

@@ -54,7 +54,11 @@
                                         <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
                                     </Path.Fill>
                                     <Path.Data>
-                                        <EllipseGeometry Center="{Binding Path=StartPoint, Mode=OneWay}" RadiusX="5" RadiusY="5" />
+                                        <EllipseGeometry Center="{Binding Path=StartPoint, Mode=OneWay}" RadiusX="5" RadiusY="5" >
+                                            <EllipseGeometry.Transform>
+                                                <TranslateTransform x:Name="MyTranslateTransform" X="{Binding Path=CurrentPosition.X}" Y="{Binding Path=CurrentPosition.Y}" />
+                                            </EllipseGeometry.Transform>
+                                        </EllipseGeometry>
                                     </Path.Data>
                                 </Path>                               
                             </Canvas>

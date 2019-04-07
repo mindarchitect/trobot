@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
+using TRobot.ECU.UI.ViewModels;
 using TRobot.MU.Service;
 using TRobot.MU.UI.Models;
 
 namespace TRobot.MU.UI.ViewModels
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel: BaseViewModel
     {
         public ObservableCollection<RobotMonitoringItem> Robots { get; private set; }
 
@@ -19,7 +20,21 @@ namespace TRobot.MU.UI.ViewModels
             trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
             Robots = new ObservableCollection<RobotMonitoringItem>();
 
-            trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;           
+            trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
+            trajectoryMonitoringServiceHost.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
+        }
+
+        private void OnServiceRobotPositionUpdated(object sender, RobotPositionUpdatedEventArguments e)
+        {
+            for (var i = 0; i < Robots.Count; i++)
+            {
+                var robot = Robots[i];
+
+                if (robot.Guid == e.RobotDescartesTrajectoryPosition.RobotId)
+                {
+                    robot.CurrentPosition = e.RobotDescartesTrajectoryPosition.CurrentPosition;
+                }
+            }
         }
 
         private void OnServiceRobotTrajectorySet(object sender, TrajectorySetEventArguments e)

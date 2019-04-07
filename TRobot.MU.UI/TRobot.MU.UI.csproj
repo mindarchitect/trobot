@@ -103,6 +103,10 @@
       <Project>{896f4469-d992-442d-93e5-5cb23c0a0a86}</Project>
       <Name>TRobot.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TRobot.Core.UI\TRobot.Core.UI.csproj">
+      <Project>{78731189-693A-475F-87B6-915E5A44F01B}</Project>
+      <Name>TRobot.Core.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TRobot.MU\TRobot.MU.csproj">
       <Project>{3DEF3F3F-546E-4699-B2CD-27E65EF3DC07}</Project>
       <Name>TRobot.MU</Name>
