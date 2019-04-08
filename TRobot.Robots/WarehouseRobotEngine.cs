@@ -44,43 +44,26 @@ namespace TRobot.Robots
 
         private void calculateDrivesSpeed()
         {
-            var robotVelocity = robot.Velocity;
-            var robotAcceleration = robot.Acceleration;
+            var robotVelocity = robot.Velocity;            
             var trajectory = robot.Controller.Trajectory;
 
             Vector currentVector;
+            bool condition = true;
 
-            for (LinkedListNode<Vector> node = trajectory.First; node != null; node = node.Next)
+            for (LinkedListNode<Vector> node = trajectory.First; node != null; )
             {
                 currentVector = node.Value;
-
-                while (true)
-                {
-                    var currentDriveXVelocity = DriveX.Velocity;
-                    var currentDriveYVelocity = DriveY.Velocity;
-
+                
+                while (condition)
+                {                    
                     var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);
 
                     var YDriveVelocity = robotVelocity * Math.Cos(arctangRadians);
-                    var XDriveVelocity = robotVelocity * Math.Sin(arctangRadians);
+                    var XDriveVelocity = robotVelocity * Math.Sin(arctangRadians);                                        
 
-                    if (YDriveVelocity > currentDriveYVelocity)
-                    {
-                        DriveY.Velocity += robotAcceleration;
-                    }
-                    else
-                    {
-                        DriveY.Velocity = YDriveVelocity;
-                    }
-
-                    if (XDriveVelocity > currentDriveXVelocity)
-                    {
-                        DriveX.Velocity += robotAcceleration;
-                    }
-                    else
-                    {
-                        DriveX.Velocity = XDriveVelocity;
-                    }
+                    //Create separate therad for each drive + resources synchronization
+                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, DriveY.Velocity);
+                    DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, DriveX.Velocity);                    
 
                     var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                     robot.Velocity = resultingVelocityVector.Length;
@@ -94,7 +77,7 @@ namespace TRobot.Robots
                     robot.CurrentPosition = resultingPosition;
                     OnPositionChanged(new PositionChangedEventArguments(robot.CurrentPosition));
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(tick);
                 }
             }            
         }
@@ -112,6 +95,22 @@ namespace TRobot.Robots
         protected virtual void OnPositionChanged(PositionChangedEventArguments e)
         {
             PositionChanged?.Invoke(this, e);
+        }
+
+        private double CalculateDriveVelocity(double driveVelocity, double currentDriveVelocity)
+        {
+            var robotAcceleration = robot.Acceleration;
+
+            if (driveVelocity > currentDriveVelocity)
+            {
+                currentDriveVelocity += robotAcceleration / RefreshFactor;
+            }
+            else
+            {
+                currentDriveVelocity = driveVelocity / RefreshFactor;
+            }
+
+            return currentDriveVelocity;
         }
     }
 }
