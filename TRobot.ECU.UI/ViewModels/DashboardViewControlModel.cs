@@ -16,7 +16,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         public DashboardViewControlModel()
         {
-            var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(100, 100));
+            var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(300, 300));
 
             trajectoryValidationServiceHost = new RobotDescartesTrajectoryValidationServiceHost(descartesRobotFactory);
 

@@ -26,12 +26,12 @@ namespace TRobot.Robots.ViewModels
                  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 50));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 70));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 80, 100));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 80));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 10));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 200));
 
-            Velocity = 10;
-            Acceleration = 2;
+            Velocity = 30;
+            Acceleration = 1;
         }
 
         private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
@@ -110,7 +110,7 @@ namespace TRobot.Robots.ViewModels
 
         private void StopRobot()
         {
-            Robot.Controller.Stop();
+            Robot.Controller.Stop();            
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
