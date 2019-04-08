@@ -22,9 +22,30 @@ namespace TRobot.Robots
         public event EventHandler<VelocityChangedEventArguments> VelocityChanged;
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
 
+        private object pobotPropertyLock = new object();
+
+        public WarehouseRobot Robot
+        {
+            get
+            {
+                lock (pobotPropertyLock)
+                {
+                    return robot;
+                }
+            }
+
+            set
+            {
+                lock (pobotPropertyLock)
+                {
+                    robot = value;                    
+                }
+            }
+        }
+
         internal WarehouseRobotEngine(WarehouseRobot robot) : base()
         {
-            this.robot = robot;
+            this.Robot = robot;
 
             DriveX = new RobotDimensionalDrive(Dimension.X);
             DriveY = new RobotDimensionalDrive(Dimension.Y);
@@ -44,8 +65,8 @@ namespace TRobot.Robots
 
         private void calculateDrivesSpeed()
         {
-            var robotVelocity = robot.Velocity;            
-            var trajectory = robot.Controller.Trajectory;
+            var robotVelocity = Robot.Velocity;            
+            var trajectory = Robot.Controller.Trajectory;
 
             Vector currentVector;
             bool condition = true;
@@ -66,16 +87,16 @@ namespace TRobot.Robots
                     DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, DriveX.Velocity);                    
 
                     var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                    robot.Velocity = resultingVelocityVector.Length;
+                    Robot.Velocity = resultingVelocityVector.Length;
 
                     if (resultingVelocityVector.Length != robotVelocity)
                     {
-                        OnVelocityChanged(new VelocityChangedEventArguments(robot.Velocity));
+                        OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
                     }
 
-                    var resultingPosition = Vector.Add(resultingVelocityVector, robot.CurrentPosition);
-                    robot.CurrentPosition = resultingPosition;
-                    OnPositionChanged(new PositionChangedEventArguments(robot.CurrentPosition));
+                    var resultingPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                    Robot.CurrentPosition = resultingPosition;
+                    OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
 
                     Thread.Sleep(tick);
                 }
@@ -99,7 +120,7 @@ namespace TRobot.Robots
 
         private double CalculateDriveVelocity(double driveVelocity, double currentDriveVelocity)
         {
-            var robotAcceleration = robot.Acceleration;
+            var robotAcceleration = Robot.Acceleration;
 
             if (driveVelocity > currentDriveVelocity)
             {
