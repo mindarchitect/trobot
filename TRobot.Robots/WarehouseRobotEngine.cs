@@ -91,7 +91,7 @@ namespace TRobot.Robots
                 var XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
 
                 var YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
-                var XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;                
+                var XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
 
                 while (positionIsInCurrentVector)
                 {
@@ -102,35 +102,28 @@ namespace TRobot.Robots
                     DriveY.Velocity = YDriveVelocity;
                     DriveX.Velocity = XDriveVelocity;
 
-                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);                    
+                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                     Robot.Velocity = resultingVelocityVector.Length;
 
                     if (resultingVelocityVector.Length != robotVelocity)
                     {
                         OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
-                    }                                      
+                    }
+
+                    positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
+
+                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
+                    if (!positionIsInCurrentVector)
+                    {
+                        continue;
+                    }
 
                     Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                     OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
 
-                    //if (DriveY.Velocity < YDriveVelocity && DriveX.Velocity < XDriveVelocity)
-                    if (Math.Abs(DriveY.Velocity) < Math.Abs(YDriveVelocity) || Math.Abs(DriveX.Velocity) < Math.Abs(XDriveVelocity))
-                    {
-                        var resultingAccelerationVector = new Vector(XDriveAcceleration, YDriveAcceleration);
-                        Robot.CurrentPosition = Vector.Add(resultingAccelerationVector, Robot.CurrentPosition);
-                        OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
-
-                        DriveY.Velocity += YDriveAcceleration;
-                        DriveX.Velocity += XDriveAcceleration;
-
-                    }
-
-                    positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
-                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
-
                     Thread.Sleep(tick);
                 }
-                
+
                 node = node.Next;                
             }            
         }
