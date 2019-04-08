@@ -6,8 +6,8 @@ namespace TRobot.Core
 {
     public interface IMovable
     {
-        uint Velocity { get; set; }
-        uint Acceleration { get; set; }
+        double Velocity { get; set; }
+        double Acceleration { get; set; }
 
         void Start();
 

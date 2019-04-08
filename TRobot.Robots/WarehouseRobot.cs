@@ -67,7 +67,7 @@ namespace TRobot.Robots
             set;
         }
 
-        public uint Acceleration
+        public double Acceleration
         {
             get;
             set;
@@ -89,7 +89,7 @@ namespace TRobot.Robots
         {
             get;
             set;
-        }
+        }        
 
         void OnPositionChanged(PositionChangedEventArguments e)
         {

@@ -26,7 +26,7 @@ namespace TRobot.Robots.ViewModels
                  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 30));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 50));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 70));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 80, 100));
 
