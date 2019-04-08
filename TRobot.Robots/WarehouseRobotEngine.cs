@@ -70,13 +70,14 @@ namespace TRobot.Robots
         {
             var robotVelocity = Robot.Velocity;
             var robotAcceleration = Robot.Acceleration;
-            var trajectory = Robot.Controller.Trajectory;
+            var trajectory = Robot.Controller.Trajectory;            
 
             Vector currentVector;            
             Point positionInCurrentVector;
             
             bool positionIsInCurrentVector = false;
 
+            int i = 1;
             for (LinkedListNode<Vector> node = trajectory.First; node != null; )
             {
                 currentVector = node.Value;
@@ -90,8 +91,8 @@ namespace TRobot.Robots
                 var XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
 
                 var YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
-                var XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
-                
+                var XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;                
+
                 while (positionIsInCurrentVector)
                 {
                     //Create separate therad for each drive + resources synchronization                    
@@ -101,29 +102,35 @@ namespace TRobot.Robots
                     DriveY.Velocity = YDriveVelocity;
                     DriveX.Velocity = XDriveVelocity;
 
-                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);                    
                     Robot.Velocity = resultingVelocityVector.Length;
 
                     if (resultingVelocityVector.Length != robotVelocity)
                     {
                         OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
-                    }
-                    
-                    positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
+                    }                                      
 
-                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
-                    if (!positionIsInCurrentVector)
+                    Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                    OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+
+                    //if (DriveY.Velocity < YDriveVelocity && DriveX.Velocity < XDriveVelocity)
+                    if (Math.Abs(DriveY.Velocity) < Math.Abs(YDriveVelocity) || Math.Abs(DriveX.Velocity) < Math.Abs(XDriveVelocity))
                     {
-                        continue;
+                        var resultingAccelerationVector = new Vector(XDriveAcceleration, YDriveAcceleration);
+                        Robot.CurrentPosition = Vector.Add(resultingAccelerationVector, Robot.CurrentPosition);
+                        OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+
+                        DriveY.Velocity += YDriveAcceleration;
+                        DriveX.Velocity += XDriveAcceleration;
+
                     }
 
-                    Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);                    
-                    OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));                                                          
+                    positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
+                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
 
                     Thread.Sleep(tick);
                 }
-
-                // Moving to next node
+                
                 node = node.Next;                
             }            
         }
@@ -158,7 +165,8 @@ namespace TRobot.Robots
             {
                 return absCurrentDriveVelocity * (-1);
             }
+
             return absCurrentDriveVelocity;
-        }
+        }        
     }
 }

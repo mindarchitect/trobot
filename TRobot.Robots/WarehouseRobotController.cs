@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TRobot.Communication.Services.Trajectory;
@@ -15,7 +14,7 @@ namespace TRobot.Robots
     internal class WarehouseRobotController: IControllable
     {
         private WarehouseRobot robot;
-        private IList<DescartesCoordinatesItem> coordinates;
+        internal IList<DescartesCoordinatesItem> Coordinates { get; set; }
         internal LinkedList<Vector> Trajectory { get; set; }
         public Vector CurrentVector { get; set; }        
 
@@ -60,7 +59,7 @@ namespace TRobot.Robots
                 throw new Exception("Trajectory coordinates should containe at least 2 coordinates");
             }
 
-            this.coordinates = coordinates;
+            this.Coordinates = coordinates;
 
             await Task.Run(() => ValidateTrajectory());
 
@@ -76,8 +75,8 @@ namespace TRobot.Robots
         public void Stop()
         {
             robot.Engine.Stop();
-            robot.CurrentPosition = coordinates[0].Point;
-            warehouseRobotMonitoringSeviceClient.UpdatePosition(robot.Id, coordinates[0].Point);
+            robot.CurrentPosition = Coordinates[0].Point;
+            warehouseRobotMonitoringSeviceClient.UpdatePosition(robot.Id, Coordinates[0].Point);
         }
 
         public void Pause()
@@ -91,11 +90,11 @@ namespace TRobot.Robots
 
             LinkedListNode<Vector> currentNode = null;
 
-            for (var i = 0; i < coordinates.Count; i++)
+            for (var i = 0; i < Coordinates.Count; i++)
             {
                 try
                 {
-                    var vector = GetTrajectoryVectors(coordinates[i].Point, coordinates[i + 1].Point);                   
+                    var vector = GetTrajectoryVectors(Coordinates[i].Point, Coordinates[i + 1].Point);                   
 
                     if (i == 0)
                     {
@@ -121,7 +120,7 @@ namespace TRobot.Robots
 
         private void ValidateTrajectory()
         {
-            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
+            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(Coordinates).ConvertAll(item => new Point
             {
                 X = item.Point.X,
                 Y = item.Point.Y
@@ -132,7 +131,7 @@ namespace TRobot.Robots
 
         private void SetupTrajectoryMonitoring()
         {
-            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(coordinates).ConvertAll(item => new Point
+            List<Point> trajectoryPoints = new List<DescartesCoordinatesItem>(Coordinates).ConvertAll(item => new Point
             {
                 X = item.Point.X,
                 Y = item.Point.Y
