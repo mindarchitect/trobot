@@ -99,8 +99,8 @@ namespace TRobot.Robots
                     //DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
                     //DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
 
-                    DriveY.Velocity = YDriveVelocity;
-                    DriveX.Velocity = XDriveVelocity;
+                    //DriveY.Velocity = YDriveVelocity;
+                    //DriveX.Velocity = XDriveVelocity;
 
                     var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                     Robot.Velocity = resultingVelocityVector.Length;
