@@ -14,7 +14,7 @@ namespace TRobot.Robots
         private Thread engineThread;
 
         private static int RefreshFactor = 60;
-        private int tick = (int)Math.Round(((double)1 / RefreshFactor) * 1000);
+        private readonly int tick = (int)Math.Round(((double)1 / RefreshFactor) * 1000);
 
         public RobotDimensionalDrive DriveX { get; set; }
         public RobotDimensionalDrive DriveY { get; set; }
@@ -45,7 +45,7 @@ namespace TRobot.Robots
 
         internal WarehouseRobotEngine(WarehouseRobot robot) : base()
         {
-            this.Robot = robot;
+            Robot = robot;
 
             DriveX = new RobotDimensionalDrive(Dimension.X);
             DriveY = new RobotDimensionalDrive(Dimension.Y);
