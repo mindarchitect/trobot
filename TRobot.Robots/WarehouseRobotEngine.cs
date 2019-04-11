@@ -22,13 +22,37 @@ namespace TRobot.Robots
         public event EventHandler<VelocityChangedEventArguments> VelocityChanged;
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
 
-        private object pobotPropertyLock = new object();
+        private object robotPropertyLock = new object();
+        private object accelerationFlagLock = new object();
+
+        private ManualResetEvent engineThreadControllingEvent = new ManualResetEvent(false);
+
+        private bool accelerating = true;
+
+        public bool Accelerating
+        {
+            get
+            {
+                lock (accelerationFlagLock)
+                {
+                    return accelerating;
+                }
+            }
+
+            set
+            {
+                lock (accelerationFlagLock)
+                {
+                    accelerating = value;
+                }
+            }
+        }
 
         public WarehouseRobot Robot
         {
             get
             {
-                lock (pobotPropertyLock)
+                lock (robotPropertyLock)
                 {
                     return robot;
                 }
@@ -36,7 +60,7 @@ namespace TRobot.Robots
 
             set
             {
-                lock (pobotPropertyLock)
+                lock (robotPropertyLock)
                 {
                     robot = value;                    
                 }
@@ -49,34 +73,59 @@ namespace TRobot.Robots
 
             DriveX = new RobotDimensionalDrive(Dimension.X);
             DriveY = new RobotDimensionalDrive(Dimension.Y);
+
+            var threadStart = new ThreadStart(SimulateRobotMovement);
+            engineThread = new Thread(threadStart);            
         }
 
         public void Start()
         {
-            var threadStart = new ThreadStart(calculateDrivesSpeed);
-            engineThread = new Thread(threadStart);
-            engineThread.Start();
+            Accelerating = true;
+            engineThreadControllingEvent.Set();
+            if (!engineThread.IsAlive)
+            {
+                engineThread.Start();
+            }            
         }
 
         public void Stop()
         {
-            if (engineThread != null)
-            {
-                engineThread.Abort();
-            }                      
+            //if (engineThread != null)
+            //{
+            //    engineThread.Abort();
+            //}                      
+
+            Accelerating = false;
         }
 
-        private void calculateDrivesSpeed()
+        public void Resume()
+        {
+            //engineThreadControllingEvent.Set();
+        }
+
+        public void Pause()
+        {
+            //engineThreadControllingEvent.Reset();
+        }
+
+        private void SimulateRobotMovement()
         {
             var robotVelocity = Robot.Velocity;
             var robotAcceleration = Robot.Acceleration;
             var trajectory = Robot.Controller.Trajectory;            
 
-            Vector currentVector;            
-            Point positionInCurrentVector;
+            Vector currentVector = new Vector();
+            Vector resultingVelocityVector = new Vector();
+            Point positionInCurrentVector = new Point(0, 0);
             
             bool positionIsInCurrentVector = false;
-            
+
+            double YDriveVelocity = 0;
+            double XDriveVelocity = 0;
+
+            double YDriveAcceleration = 0;
+            double XDriveAcceleration = 0;
+
             for (LinkedListNode<Vector> node = trajectory.First; node != null; )
             {
                 currentVector = node.Value;
@@ -86,23 +135,34 @@ namespace TRobot.Robots
 
                 var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);                
 
-                var YDriveVelocity = (robotVelocity * Math.Sin(arctangRadians)) / RefreshFactor;
-                var XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
+                YDriveVelocity = (robotVelocity * Math.Sin(arctangRadians)) / RefreshFactor;
+                XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
 
-                var YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
-                var XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
+                YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
+                XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
 
                 while (positionIsInCurrentVector)
                 {
+                    engineThreadControllingEvent.WaitOne();
+
                     //Create separate therad for each drive + resources synchronization                    
-                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
-                    DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);                    
 
-                    var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                    Robot.Velocity = resultingVelocityVector.Length;
-
-                    if (resultingVelocityVector.Length != robotVelocity)
+                    if (Accelerating)
                     {
+                        DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
+                        DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
+                    }
+                    else
+                    {
+                        DriveX.Velocity = CalculateDriveVelocity2(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
+                        DriveY.Velocity = CalculateDriveVelocity2(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);                        
+                    }                    
+
+                    resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);                    
+
+                    if (resultingVelocityVector.Length != Robot.Velocity)
+                    {
+                        Robot.Velocity = resultingVelocityVector.Length;
                         OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
                     }
 
@@ -121,13 +181,28 @@ namespace TRobot.Robots
                 }
 
                 node = node.Next;                
-            }            
-        }
+            } 
+            
+            while (resultingVelocityVector.Length != 0)
+            {                
+                DriveX.Velocity = CalculateDriveVelocity2(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
+                DriveY.Velocity = CalculateDriveVelocity2(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);                
 
-        public void Pause()
-        {
-            throw new NotImplementedException();
-        }
+                resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+
+                if (resultingVelocityVector.Length != Robot.Velocity)
+                {
+                    Robot.Velocity = resultingVelocityVector.Length;
+                    OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
+                }               
+
+                Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+
+                Thread.Sleep(tick);
+            }
+            
+        }       
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
         {
@@ -171,6 +246,30 @@ namespace TRobot.Robots
             }
 
             return absCurrentDriveVelocity;
-        }        
+        }
+
+        private double CalculateDriveVelocity2(double driveVelocity, double driveAcceleration, double currentDriveVelocity)
+        {
+            double absDriveVelocity = Math.Abs(driveVelocity);
+            double absCurrentDriveVelocity = Math.Abs(currentDriveVelocity);
+            double absDriveAcceleration = Math.Abs(driveAcceleration);
+
+            if (absCurrentDriveVelocity > 0)
+            {
+                absCurrentDriveVelocity -= absDriveAcceleration;
+
+                if (absCurrentDriveVelocity < 0)
+                {
+                    absCurrentDriveVelocity = 0;
+                }
+            }            
+
+            if (Math.Sign(driveVelocity) == -1 && Math.Sign(driveAcceleration) == -1)
+            {
+                return absCurrentDriveVelocity * (-1);
+            }
+
+            return absCurrentDriveVelocity;
+        }
     }
 }

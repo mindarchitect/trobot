@@ -74,9 +74,7 @@ namespace TRobot.Robots
 
         public void Stop()
         {
-            robot.Engine.Stop();
-            robot.CurrentPosition = Coordinates[0].Point;
-            warehouseRobotMonitoringSeviceClient.UpdatePosition(robot.Id, Coordinates[0].Point);
+            robot.Engine.Stop();            
         }
 
         public void Pause()
