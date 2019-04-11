@@ -76,8 +76,7 @@ namespace TRobot.Robots
             Point positionInCurrentVector;
             
             bool positionIsInCurrentVector = false;
-
-            int i = 1;
+            
             for (LinkedListNode<Vector> node = trajectory.First; node != null; )
             {
                 currentVector = node.Value;
@@ -96,11 +95,8 @@ namespace TRobot.Robots
                 while (positionIsInCurrentVector)
                 {
                     //Create separate therad for each drive + resources synchronization                    
-                    //DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
-                    //DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
-
-                    //DriveY.Velocity = YDriveVelocity;
-                    //DriveX.Velocity = XDriveVelocity;
+                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
+                    DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);                    
 
                     var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                     Robot.Velocity = resultingVelocityVector.Length;
@@ -152,6 +148,21 @@ namespace TRobot.Robots
             if (absCurrentDriveVelocity < absDriveVelocity)
             {
                 absCurrentDriveVelocity += absDriveAcceleration;
+
+                if (absCurrentDriveVelocity > absDriveVelocity)
+                {
+                    absCurrentDriveVelocity = absDriveVelocity;
+                }
+            }
+
+            if (absCurrentDriveVelocity > absDriveVelocity)
+            {
+                absCurrentDriveVelocity -= absDriveAcceleration;
+
+                if (absCurrentDriveVelocity < absDriveVelocity)
+                {
+                    absCurrentDriveVelocity = absDriveVelocity;
+                }
             }
 
             if (Math.Sign(driveVelocity) == -1 && Math.Sign(driveAcceleration) == -1)
