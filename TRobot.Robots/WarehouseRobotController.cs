@@ -79,7 +79,7 @@ namespace TRobot.Robots
 
         public void Pause()
         {
-            throw new NotImplementedException();
+            robot.Engine.Pause();
         }
 
         internal void BuildTrajectory()

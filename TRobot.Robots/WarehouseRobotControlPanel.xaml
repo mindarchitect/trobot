@@ -13,6 +13,22 @@
         >  
 
     <Window.Resources>
+        <Style TargetType="{x:Type ToggleButton}"
+           x:Key="ToggleButtonStyle">            
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Content" Value="Pause" />                    
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Content" Value="Start" />                    
+                </Trigger>                
+            </Style.Triggers>
+            <Setter Property="Margin" Value="5,5,5,5" />
+            <Setter Property="Padding" Value="5,5,5,5" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="MaxWidth" Value="200" />
+        </Style>        
+
         <Style x:Key="ReadOnlyText" TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="0,5,5,0" />
             <Setter Property="IsReadOnly" Value="True" />
@@ -68,7 +84,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <!--<StateToButtonContentConverter x:Key="StateToButtonContentConverter" />-->
+
         <DataTemplate x:Key="DestinationPointTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -115,7 +133,8 @@
             <!-- Left panel setting grid -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -124,9 +143,9 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
-                    Velocity (points/sec)
+                    Velocity
                 </Label>
-                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Left">
+                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch">
                     <TextBox.Text>
                         <Binding Path="Velocity" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -135,10 +154,13 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
-                    Acceleration (points/sec2)
+                <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
+                    points/sec
                 </Label>
-                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Left">
+                <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
+                    Acceleration
+                </Label>
+                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch">
                     <TextBox.Text>
                         <Binding Path="Acceleration" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -146,25 +168,23 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
-                </TextBox>                
+                </TextBox>
+                <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
+                    points/sec2
+                </Label>
             </Grid>           
         </GroupBox>
 
         <!-- Function Buttons -->
-        <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" >
-            <!-- Add destination point button -->
-            <Button Style="{StaticResource Button}" Command="{Binding Path=Start}" IsEnabled="{Binding Path=TrajectoryValidated}">
-                Start
-                <Button.ToolTip>
-                    <TextBlock>Start</TextBlock>
-                </Button.ToolTip>
-            </Button>
+        <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" >                       
+            <ToggleButton IsChecked="False" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartPause}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
+            
             <Button Style="{StaticResource Button}" Command="{Binding Path=Stop}" IsEnabled="{Binding Path=TrajectoryValidated}" >
                 Stop
                 <Button.ToolTip>
                     <TextBlock>Stop</TextBlock>
                 </Button.ToolTip>
-            </Button>            
+            </Button>
             <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" >
                 Upload settings
                 <Button.ToolTip>

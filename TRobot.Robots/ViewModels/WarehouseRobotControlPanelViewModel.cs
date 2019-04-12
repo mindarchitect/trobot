@@ -11,13 +11,13 @@ namespace TRobot.Robots.ViewModels
 {
     public class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
-        public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; private set; }
+        public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
         public uint Velocity { get; set; }
         public uint Acceleration { get; set; }
 
         public WarehouseRobot Robot { get; private set; }
 
-        private bool trajectoryValidated;        
+        private bool trajectoryValidated;                                          
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -64,19 +64,14 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        private ICommand start;
+        private ICommand startPause;
 
-        public ICommand Start
+        public ICommand StartPause
         {
             get
             {
-                if (start == null)
-                {
-                    start = new RelayCommand<object>(
-                        param => StartRobot()
-                    );
-                }
-                return start;
+                startPause = new RelayCommand<object>(StartPauseRobot);                                
+                return startPause;
             }
         }
 
@@ -94,7 +89,7 @@ namespace TRobot.Robots.ViewModels
                 }
                 return stop;
             }
-        }
+        }       
 
         private void UploadRobotSettings()
         {
@@ -113,9 +108,26 @@ namespace TRobot.Robots.ViewModels
             Robot.Controller.Stop();            
         }
 
+        private void PauseRobot()
+        {
+            Robot.Controller.Pause();
+        }
+
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             Robot.Controller.Stop();
+        }
+
+        private void StartPauseRobot(object state)
+        {
+            if ((bool)state)
+            {
+                StartRobot();
+            }
+            else
+            {
+                PauseRobot();
+            }
         }
 
         public bool TrajectoryValidated

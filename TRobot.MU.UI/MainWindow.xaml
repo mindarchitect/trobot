@@ -21,7 +21,7 @@
         <DockPanel Grid.Column="0" >
             <!-- Canvas Containing the robot and the path it follows during animation -->
             <Canvas Background="{StaticResource GridBrushResource}" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ActualWidth, ElementName=parentElementName}" Height="{Binding ActualHeight, ElementName=parentElementName}">
-                <ItemsControl ItemsSource="{Binding Path=Robots, Mode=OneWay}">
+                <ItemsControl ItemsSource="{Binding Path=RobotMonitoringItems, Mode=OneWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas />
@@ -72,7 +72,7 @@
             </Canvas>
         </DockPanel>       
         <GroupBox Header="Robots" Grid.Column="1" >
-            <ListView Margin="10" ItemsSource="{Binding Path=Robots}">
+            <ListView Margin="10" ItemsSource="{Binding Path=RobotMonitoringItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>

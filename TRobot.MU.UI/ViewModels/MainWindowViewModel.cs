@@ -6,19 +6,21 @@ using TRobot.Communication.Events;
 using TRobot.ECU.UI.ViewModels;
 using TRobot.MU.Service;
 using TRobot.MU.UI.Models;
+using System.Linq;
+using System;
 
 namespace TRobot.MU.UI.ViewModels
 {
     public class MainWindowViewModel: BaseViewModel
     {
-        public ObservableCollection<RobotMonitoringItem> Robots { get; private set; }
+        public ObservableCollection<RobotMonitoringItem> RobotMonitoringItems { get; private set; }
 
         private RobotDescartesTrajectoryMonitoringServiceHost trajectoryMonitoringServiceHost;
 
         public MainWindowViewModel()
         {
             trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
-            Robots = new ObservableCollection<RobotMonitoringItem>();
+            RobotMonitoringItems = new ObservableCollection<RobotMonitoringItem>();
 
             trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
             trajectoryMonitoringServiceHost.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
@@ -26,29 +28,41 @@ namespace TRobot.MU.UI.ViewModels
 
         private void OnServiceRobotPositionUpdated(object sender, RobotPositionUpdatedEventArguments e)
         {
-            for (var i = 0; i < Robots.Count; i++)
-            {
-                var robot = Robots[i];
+            var robotId = e.RobotDescartesTrajectoryPosition.RobotId;
+            var item = RobotMonitoringItems.FirstOrDefault(robotMonitoringItem => robotMonitoringItem.Guid == robotId);
 
-                if (robot.Guid == e.RobotDescartesTrajectoryPosition.RobotId)
-                {
-                    robot.CurrentPosition = e.RobotDescartesTrajectoryPosition.CurrentPosition;
-                }
-            }
+            if (item != null)
+            {
+                item.CurrentPosition = e.RobotDescartesTrajectoryPosition.CurrentPosition;
+            }            
         }
 
         private void OnServiceRobotTrajectorySet(object sender, TrajectorySetEventArguments e)
-        {            
-            var robotMonitoringItem1 = new RobotMonitoringItem();
+        {
+            var robotId = e.RobotDescartesTrajectory.RobotId;
+            var item = RobotMonitoringItems.FirstOrDefault(robotMonitoringItem => robotMonitoringItem.Guid == robotId);
 
-            robotMonitoringItem1.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
-            robotMonitoringItem1.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);
-            robotMonitoringItem1.Color = Colors.DarkBlue;
-            robotMonitoringItem1.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
-            robotMonitoringItem1.Guid = e.RobotDescartesTrajectory.RobotId;
-            robotMonitoringItem1.Title = e.RobotDescartesTrajectory.RobotTitle;
+            if (item != null)
+            {
+                item.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
+                item.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);                
+                item.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
+                item.Title = e.RobotDescartesTrajectory.RobotTitle;                
+            }
+            else 
+            {
+                var random = new Random();
+                var robotMonitoringItem = new RobotMonitoringItem();
 
-            Robots.Add(robotMonitoringItem1);
+                robotMonitoringItem.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
+                robotMonitoringItem.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);
+                robotMonitoringItem.Color = Color.FromRgb(Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)));
+                robotMonitoringItem.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
+                robotMonitoringItem.Guid = e.RobotDescartesTrajectory.RobotId;
+                robotMonitoringItem.Title = e.RobotDescartesTrajectory.RobotTitle;
+
+                RobotMonitoringItems.Add(robotMonitoringItem);
+            }            
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)

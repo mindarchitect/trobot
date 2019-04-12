@@ -89,23 +89,18 @@ namespace TRobot.Robots
         }
 
         public void Stop()
-        {
-            //if (engineThread != null)
-            //{
-            //    engineThread.Abort();
-            //}                      
-
+        {                               
             Accelerating = false;
         }
 
         public void Resume()
         {
-            //engineThreadControllingEvent.Set();
+            engineThreadControllingEvent.Set();
         }
 
         public void Pause()
         {
-            //engineThreadControllingEvent.Reset();
+            Accelerating = false;
         }              
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
