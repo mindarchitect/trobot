@@ -77,9 +77,9 @@ namespace TRobot.Robots
             robot.Engine.Stop();            
         }
 
-        public void Pause()
+        public void Reset()
         {
-            robot.Engine.Pause();
+            robot.Engine.Reset();
         }
 
         internal void BuildTrajectory()

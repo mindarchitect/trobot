@@ -5,6 +5,7 @@ using System.Windows;
 using TRobot.Core;
 using TRobot.Core.Enums;
 using TRobot.Core.Robot.Events;
+using System.Linq;
 
 namespace TRobot.Robots
 {
@@ -88,9 +89,15 @@ namespace TRobot.Robots
             }            
         }
 
-        public void Stop()
-        {                               
-            Accelerating = false;
+        public void Reset()
+        {
+            engineThread.Abort();
+            DriveX.Velocity = 0;
+            DriveY.Velocity = 0;
+
+            Robot.CurrentPosition = robot.Controller.Coordinates.First().Point;
+            OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+
         }
 
         public void Resume()
@@ -98,7 +105,7 @@ namespace TRobot.Robots
             engineThreadControllingEvent.Set();
         }
 
-        public void Pause()
+        public void Stop()
         {
             Accelerating = false;
         }              
@@ -260,6 +267,6 @@ namespace TRobot.Robots
                 Robot.Velocity = resultingVelocityVector.Length;
                 OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
             }
-        }
+        }        
     }
 }

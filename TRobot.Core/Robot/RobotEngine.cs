@@ -23,11 +23,6 @@ namespace TRobot.Core
         public virtual void Stop()
         {
             Drives.ForEach((drive) => drive.Stop());
-        }
-
-        public virtual void Pause()
-        {
-            Drives.ForEach((drive) => drive.Pause());
-        }
+        }        
     }
 }

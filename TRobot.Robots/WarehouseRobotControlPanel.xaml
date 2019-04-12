@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TRobot.Robots"
         xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
         xmlns:viewmodels="clr-namespace:TRobot.Robots.ViewModels"
+        xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Warehouse robot control panel"
@@ -17,7 +18,7 @@
            x:Key="ToggleButtonStyle">            
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Content" Value="Pause" />                    
+                    <Setter Property="Content" Value="Stop" />                    
                 </Trigger>
                 <Trigger Property="IsChecked" Value="False">
                     <Setter Property="Content" Value="Start" />                    
@@ -86,6 +87,7 @@
         </Style>
 
         <!--<StateToButtonContentConverter x:Key="StateToButtonContentConverter" />-->
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
         <DataTemplate x:Key="DestinationPointTemplate">
             <Grid>
@@ -177,15 +179,15 @@
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" >                       
-            <ToggleButton IsChecked="False" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartPause}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
+            <ToggleButton IsChecked="False" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStop}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
             
-            <Button Style="{StaticResource Button}" Command="{Binding Path=Stop}" IsEnabled="{Binding Path=TrajectoryValidated}" >
-                Stop
+            <Button Style="{StaticResource Button}" Command="{Binding Path=Reset}" IsEnabled="{Binding Path=TrajectoryValidated}" >
+                Reset
                 <Button.ToolTip>
-                    <TextBlock>Stop</TextBlock>
+                    <TextBlock>Reset</TextBlock>
                 </Button.ToolTip>
             </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" >
+            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" IsEnabled="{Binding Path=RobotIsStartedOrStoped, Converter={StaticResource InverseBooleanConverter}}" >
                 Upload settings
                 <Button.ToolTip>
                     <TextBlock>Upload settings</TextBlock>

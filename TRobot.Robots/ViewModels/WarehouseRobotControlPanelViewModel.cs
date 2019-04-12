@@ -13,11 +13,12 @@ namespace TRobot.Robots.ViewModels
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
         public uint Velocity { get; set; }
-        public uint Acceleration { get; set; }
+        public uint Acceleration { get; set; }       
 
         public WarehouseRobot Robot { get; private set; }
 
-        private bool trajectoryValidated;                                          
+        private bool trajectoryValidated;
+        private bool robotIsStartedOrStopped;
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -64,30 +65,30 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        private ICommand startPause;
+        private ICommand startStop;
 
-        public ICommand StartPause
+        public ICommand StartStop
         {
             get
             {
-                startPause = new RelayCommand<object>(StartPauseRobot);                                
-                return startPause;
+                startStop = new RelayCommand<object>(StartStopRobot);                                
+                return startStop;
             }
         }
 
-        private ICommand stop;
+        private ICommand reset;
 
-        public ICommand Stop
+        public ICommand Reset
         {
             get
             {
-                if (stop == null)
+                if (reset == null)
                 {
-                    stop = new RelayCommand<object>(
-                        param => StopRobot()
+                    reset = new RelayCommand<object>(
+                        param => ResetRobot()
                     );
                 }
-                return stop;
+                return reset;
             }
         }       
 
@@ -101,32 +102,36 @@ namespace TRobot.Robots.ViewModels
         private void StartRobot()
         {
             Robot.Controller.Start();
+            RobotIsStartedOrStoped = true;
         }
 
         private void StopRobot()
-        {
-            Robot.Controller.Stop();            
+        {            
+            Robot.Controller.Stop();
+            RobotIsStartedOrStoped = true;
         }
 
-        private void PauseRobot()
+        private void ResetRobot()
         {
-            Robot.Controller.Pause();
+            StopRobot();
+            Robot.Controller.Reset();
+            RobotIsStartedOrStoped = false;
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            Robot.Controller.Stop();
+            StopRobot();
         }
 
-        private void StartPauseRobot(object state)
+        private void StartStopRobot(object state)
         {
             if ((bool)state)
             {
-                StartRobot();
+                StartRobot();                
             }
             else
             {
-                PauseRobot();
+                StopRobot();                
             }
         }
 
@@ -141,6 +146,20 @@ namespace TRobot.Robots.ViewModels
             {
                 trajectoryValidated = value;
                 OnPropertyChanged("TrajectoryValidated");
+            }
+        }
+
+        public bool RobotIsStartedOrStoped
+        {
+            get
+            {
+                return robotIsStartedOrStopped;
+            }
+
+            set
+            {
+                robotIsStartedOrStopped = value;
+                OnPropertyChanged("RobotIsStartedOrPaused");
             }
         }
     }
