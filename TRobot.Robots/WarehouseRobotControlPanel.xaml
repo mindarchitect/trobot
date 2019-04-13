@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TRobot.Robots"
+        xmlns:core="clr-namespace:TRobot.Core.Enums;assembly=TRobot.Core"
         xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
         xmlns:viewmodels="clr-namespace:TRobot.Robots.ViewModels"
         xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
@@ -85,9 +86,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!--<StateToButtonContentConverter x:Key="StateToButtonContentConverter" />-->
+        
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:EnumBooleanConverter x:Key="EnumBooleanConverter" />
 
         <DataTemplate x:Key="DestinationPointTemplate">
             <Grid>
@@ -137,7 +138,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -147,7 +148,7 @@
                 <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
                     Velocity
                 </Label>
-                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch">
+                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
                     <TextBox.Text>
                         <Binding Path="Velocity" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -162,7 +163,7 @@
                 <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
                     Acceleration
                 </Label>
-                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch">
+                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
                     <TextBox.Text>
                         <Binding Path="Acceleration" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -178,16 +179,15 @@
         </GroupBox>
 
         <!-- Function Buttons -->
-        <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" >                       
-            <ToggleButton IsChecked="False" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStop}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
-            
+        <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" HorizontalAlignment="Left">
+            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStop}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />            
             <Button Style="{StaticResource Button}" Command="{Binding Path=Reset}" IsEnabled="{Binding Path=TrajectoryValidated}" >
                 Reset
                 <Button.ToolTip>
                     <TextBlock>Reset</TextBlock>
                 </Button.ToolTip>
             </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" IsEnabled="{Binding Path=RobotIsStartedOrStoped, Converter={StaticResource InverseBooleanConverter}}" >
+            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
                 Upload settings
                 <Button.ToolTip>
                     <TextBlock>Upload settings</TextBlock>
@@ -196,7 +196,7 @@
         </StackPanel>
 
         <!-- Destination points list header -->
-        <Grid Grid.Row="0" Grid.Column="1" Height="40" VerticalAlignment="Top" Style="{StaticResource DestinationPointItemsHeader}">
+        <!--<Grid Grid.Row="0" Grid.Column="1" Height="40" VerticalAlignment="Top" Style="{StaticResource DestinationPointItemsHeader}">
             <Grid.ToolTip>
                 <TextBlock>Trajectory points</TextBlock>
             </Grid.ToolTip>
@@ -213,7 +213,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-             <!--Destination points column header--> 
+             --><!--Destination points column header--><!-- 
             <TextBlock Style="{StaticResource TableLabel}" Grid.Column="0">
                 Step
                 <TextBlock.ToolTip>
@@ -221,7 +221,7 @@
                 </TextBlock.ToolTip>
             </TextBlock>
 
-             <!--Description Column Header--> 
+             --><!--Description Column Header--><!-- 
             <TextBlock Style="{StaticResource TableLabel}" Grid.Column="1">
                 X
                 <TextBlock.ToolTip>
@@ -229,7 +229,7 @@
                 </TextBlock.ToolTip>
             </TextBlock>
 
-             <!--Y Point--> 
+             --><!--Y Point--><!-- 
             <TextBlock Style="{StaticResource TableLabel}" Grid.Column="2">
                 Y
                 <TextBlock.ToolTip>
@@ -241,40 +241,20 @@
                         Style="{StaticResource DestinationPointItems}"
                         Grid.Row="0" Grid.Column="1"
                         ItemTemplate="{StaticResource DestinationPointTemplate}"
-                        ItemsSource="{Binding Path=TrajectoryCoordinates}" />
+                        ItemsSource="{Binding Path=TrajectoryCoordinates}" />-->
 
-        <!--<DataGrid Name="Trajectory" IsReadOnly="False" AutoGenerateColumns="False" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Path=TrajectoryCoordinates}" >
+        <DataGrid Name="Trajectory" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="Horizontal" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserResizeRows="False" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Step" Binding="{Binding CompanyName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="X" Binding="{Binding FirstName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Y" Binding="{Binding LastName}"></DataGridTextColumn>
-            </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Email: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding EmailAddress}" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Phone: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Phone}" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="12" Text="Sales Person: " VerticalAlignment="Center" />
-                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding SalesPerson}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
-        </DataGrid>-->
+                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding Point.X, Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Point.Y, Mode=TwoWay}"></DataGridTextColumn>
+            </DataGrid.Columns>            
+        </DataGrid>
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" >
             <!-- Add destination point button -->
-            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPoint}">
+            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPoint}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
                 Add destination point
                 <Button.ToolTip>
                     <TextBlock>Add destination point</TextBlock>

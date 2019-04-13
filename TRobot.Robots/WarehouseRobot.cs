@@ -61,6 +61,12 @@ namespace TRobot.Robots
             set;
         }
 
+        public double CurrentVelocity
+        {
+            get;
+            set;
+        }     
+
         public double Velocity
         {
             get;

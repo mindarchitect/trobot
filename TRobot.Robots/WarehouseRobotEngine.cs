@@ -83,32 +83,37 @@ namespace TRobot.Robots
             Accelerating = true;
             engineThreadControllingEvent.Set();
 
-            if (!engineThread.IsAlive)
+            switch (engineThread.ThreadState)
             {
-                engineThread.Start();
+                case ThreadState.Unstarted:
+                {
+                    engineThread.Start();
+                    break;
+                }
+                case ThreadState.Aborted:
+                {
+                    var threadStart = new ThreadStart(SimulateRobotMovement);
+                    engineThread = new Thread(threadStart);
+                    engineThread.Start();
+                    break;
+                 }
             }            
-        }
-
-        public void Reset()
-        {
-            engineThread.Abort();
-            DriveX.Velocity = 0;
-            DriveY.Velocity = 0;
-
-            Robot.CurrentPosition = robot.Controller.Coordinates.First().Point;
-            OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
-
-        }
-
-        public void Resume()
-        {
-            engineThreadControllingEvent.Set();
         }
 
         public void Stop()
         {
             Accelerating = false;
-        }              
+        }
+
+        public void Reset()
+        {
+            engineThread.Abort();            
+        }
+
+        public void Resume()
+        {
+            engineThreadControllingEvent.Set();
+        }                     
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
         {
@@ -138,65 +143,79 @@ namespace TRobot.Robots
             double YDriveAcceleration = 0;
             double XDriveAcceleration = 0;
 
-            for (LinkedListNode<Vector> node = trajectory.First; node != null;)
-            {
-                currentVector = node.Value;
-
-                positionInCurrentVector = new Point(0, 0);
-                positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
-
-                var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);
-
-                YDriveVelocity = (robotVelocity * Math.Sin(arctangRadians)) / RefreshFactor;
-                XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
-
-                YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
-                XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
-
-                while (positionIsInCurrentVector)
+            try
+            {              
+                for (LinkedListNode<Vector> node = trajectory.First; node != null;)
                 {
-                    engineThreadControllingEvent.WaitOne();
+                    currentVector = node.Value;
 
-                    //Create separate therad for each drive + resources synchronization                                       
+                    positionInCurrentVector = new Point(0, 0);
+                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
 
-                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
+                    var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);
+
+                    YDriveVelocity = (robotVelocity * Math.Sin(arctangRadians)) / RefreshFactor;
+                    XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
+
+                    YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
+                    XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
+
+                    while (positionIsInCurrentVector)
+                    {
+                        engineThreadControllingEvent.WaitOne();
+
+                        //Create separate therad for each drive + resources synchronization                                       
+
+                        DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
+                        DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
+
+                        resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+                        UpdateRobotVelocity(resultingVelocityVector);
+
+                        positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
+
+                        positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
+                        if (!positionIsInCurrentVector)
+                        {
+                            continue;
+                        }
+
+                        Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                        OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+
+                        Thread.Sleep(tick);
+                    }
+
+                    node = node.Next;
+                }
+
+                Accelerating = false;
+
+                while (resultingVelocityVector.Length != 0)
+                {
                     DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
+                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
 
                     resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                     UpdateRobotVelocity(resultingVelocityVector);
-
-                    positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
-
-                    positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
-                    if (!positionIsInCurrentVector)
-                    {
-                        continue;
-                    }                    
 
                     Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                     OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
 
                     Thread.Sleep(tick);
                 }
-
-                node = node.Next;
             }
-
-            Accelerating = false;
-
-            while (resultingVelocityVector.Length != 0)
+            catch (ThreadAbortException)
             {
-                DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
-                DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
+                DriveX.Velocity = 0;
+                DriveY.Velocity = 0;
+
+                Robot.CurrentPosition = robot.Controller.Coordinates.First().Point;
+                OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
 
                 resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
                 UpdateRobotVelocity(resultingVelocityVector);
-
-                Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
-                OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
-
-                Thread.Sleep(tick);
-            }
+            }            
         }
 
         private double CalculateDriveVelocity(double driveVelocity, double driveAcceleration, double currentDriveVelocity)

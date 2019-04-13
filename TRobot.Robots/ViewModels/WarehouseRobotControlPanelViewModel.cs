@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
+using TRobot.Core.Enums;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.Models;
 using TRobot.ECU.UI.ViewModels;
@@ -18,7 +19,7 @@ namespace TRobot.Robots.ViewModels
         public WarehouseRobot Robot { get; private set; }
 
         private bool trajectoryValidated;
-        private bool robotIsStartedOrStopped;
+        private RobotState robotState;
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -33,6 +34,8 @@ namespace TRobot.Robots.ViewModels
 
             Velocity = 30;
             Acceleration = 1;
+
+            RobotState = Robot.Controller.State;
         }
 
         private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
@@ -102,20 +105,20 @@ namespace TRobot.Robots.ViewModels
         private void StartRobot()
         {
             Robot.Controller.Start();
-            RobotIsStartedOrStoped = true;
+            RobotState = Robot.Controller.State;
         }
 
         private void StopRobot()
         {            
             Robot.Controller.Stop();
-            RobotIsStartedOrStoped = true;
+            RobotState = Robot.Controller.State;
         }
 
         private void ResetRobot()
         {
             StopRobot();
             Robot.Controller.Reset();
-            RobotIsStartedOrStoped = false;
+            RobotState = Robot.Controller.State;
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
@@ -149,17 +152,17 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        public bool RobotIsStartedOrStoped
+        public RobotState RobotState
         {
             get
             {
-                return robotIsStartedOrStopped;
+                return robotState;
             }
 
             set
             {
-                robotIsStartedOrStopped = value;
-                OnPropertyChanged("RobotIsStartedOrPaused");
+                robotState = value;
+                OnPropertyChanged("RobotState");
             }
         }
     }

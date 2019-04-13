@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
+using TRobot.Core.Enums;
 using TRobot.Core.Robot.Events;
 using TRobot.ECU.Models;
 using TRobot.Robots.Services;
@@ -16,13 +17,13 @@ namespace TRobot.Robots
         private WarehouseRobot robot;
         internal IList<DescartesCoordinatesItem> Coordinates { get; set; }
         internal LinkedList<Vector> Trajectory { get; set; }
-        public Vector CurrentVector { get; set; }        
+        public RobotState State { get; set; } = RobotState.Reset;
 
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
-        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;    
-        
+        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;        
+
         internal WarehouseRobotController(WarehouseRobot robot)
         {
             this.robot = robot;
@@ -59,7 +60,7 @@ namespace TRobot.Robots
                 throw new Exception("Trajectory coordinates should containe at least 2 coordinates");
             }
 
-            this.Coordinates = coordinates;
+            Coordinates = coordinates;
 
             await Task.Run(() => ValidateTrajectory());
 
@@ -70,16 +71,19 @@ namespace TRobot.Robots
         public void Start()
         {
             robot.Engine.Start();
+            State = RobotState.Started;
         }
 
         public void Stop()
         {
-            robot.Engine.Stop();            
+            robot.Engine.Stop();
+            State = RobotState.Stopped;
         }
 
         public void Reset()
         {
             robot.Engine.Reset();
+            State = RobotState.Reset;
         }
 
         internal void BuildTrajectory()
@@ -98,7 +102,6 @@ namespace TRobot.Robots
                     {
                         currentNode = new LinkedListNode<Vector>(vector);
                         Trajectory.AddFirst(currentNode);
-                        CurrentVector = vector;
                     }
                     else
                     {
