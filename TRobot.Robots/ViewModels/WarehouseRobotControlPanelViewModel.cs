@@ -13,6 +13,9 @@ namespace TRobot.Robots.ViewModels
     public class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
+
+        private DescartesCoordinatesItem selectedTrajectoryCoordinatesItem;       
+
         public uint Velocity { get; set; }
         public uint Acceleration { get; set; }       
 
@@ -20,6 +23,11 @@ namespace TRobot.Robots.ViewModels
 
         private bool trajectoryValidated;
         private RobotState robotState;
+
+        private ICommand startStopCommand;
+        private ICommand uploadSettingsCommand;
+        private ICommand resetCommand;
+        private ICommand deleteSelectedTrajectoryCoordinatesItemCommand;
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -51,75 +59,52 @@ namespace TRobot.Robots.ViewModels
                 MessageBox.Show(string.Format("Trajectroy validation error: {0}", e.ValidationMessage), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
-
-        private ICommand uploadSettings;
-
+        
         public ICommand UploadSettings
         {
             get
             {
-                if (uploadSettings == null)
+                if (uploadSettingsCommand == null)
                 {
-                    uploadSettings = new RelayCommand<object>(
-                        param => UploadRobotSettings()
-                    );
+                    uploadSettingsCommand = new RelayCommand<object>(param => UploadRobotSettings());
                 }
-                return uploadSettings;
+                return uploadSettingsCommand;
             }
-        }
+        }        
 
-        private ICommand startStop;
-
-        public ICommand StartStop
+        public ICommand StartStopCommnad
         {
             get
             {
-                startStop = new RelayCommand<object>(StartStopRobot);                                
-                return startStop;
+                startStopCommand = new RelayCommand<object>(StartStopRobot);                                
+                return startStopCommand;
             }
-        }
+        }        
 
-        private ICommand reset;
-
-        public ICommand Reset
+        public ICommand ResetCommand
         {
             get
             {
-                if (reset == null)
+                if (resetCommand == null)
                 {
-                    reset = new RelayCommand<object>(
-                        param => ResetRobot()
-                    );
+                    resetCommand = new RelayCommand<object>(param => ResetRobot());
                 }
-                return reset;
+                return resetCommand;
             }
-        }       
-
-        private void UploadRobotSettings()
+        }
+        
+        public ICommand DeleteSelectedTrajectoryCoordinatesItemCommand
         {
-            Robot.UploadTrajectory(TrajectoryCoordinates);
-            Robot.Acceleration = Acceleration;
-            Robot.Velocity = Velocity;
+            get
+            {
+                if (deleteSelectedTrajectoryCoordinatesItemCommand == null)
+                {
+                    deleteSelectedTrajectoryCoordinatesItemCommand = new RelayCommand<object>(param => DeleteTrajectoryCoordinatesItem((DescartesCoordinatesItem)param), param => CanDeleteSelectedTrajectoryCoordinatesItem);
+                }
+                return deleteSelectedTrajectoryCoordinatesItemCommand;
+            }
         }
 
-        private void StartRobot()
-        {
-            Robot.Controller.Start();
-            RobotState = Robot.Controller.State;
-        }
-
-        private void StopRobot()
-        {            
-            Robot.Controller.Stop();
-            RobotState = Robot.Controller.State;
-        }
-
-        private void ResetRobot()
-        {
-            StopRobot();
-            Robot.Controller.Reset();
-            RobotState = Robot.Controller.State;
-        }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
@@ -164,6 +149,52 @@ namespace TRobot.Robots.ViewModels
                 robotState = value;
                 OnPropertyChanged("RobotState");
             }
+        }
+
+        public DescartesCoordinatesItem SelectedTrajectoryCoordinatesItem
+        {
+            get { return selectedTrajectoryCoordinatesItem; }
+            set
+            {
+                selectedTrajectoryCoordinatesItem = value;
+                OnPropertyChanged("SelectedTrajectoryCoordinatesItem");
+            }
+        }
+
+        private bool CanDeleteSelectedTrajectoryCoordinatesItem
+        {
+            get { return SelectedTrajectoryCoordinatesItem != null; }
+        }
+
+        private void UploadRobotSettings()
+        {
+            Robot.UploadTrajectory(TrajectoryCoordinates);
+            Robot.Acceleration = Acceleration;
+            Robot.Velocity = Velocity;
+        }
+
+        private void StartRobot()
+        {
+            Robot.Controller.Start();
+            RobotState = Robot.Controller.State;
+        }
+
+        private void StopRobot()
+        {
+            Robot.Controller.Stop();
+            RobotState = Robot.Controller.State;
+        }
+
+        private void ResetRobot()
+        {
+            StopRobot();
+            Robot.Controller.Reset();
+            RobotState = Robot.Controller.State;
+        }
+
+        private void DeleteTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
+        {
+            TrajectoryCoordinates.Remove(descartesCoordinatesItem);
         }
     }
 }

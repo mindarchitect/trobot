@@ -17,6 +17,7 @@ namespace TRobot.Robots
         private WarehouseRobot robot;
         internal IList<DescartesCoordinatesItem> Coordinates { get; set; }
         internal LinkedList<Vector> Trajectory { get; set; }
+
         public RobotState State { get; set; } = RobotState.Reset;
 
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
