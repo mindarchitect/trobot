@@ -244,7 +244,7 @@
                         ItemTemplate="{StaticResource DestinationPointTemplate}"
                         ItemsSource="{Binding Path=TrajectoryCoordinates}" />-->
 
-        <DataGrid Name="Trajectory" AutoGenerateColumns="False" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="Horizontal" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserResizeRows="False" Padding="5" Margin="5" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
+        <DataGrid Name="Trajectory" RowHeaderWidth="0" AutoGenerateColumns="False" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="None" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserResizeRows="False" Margin="5" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding Point.X, Mode=TwoWay}"></DataGridTextColumn>
@@ -255,6 +255,7 @@
                             <Button Content="Delete" 
                                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.DeleteSelectedTrajectoryCoordinatesItemCommand}"
                                     CommandParameter="{Binding}"
+                                    IsEnabled="True"
                             />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
