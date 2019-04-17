@@ -14,12 +14,9 @@ namespace TRobot.Robots.ViewModels
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
 
-        private DescartesCoordinatesItem selectedTrajectoryCoordinatesItem;       
+        private DescartesCoordinatesItem selectedTrajectoryCoordinatesItem;               
 
-        public uint Velocity { get; set; }
-        public uint Acceleration { get; set; }       
-
-        public WarehouseRobot Robot { get; private set; }
+        public WarehouseRobot Robot { get; set; }
 
         private bool trajectoryValidated;
         private RobotState robotState;
@@ -28,6 +25,9 @@ namespace TRobot.Robots.ViewModels
         private ICommand uploadSettingsCommand;
         private ICommand resetCommand;
         private ICommand deleteSelectedTrajectoryCoordinatesItemCommand;
+
+        private uint velocity;
+        private uint acceleration;
 
         public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -39,10 +39,10 @@ namespace TRobot.Robots.ViewModels
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 80));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 10));
-            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 200));
+            TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 200));            
 
-            Robot.Settings.Velocity = 30;
-            Robot.Settings.Acceleration = 1;
+            Velocity = 30;
+            Acceleration = 1;
 
             RobotState = Robot.Controller.State;
         }
@@ -61,7 +61,7 @@ namespace TRobot.Robots.ViewModels
             }
         }
         
-        public ICommand UploadSettings
+        public ICommand UploadSettingsCommand
         {
             get
             {
@@ -73,7 +73,7 @@ namespace TRobot.Robots.ViewModels
             }
         }        
 
-        public ICommand StartStopCommnad
+        public ICommand StartStopCommand
         {
             get
             {
@@ -154,11 +154,44 @@ namespace TRobot.Robots.ViewModels
 
         public DescartesCoordinatesItem SelectedTrajectoryCoordinatesItem
         {
-            get { return selectedTrajectoryCoordinatesItem; }
+            get
+            {
+                return selectedTrajectoryCoordinatesItem;
+            }
             set
             {
                 selectedTrajectoryCoordinatesItem = value;
                 OnPropertyChanged("SelectedTrajectoryCoordinatesItem");
+            }
+        }
+
+        public uint Velocity
+        {
+            get
+            {
+                return velocity;
+            }
+
+            set
+            {
+                velocity = value;
+                Robot.Settings.Velocity = velocity;
+                OnPropertyChanged("Velocity");
+            }
+        }
+
+        public uint Acceleration
+        {
+            get
+            {
+                return acceleration;
+            }
+
+            set
+            {
+                acceleration = value;
+                Robot.Settings.Acceleration = acceleration;
+                OnPropertyChanged("Acceleration");
             }
         }
 
@@ -170,8 +203,8 @@ namespace TRobot.Robots.ViewModels
         private void UploadRobotSettings()
         {
             Robot.UploadTrajectory(TrajectoryCoordinates);
-            Robot.Acceleration = Acceleration;
-            Robot.Velocity = Velocity;
+            Robot.Settings.Acceleration = Acceleration;
+            Robot.Settings.Velocity = Velocity;
         }
 
         private void StartRobot()

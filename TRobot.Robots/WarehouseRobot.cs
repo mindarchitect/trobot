@@ -14,7 +14,7 @@ namespace TRobot.Robots
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
         private WarehouseRobotControlPanel controlPanel;
 
-        internal RobotSettings Settings { get; set; }    
+        public RobotSettings Settings { get; set; }    
 
         public WarehouseRobot(DescartesRobotFactory factory)
         {            

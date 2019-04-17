@@ -127,8 +127,8 @@ namespace TRobot.Robots
 
         private void SimulateRobotMovement()
         {
-            var robotVelocity = Robot.Velocity;
-            var robotAcceleration = Robot.Acceleration;
+            var robotVelocity = Robot.Settings.Velocity;
+            var robotAcceleration = Robot.Settings.Acceleration;
             var trajectory = Robot.Controller.Trajectory;
 
             Vector currentVector = new Vector();
@@ -170,7 +170,7 @@ namespace TRobot.Robots
                         DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
 
                         resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                        UpdateRobotVelocity(resultingVelocityVector);
+                        UpdateRobotCurrentVelocity(resultingVelocityVector);
 
                         positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
 
@@ -180,8 +180,8 @@ namespace TRobot.Robots
                             continue;
                         }
 
-                        Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
-                        OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+                        var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                        UpdateRobotCurrentPosition(newPosition);
 
                         Thread.Sleep(tick);
                     }
@@ -190,17 +190,16 @@ namespace TRobot.Robots
                 }
 
                 Accelerating = false;
-
                 while (resultingVelocityVector.Length != 0)
                 {
                     DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
                     DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
 
                     resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                    UpdateRobotVelocity(resultingVelocityVector);
+                    UpdateRobotCurrentVelocity(resultingVelocityVector);                    
 
-                    Robot.CurrentPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
-                    OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+                    var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
+                    UpdateRobotCurrentPosition(newPosition);
 
                     Thread.Sleep(tick);
                 }
@@ -208,13 +207,12 @@ namespace TRobot.Robots
             catch (ThreadAbortException)
             {
                 DriveX.Velocity = 0;
-                DriveY.Velocity = 0;
+                DriveY.Velocity = 0;                
 
-                Robot.CurrentPosition = robot.Controller.Coordinates.First().Point;
-                OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+                UpdateRobotCurrentPosition(robot.Controller.Coordinates.First().Point);
 
                 resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                UpdateRobotVelocity(resultingVelocityVector);
+                UpdateRobotCurrentVelocity(resultingVelocityVector);
             }            
         }
 
@@ -279,13 +277,23 @@ namespace TRobot.Robots
             return currentDriveVelocity;
         }
 
-        private void UpdateRobotVelocity(Vector resultingVelocityVector)
-        {       
-            if (resultingVelocityVector.Length != Robot.Velocity)
+        private void UpdateRobotCurrentVelocity(Vector resultingVelocityVector)
+        {            
+            var resultingVelocity = resultingVelocityVector.Length;
+
+            if (resultingVelocity != Robot.CurrentVelocity)
             {
-                Robot.Velocity = resultingVelocityVector.Length;
-                OnVelocityChanged(new VelocityChangedEventArguments(Robot.Velocity));
+                Robot.CurrentVelocity = resultingVelocity;
+                OnVelocityChanged(new VelocityChangedEventArguments(Robot.CurrentVelocity));
             }
-        }        
+        }
+        private void UpdateRobotCurrentPosition(Point currentPosition)
+        {            
+            if (currentPosition != Robot.CurrentPosition)
+            {
+                Robot.CurrentPosition = currentPosition;
+                OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
+            }
+        }
     }
 }

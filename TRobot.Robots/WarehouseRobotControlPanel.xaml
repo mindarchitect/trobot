@@ -149,9 +149,9 @@
                 <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
                     Velocity
                 </Label>
-                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
+                <TextBox Grid.Row="0" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}, Mode=TwoWay}">
                     <TextBox.Text>
-                        <Binding Path="Velocity" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Robot.Settings.Velocity" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:NumberValidationRule />
                             </Binding.ValidationRules>
@@ -166,7 +166,7 @@
                 </Label>
                 <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
                     <TextBox.Text>
-                        <Binding Path="Acceleration" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Robot.Settings.Acceleration" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:NumberValidationRule />
                             </Binding.ValidationRules>
@@ -181,14 +181,14 @@
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" HorizontalAlignment="Left">
-            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStop}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />            
-            <Button Style="{StaticResource Button}" Command="{Binding Path=Reset}" IsEnabled="{Binding Path=TrajectoryValidated}" >
+            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStopCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />            
+            <Button Style="{StaticResource Button}" Command="{Binding Path=ResetCommand}" IsEnabled="{Binding Path=TrajectoryValidated}" >
                 Reset
                 <Button.ToolTip>
                     <TextBlock>Reset</TextBlock>
                 </Button.ToolTip>
             </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettings}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
+            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettingsCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
                 Upload settings
                 <Button.ToolTip>
                     <TextBlock>Upload settings</TextBlock>

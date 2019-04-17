@@ -1,6 +1,6 @@
 ﻿namespace TRobot.Robots
 {
-    internal class RobotSettings
+    public class RobotSettings
     {
         public double Velocity
         {
