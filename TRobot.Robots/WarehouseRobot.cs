@@ -12,11 +12,15 @@ namespace TRobot.Robots
     public class WarehouseRobot : AbstractRobot, IMovable, IFactoryProvier<DescartesRobotFactory>
     {          
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
-        private WarehouseRobotControlPanel controlPanel;       
+        private WarehouseRobotControlPanel controlPanel;
+
+        internal RobotSettings Settings { get; set; }    
 
         public WarehouseRobot(DescartesRobotFactory factory)
         {            
             Factory = factory;
+
+            Settings = new RobotSettings();
 
             Engine = new WarehouseRobotEngine(this);
             Controller = new WarehouseRobotController(this);                      
@@ -65,19 +69,7 @@ namespace TRobot.Robots
         {
             get;
             set;
-        }     
-
-        public double Velocity
-        {
-            get;
-            set;
-        }
-
-        public double Acceleration
-        {
-            get;
-            set;
-        }
+        }             
 
         public DescartesRobotFactory Factory
         {

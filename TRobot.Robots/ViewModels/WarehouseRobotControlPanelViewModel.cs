@@ -13,7 +13,11 @@ namespace TRobot.Robots.ViewModels
     public class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
-        public uint Velocity { get; set; }
+        public uint Velocity
+        {
+            get;
+            set;
+        }
         public uint Acceleration { get; set; }       
 
         public WarehouseRobot Robot { get; private set; }
@@ -25,15 +29,16 @@ namespace TRobot.Robots.ViewModels
         {
             Robot = robot;
             Robot.Controller.TrajectoryValidated += OnControllerRobotTrajectoryValidated;
-                 
+               
+            // Just for testing  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(0, 0, 0));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(1, 30, 80));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(2, 50, 10));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 200));
 
-            Velocity = 30;
-            Acceleration = 1;
+            Robot.Settings.Velocity = 30;
+            Robot.Settings.Acceleration = 1;
 
             RobotState = Robot.Controller.State;
         }
@@ -98,8 +103,8 @@ namespace TRobot.Robots.ViewModels
         private void UploadRobotSettings()
         {
             Robot.UploadTrajectory(TrajectoryCoordinates);
-            Robot.Acceleration = Acceleration;
-            Robot.Velocity = Velocity;
+            Robot.Settings.Acceleration = Acceleration;
+            Robot.Settings.Velocity = Velocity;
         }
 
         private void StartRobot()

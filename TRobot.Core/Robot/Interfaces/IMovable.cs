@@ -5,9 +5,7 @@ using TRobot.Core.Robot.Events;
 namespace TRobot.Core
 {
     public interface IMovable
-    {
-        double Velocity { get; set; }
-        double Acceleration { get; set; }
+    {     
 
         void Start();
 

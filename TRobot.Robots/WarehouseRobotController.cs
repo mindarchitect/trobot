@@ -11,7 +11,7 @@ using TRobot.ECU.Models;
 using TRobot.Robots.Services;
 
 namespace TRobot.Robots
-{    
+{
     internal class WarehouseRobotController: IControllable
     {
         private WarehouseRobot robot;
