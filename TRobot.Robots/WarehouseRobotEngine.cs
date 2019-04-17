@@ -107,7 +107,20 @@ namespace TRobot.Robots
 
         public void Reset()
         {
-            engineThread.Abort();            
+            switch (engineThread.ThreadState)
+            {
+                case ThreadState.Running:
+                    {
+                        engineThread.Abort();
+                        break;
+                    }
+                case ThreadState.Stopped:
+                    {
+                        ResetRobot();
+                        break;
+                    }
+            }
+           
         }
 
         public void Resume()
@@ -206,13 +219,7 @@ namespace TRobot.Robots
             }
             catch (ThreadAbortException)
             {
-                DriveX.Velocity = 0;
-                DriveY.Velocity = 0;                
-
-                UpdateRobotCurrentPosition(robot.Controller.Coordinates.First().Point);
-
-                resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                UpdateRobotCurrentVelocity(resultingVelocityVector);
+                ResetRobot();
             }            
         }
 
@@ -294,6 +301,17 @@ namespace TRobot.Robots
                 Robot.CurrentPosition = currentPosition;
                 OnPositionChanged(new PositionChangedEventArguments(Robot.CurrentPosition));
             }
+        }
+
+        private void ResetRobot()
+        {
+            DriveX.Velocity = 0;
+            DriveY.Velocity = 0;
+
+            var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+            UpdateRobotCurrentVelocity(resultingVelocityVector);
+
+            UpdateRobotCurrentPosition(robot.Controller.Coordinates.First().Point);
         }
     }
 }
