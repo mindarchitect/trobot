@@ -42,7 +42,7 @@ namespace TRobot.Robots.ViewModels
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 200));            
 
             Velocity = 30;
-            Acceleration = 1;
+            Acceleration = 2;
 
             RobotState = Robot.Controller.State;
         }
@@ -171,7 +171,6 @@ namespace TRobot.Robots.ViewModels
             {
                 return velocity;
             }
-
             set
             {
                 velocity = value;
@@ -186,7 +185,6 @@ namespace TRobot.Robots.ViewModels
             {
                 return acceleration;
             }
-
             set
             {
                 acceleration = value;
@@ -202,9 +200,7 @@ namespace TRobot.Robots.ViewModels
 
         private void UploadRobotSettings()
         {
-            Robot.UploadTrajectory(TrajectoryCoordinates);
-            Robot.Settings.Acceleration = Acceleration;
-            Robot.Settings.Velocity = Velocity;
+            Robot.UploadTrajectory(TrajectoryCoordinates);            
         }
 
         private void StartRobot()
@@ -220,8 +216,7 @@ namespace TRobot.Robots.ViewModels
         }
 
         private void ResetRobot()
-        {
-            StopRobot();
+        {            
             Robot.Controller.Reset();
             RobotState = Robot.Controller.State;
         }
