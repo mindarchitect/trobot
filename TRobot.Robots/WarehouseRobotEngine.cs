@@ -83,9 +83,15 @@ namespace TRobot.Robots
             engineTaskControllingEvent.Set();
 
             if (engineTask?.IsCompleted ?? true)
-            {                
-                cancellationTokenSource = new CancellationTokenSource();
-                engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);
+            {
+                TaskStatus? engineTaskStatus = engineTask?.Status;
+                
+                if (!engineTaskStatus.HasValue || engineTaskStatus.Value != TaskStatus.RanToCompletion)
+                {
+                    cancellationTokenSource = new CancellationTokenSource();
+                    engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);
+                }
+                
             }            
         }
 
@@ -98,18 +104,13 @@ namespace TRobot.Robots
         {                        
             if (engineTask?.IsCompleted ?? true)
             {                
-                ResetRobot();
+                ResetRobot();                               
             }
             else
             {
                 cancellationTokenSource.Cancel();
                 engineTaskControllingEvent.Set();
             }        
-        }
-
-        public void Resume()
-        {
-            engineTaskControllingEvent.Set();
         }                     
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
@@ -301,6 +302,8 @@ namespace TRobot.Robots
             UpdateRobotCurrentVelocity(resultingVelocityVector);
 
             UpdateRobotCurrentPosition(robot.Controller.Coordinates.First().Point);
+
+            engineTask = null;
         }
     }
 }
