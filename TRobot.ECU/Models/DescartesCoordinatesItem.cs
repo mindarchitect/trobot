@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
+using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.ECU.Models
 {
-    public sealed class DescartesCoordinatesItem
+    public sealed class DescartesCoordinatesItem : BaseViewModel
     {
         private uint step;
         private Point point;
@@ -31,13 +31,6 @@ namespace TRobot.ECU.Models
                 point = value;
                 OnPropertyChanged("Point");
             }
-        }        
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }               
     }
 }

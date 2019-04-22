@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TRobot.Core;
 using TRobot.Core.Enums;
 using TRobot.Core.UI.Commands;
@@ -224,6 +226,12 @@ namespace TRobot.Robots.ViewModels
         private void DeleteTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
         {
             TrajectoryCoordinates.Remove(descartesCoordinatesItem);
+        }
+
+        private void TrajectoryDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {            
+            DataGrid grid = (DataGrid)sender;
+            grid.CommitEdit(DataGridEditingUnit.Row, true);                        
         }
     }
 }

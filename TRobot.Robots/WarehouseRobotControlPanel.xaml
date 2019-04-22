@@ -244,11 +244,11 @@
                         ItemTemplate="{StaticResource DestinationPointTemplate}"
                         ItemsSource="{Binding Path=TrajectoryCoordinates}" />-->
 
-        <DataGrid Name="Trajectory" RowHeaderWidth="0" AutoGenerateColumns="False" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="None" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True" CanUserResizeRows="False" Margin="5" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
+        <DataGrid Name="TrajectoryDataGrid" RowHeaderWidth="0" AutoGenerateColumns="False" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="None" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="False" CanUserResizeRows="False" Margin="5" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding Point.X, Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Point.Y, Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
+                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding Point.X, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Point.Y, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
