@@ -7,6 +7,7 @@ namespace TRobot.ECU.Models
     {
         private uint step;
         private Point point;
+
         public DescartesCoordinatesItem(uint step, uint x, uint y)
         {
             Step = step;
@@ -23,14 +24,36 @@ namespace TRobot.ECU.Models
             }
         }
 
-        public Point Point
+        public double X
         {
-            get { return point; }
+            get { return point.X; }
             set
             {
-                point = value;
-                OnPropertyChanged("Point");
+                point.X = value;
+                OnPropertyChanged("X");
             }
-        }               
+        }
+
+        public double Y
+        {
+            get { return point.Y; }
+            set
+            {
+                point.Y = value;
+                OnPropertyChanged("Y");
+            }
+        }
+
+        public Point Point
+        {
+            get
+            {
+                return point;
+            }
+            private set
+            {
+                point = value;
+            }
+        }
     }
 }

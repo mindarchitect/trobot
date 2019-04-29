@@ -246,9 +246,9 @@
 
         <DataGrid Name="TrajectoryDataGrid" RowHeaderWidth="0" AutoGenerateColumns="False" IsReadOnly="False" Grid.Row="0" Grid.Column="1" GridLinesVisibility="None" ItemsSource="{Binding Path=TrajectoryCoordinates}" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="False" CanUserResizeRows="False" Margin="5" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
-                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding Point.X, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Point.Y, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
