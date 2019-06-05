@@ -52,14 +52,15 @@ namespace TRobot.MU.UI.ViewModels
             else 
             {
                 var random = new Random();
-                var robotMonitoringItem = new RobotMonitoringItem();
-
-                robotMonitoringItem.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
-                robotMonitoringItem.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);
-                robotMonitoringItem.Color = Color.FromRgb(Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)));
-                robotMonitoringItem.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
-                robotMonitoringItem.Guid = e.RobotDescartesTrajectory.RobotId;
-                robotMonitoringItem.Title = e.RobotDescartesTrajectory.RobotTitle;
+                var robotMonitoringItem = new RobotMonitoringItem
+                {
+                    StartPoint = e.RobotDescartesTrajectory.CurrentPosition,
+                    Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory),
+                    Color = Color.FromRgb(Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256))),
+                    CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition,
+                    Guid = e.RobotDescartesTrajectory.RobotId,
+                    Title = e.RobotDescartesTrajectory.RobotTitle
+                };
 
                 RobotMonitoringItems.Add(robotMonitoringItem);
             }            
