@@ -150,11 +150,18 @@ namespace TRobot.Robots
 
                 var arctangRadians = Math.Atan2(currentVector.Y, currentVector.X);
 
-                YDriveVelocity = (robotVelocity * Math.Sin(arctangRadians)) / RefreshFactor;
-                XDriveVelocity = (robotVelocity * Math.Cos(arctangRadians)) / RefreshFactor;
+                var x = Math.Cos(arctangRadians);
+                var y = Math.Sin(arctangRadians);
 
-                YDriveAcceleration = (robotAcceleration * Math.Sin(arctangRadians)) / RefreshFactor;
-                XDriveAcceleration = (robotAcceleration * Math.Cos(arctangRadians)) / RefreshFactor;
+                XDriveVelocity = (robotVelocity * x) / RefreshFactor;
+                YDriveVelocity = (robotVelocity * y) / RefreshFactor;
+
+                XDriveAcceleration = (robotAcceleration * x) / RefreshFactor;
+                YDriveAcceleration = (robotAcceleration * y) / RefreshFactor;
+
+                // Stop each drive before changing vector
+                DriveX.Velocity = 0;
+                DriveY.Velocity = 0;                
 
                 while (positionIsInCurrentVector)
                 {
