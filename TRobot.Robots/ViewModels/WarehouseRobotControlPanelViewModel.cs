@@ -101,7 +101,7 @@ namespace TRobot.Robots.ViewModels
             {
                 if (deleteSelectedTrajectoryCoordinatesItemCommand == null)
                 {
-                    deleteSelectedTrajectoryCoordinatesItemCommand = new RelayCommand<object>(param => DeleteTrajectoryCoordinatesItem((DescartesCoordinatesItem)param), param => CanDeleteSelectedTrajectoryCoordinatesItem);
+                    deleteSelectedTrajectoryCoordinatesItemCommand = new RelayCommand<object>(param => DeleteTrajectoryCoordinatesItem((DescartesCoordinatesItem)param), param => true);
                 }
                 return deleteSelectedTrajectoryCoordinatesItemCommand;
             }

@@ -17,10 +17,5 @@ namespace TRobot.Robots
 
             DataContext = warehouseRobotControlPanelViewModel;
         }
-
-        private void Trajectory_CellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
-        {
-
-        }
     }
 }
