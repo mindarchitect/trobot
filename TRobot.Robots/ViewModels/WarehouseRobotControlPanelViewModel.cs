@@ -105,13 +105,7 @@ namespace TRobot.Robots.ViewModels
                 }
                 return deleteSelectedTrajectoryCoordinatesItemCommand;
             }
-        }
-
-
-        public void OnWindowClosing(object sender, CancelEventArgs e)
-        {
-            StopRobot();
-        }
+        }        
 
         private void StartStopRobot(object state)
         {
@@ -210,7 +204,7 @@ namespace TRobot.Robots.ViewModels
             RobotState = Robot.Controller.State;
         }
 
-        private void StopRobot()
+        public void StopRobot()
         {
             Robot.Controller.Stop();
             RobotState = Robot.Controller.State;

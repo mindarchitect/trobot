@@ -63,12 +63,19 @@
                 <ListBox IsSynchronizedWithCurrentItem="True"
                          Name="FactoryRobots"
                          Margin="5"
+                         Padding="5"
                          Style="{StaticResource RobotsListBoxStyle}"
                          SelectionMode="Extended"
                          ItemTemplate="{StaticResource RobotsTemplate}"
                          ItemsSource="{Binding Robots}"
                          SelectedIndex="0" >
-                </ListBox>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">                            
+                            <Setter Property="Padding" Value="1" />
+                            <Setter Property="Margin" Value="1" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>                
             </ScrollViewer>
         </DataTemplate>
 

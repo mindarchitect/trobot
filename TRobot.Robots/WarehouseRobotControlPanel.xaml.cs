@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using TRobot.Robots.ViewModels;
 
 namespace TRobot.Robots
@@ -8,14 +9,21 @@ namespace TRobot.Robots
     /// </summary>
     public partial class WarehouseRobotControlPanel : Window
     {
+        private WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel;
         public WarehouseRobotControlPanel(WarehouseRobot robot)
         {
             InitializeComponent();
 
-            var warehouseRobotControlPanelViewModel = new WarehouseRobotControlPanelViewModel(robot);
-            Closing += warehouseRobotControlPanelViewModel.OnWindowClosing;
+            warehouseRobotControlPanelViewModel = new WarehouseRobotControlPanelViewModel(robot);
+            Closing += OnWindowClosing;
 
             DataContext = warehouseRobotControlPanelViewModel;
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            warehouseRobotControlPanelViewModel.StopRobot();
+            Visibility = Visibility.Hidden;
         }
     }
 }
