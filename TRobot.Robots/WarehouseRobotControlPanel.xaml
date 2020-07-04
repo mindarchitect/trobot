@@ -238,7 +238,7 @@
                 <Button.ToolTip>
                     <TextBlock>Add destination point</TextBlock>
                 </Button.ToolTip>
-            </Button>            
+            </Button>
         </StackPanel>
     </Grid>    
 </Window>

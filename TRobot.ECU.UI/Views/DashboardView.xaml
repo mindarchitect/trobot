@@ -18,9 +18,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBox}">
-                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal"
-                                   ItemHeight="{Binding ElementName=ZoomSlider, Path='Value'}"
-                                   ItemWidth="{Binding ElementName=ZoomSlider, Path='Value'}"
+                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal"                                   
                                    VerticalAlignment="Top" HorizontalAlignment="Stretch" />
                     </ControlTemplate>
                 </Setter.Value>
