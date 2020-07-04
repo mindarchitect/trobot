@@ -29,14 +29,42 @@ namespace TRobot.Robots
         {
             this.robot = robot;
 
-            var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);
+            this.robot.Engine.VelocityChanged += OnEngineVelocityChanged;
+            this.robot.Engine.PositionChanged += OnEnginePositionChanged;            
+        }
+
+        public void Initialize()
+        {
+            var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);            
             warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));            
 
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
+        }
 
-            this.robot.Engine.VelocityChanged += OnEngineVelocityChanged;
-            this.robot.Engine.PositionChanged += OnEnginePositionChanged;
+        public void Terminate()
+        {
+            try
+            {
+                warehouseRobotTrajectoryValidationServiceClient.Close();
+                warehouseRobotMonitoringSeviceClient.Close();
+            }
+            catch (CommunicationException e)
+            {
+                warehouseRobotTrajectoryValidationServiceClient.Abort();
+                warehouseRobotMonitoringSeviceClient.Abort();
+            }
+            catch (TimeoutException e)
+            {
+                warehouseRobotTrajectoryValidationServiceClient.Abort();
+                warehouseRobotMonitoringSeviceClient.Abort();
+            }
+            catch (Exception e)
+            {
+                warehouseRobotTrajectoryValidationServiceClient.Abort();
+                warehouseRobotMonitoringSeviceClient.Abort();
+                throw;
+            }            
         }
 
         private void OnEnginePositionChanged(object sender, PositionChangedEventArguments e)

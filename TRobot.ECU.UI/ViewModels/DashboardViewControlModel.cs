@@ -22,9 +22,11 @@ namespace TRobot.ECU.UI.ViewModels
 
             var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
             warehouseRobot1.Title = "Warehouse Robot 1";
+            warehouseRobot1.Initialize();
 
             var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
             warehouseRobot2.Title = "Warehouse Robot 2";
+            warehouseRobot2.Initialize();
 
             descartesRobotFactory.Robots.Add(warehouseRobot1);
             descartesRobotFactory.Robots.Add(warehouseRobot2);
@@ -68,6 +70,14 @@ namespace TRobot.ECU.UI.ViewModels
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             trajectoryValidationServiceHost.Close();
+
+            foreach (var robotFactory in robotFactories)
+            {
+                foreach (var robot in robotFactory.Robots)
+                {
+                    robot.Terminate();
+                }
+            }
         }
     }
 }

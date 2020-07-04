@@ -27,7 +27,7 @@ namespace TRobot.Robots
         private object accelerationPropertyLock = new object();
         private bool accelerating = true;
 
-        private ManualResetEvent engineTaskControllingEvent = new ManualResetEvent(false);
+        private ManualResetEvent engineTaskControllingEvent;
         private CancellationTokenSource cancellationTokenSource;
         private Task engineTask;
 
@@ -74,7 +74,9 @@ namespace TRobot.Robots
             Robot = robot;
 
             DriveX = new RobotDimensionalDrive(Dimension.X);
-            DriveY = new RobotDimensionalDrive(Dimension.Y);            
+            DriveY = new RobotDimensionalDrive(Dimension.Y);
+
+            engineTaskControllingEvent = new ManualResetEvent(false);
         }
 
         public void Start()
@@ -97,7 +99,7 @@ namespace TRobot.Robots
 
         public void Stop()
         {
-            Accelerating = false;           
+            Accelerating = false;            
         }
 
         public void Reset()
