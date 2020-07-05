@@ -10,7 +10,9 @@
         Height="300"
         Width="600"
         WindowStartupLocation="CenterOwner">
+
     
+
     <Window.Resources>
         <!-- Main robots view -->
         <Style TargetType="{x:Type ListBox}" x:Key="RobotsListBoxStyle">
@@ -85,32 +87,42 @@
         <local:TemplateSelector x:Key="ContentTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonContentTemplate}" ItemTemplate="{StaticResource ItemContentTemplate}"/>
     </Window.Resources>
 
-    <!-- Master Container -->
-    <Grid Margin="10">        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*" />
-            <ColumnDefinition Width="30*" />
-        </Grid.ColumnDefinitions>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Monitor" Command="{Binding StartMonitorCommand}" />
+            </MenuItem>
+        </Menu>
+        <!-- Master Container -->
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*" />
+                <ColumnDefinition Width="30*" />
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-       
-        <DockPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,10" >
-            <Label DockPanel.Dock="Left" Margin="0,0,10,0">Factories: </Label>            
-        </DockPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" >            
-            <TabControl ItemsSource="{Binding RobotFactories}" ItemTemplateSelector="{StaticResource HeaderTemplateSelector}" ContentTemplateSelector="{StaticResource ContentTemplateSelector}" SelectedIndex="0" />
-        </DockPanel>
+            <DockPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,10" >
+                <Label DockPanel.Dock="Left" Margin="0,0,10,0">Factories:</Label>
+            </DockPanel>
 
-        <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" >
-            <Label DockPanel.Dock="Left" Margin="0,0,10,0">Properties:</Label>
-        </DockPanel>
+            <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" >
+                <TabControl ItemsSource="{Binding RobotFactories}" ItemTemplateSelector="{StaticResource HeaderTemplateSelector}" ContentTemplateSelector="{StaticResource ContentTemplateSelector}" SelectedIndex="0" />
+            </DockPanel>
 
-        <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">            
-            <Button DockPanel.Dock="Right" >Add Robot</Button>                            
-        </DockPanel>
-    </Grid>
+            <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" >
+                <Label DockPanel.Dock="Left" Margin="0,0,10,0">Properties:</Label>
+            </DockPanel>
+
+            <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">
+                <Button DockPanel.Dock="Right" >Add Robot</Button>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>

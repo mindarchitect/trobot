@@ -1,7 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.Service;
@@ -60,9 +65,50 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
+        private ICommand startMonitorCommand;
+        public ICommand StartMonitorCommand
+        {
+            get
+            {
+                if (startMonitorCommand == null)
+                {
+                    startMonitorCommand = new RelayCommand<object>(StartMonitor);
+                }
+
+                return startMonitorCommand;
+            }
+        }
+
+        private ICommand exitApplicationCommand;
+        public ICommand ExitApplicationCommand
+        {
+            get
+            {
+                if (exitApplicationCommand == null)
+                {
+                    exitApplicationCommand = new RelayCommand<object>(ExitApplication);
+                }
+
+                return exitApplicationCommand;
+            }
+        }
+
         private void Add(RobotFactory robotFactory)
         {
             RobotFactories.Add(robotFactory);
+        }
+
+        private void StartMonitor(object param)
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo("TRobot.MU.UI.exe");                       
+            processStartInfo.WorkingDirectory = Path.GetFullPath(@"..\..\..\TRobot.MU.UI\bin\Debug");
+
+            Process.Start(processStartInfo);
+        }
+
+        private void ExitApplication(object param)
+        {
+            Application.Current.Shutdown();
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
