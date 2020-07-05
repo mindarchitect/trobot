@@ -22,8 +22,9 @@ namespace TRobot.Robots
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
+            //e.Cancel = true;
             warehouseRobotControlPanelViewModel.StopRobot();
-            Visibility = Visibility.Hidden;
+            //Visibility = Visibility.Hidden;
         }
     }
 }

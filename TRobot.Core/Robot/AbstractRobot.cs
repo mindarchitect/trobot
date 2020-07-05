@@ -14,11 +14,7 @@ namespace TRobot.Core
 
         public abstract void Start();
 
-        public abstract void Stop();
-
-        public abstract void Initialize();
-
-        public abstract void Terminate();
+        public abstract void Stop();        
 
         public override string ToString() => Title;
     }

@@ -20,11 +20,7 @@ namespace TRobot.Robots
         {            
             Factory = factory;
 
-            Settings = new RobotSettings();
-
-            Engine = new WarehouseRobotEngine(this);
-            Controller = new WarehouseRobotController(this);                                         
-            controlPanel = new WarehouseRobotControlPanel(this);
+            Settings = new RobotSettings();            
         }
 
         private ICommand startCommand;
@@ -92,25 +88,25 @@ namespace TRobot.Robots
             PositionChanged?.Invoke(this, e);
         }
 
-        public override void Initialize()
-        {
-            Controller.Initialize();
-        }
-
         public override void Start()
         {
+            Engine = new WarehouseRobotEngine(this);
+            Controller = new WarehouseRobotController(this);
+            Controller.Initialize();
+     
+            if (controlPanel == null)
+            {
+                controlPanel = new WarehouseRobotControlPanel(this);
+            }
+            
             controlPanel.Show();
         }      
 
         public override void Stop()
-        {            
-        }
-
-        public override void Terminate()
         {
-            Controller.Terminate();
-            Engine.Stop();
-        }
+            Controller?.Terminate();            
+            controlPanel?.Close();            
+        } 
 
         internal void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
         {
