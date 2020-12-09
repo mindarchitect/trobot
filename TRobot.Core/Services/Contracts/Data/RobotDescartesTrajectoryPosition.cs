@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Windows;
 
-namespace TRobot.Communication.Contracts.Data
+namespace TRobot.Core.Services.Contracts.Data
 {    
 
     [DataContract]

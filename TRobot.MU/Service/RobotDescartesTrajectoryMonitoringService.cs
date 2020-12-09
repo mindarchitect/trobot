@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
-using TRobot.Communication.Contracts.Data;
 using TRobot.Communication.Events;
 using TRobot.Communication.Services.Monitoring;
+using TRobot.Core.Services.Contracts.Data;
 
 namespace TRobot.MU.Service
 {

@@ -33,9 +33,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,7 +63,6 @@
     <Compile Include="Robot\Events\TrajectorySetEventArguments.cs" />
     <Compile Include="Robot\Events\TrajectoryValidatedEventArguments.cs" />
     <Compile Include="Robot\Interfaces\IFactoryProvider.cs" />
-    <Compile Include="Robot\Interfaces\IServiceHostProvider.cs" />
     <Compile Include="Robot\RobotDimensionalDrive.cs" />
     <Compile Include="Robot\RobotEngine.cs" />
     <Compile Include="Robot\Engine.cs" />
@@ -72,14 +73,11 @@
     <Compile Include="Robot\Interfaces\IControllable.cs" />
     <Compile Include="Robot\Interfaces\IMovable.cs" />
     <Compile Include="Robot\AbstractRobot.cs" />
+    <Compile Include="Services\Contracts\Data\RobotDescartesTrajectory.cs" />
+    <Compile Include="Services\Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TRobot.Communication\TRobot.Communication.csproj">
-      <Project>{896F4469-D992-442D-93E5-5CB23C0A0A86}</Project>
-      <Name>TRobot.Communication</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

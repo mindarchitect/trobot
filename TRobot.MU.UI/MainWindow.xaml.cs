@@ -13,7 +13,7 @@ namespace MonitoringUnit.UI
         {
             InitializeComponent();
 
-            var mainWindowViewModel = DependencyInjector.Retrieve<MainWindowViewModel>();
+            var mainWindowViewModel = DependencyInjector.Resolve<MainWindowViewModel>();
             Closing += mainWindowViewModel.OnWindowClosing;
 
             DataContext = mainWindowViewModel;            

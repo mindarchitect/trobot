@@ -5,9 +5,10 @@ using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using TRobot.Communication.Services;
+using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.Core.UI.Commands;
-using TRobot.ECU.Service;
 using TRobot.Robots;
 
 namespace TRobot.ECU.UI.ViewModels
@@ -15,23 +16,30 @@ namespace TRobot.ECU.UI.ViewModels
     public class DashboardViewControlModel : BaseViewModel
     {
         private ObservableCollection<RobotFactory> robotFactories;
-        private RobotDescartesTrajectoryValidationServiceHost trajectoryValidationServiceHost;
+        private IServiceHostProvider serviceHostProvider;
 
-        public DashboardViewControlModel()
+        public DashboardViewControlModel(IServiceHostProvider serviceHostProvider)
         {
-            var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(300, 300));
+            this.serviceHostProvider = serviceHostProvider;
 
-            trajectoryValidationServiceHost = new RobotDescartesTrajectoryValidationServiceHost(descartesRobotFactory);
+            if (serviceHostProvider.Service is IRobotTrajectoryValidationService)
+            {
+                IRobotTrajectoryValidationService robotTrajectoryValidationService = (IRobotTrajectoryValidationService) serviceHostProvider.Service;
 
-            var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
-            warehouseRobot1.Title = "Warehouse Robot 1";            
+                //var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(300, 300));
+                var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
+                robotTrajectoryValidationService.DescartesRobotFactory = descartesRobotFactory;
 
-            var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
-            warehouseRobot2.Title = "Warehouse Robot 2";            
+                var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
+                warehouseRobot1.Title = "Warehouse Robot 1";
 
-            descartesRobotFactory.Robots.Add(warehouseRobot1);
-            descartesRobotFactory.Robots.Add(warehouseRobot2);
-            RobotFactories.Add(descartesRobotFactory);
+                var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
+                warehouseRobot2.Title = "Warehouse Robot 2";
+
+                descartesRobotFactory.Robots.Add(warehouseRobot1);
+                descartesRobotFactory.Robots.Add(warehouseRobot2);
+                RobotFactories.Add(descartesRobotFactory);
+            }
         }
 
         public ObservableCollection<RobotFactory> RobotFactories
@@ -111,7 +119,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            trajectoryValidationServiceHost.Close();
+            serviceHostProvider.Close();
 
             foreach (var robotFactory in robotFactories)
             {

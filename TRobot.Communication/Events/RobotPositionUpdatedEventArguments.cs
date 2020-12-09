@@ -1,5 +1,5 @@
 ﻿using System;
-using TRobot.Communication.Contracts.Data;
+using TRobot.Core.Services.Contracts.Data;
 
 namespace TRobot.Communication.Events
 {

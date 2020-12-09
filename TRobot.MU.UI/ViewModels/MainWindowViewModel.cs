@@ -4,25 +4,31 @@ using System.ComponentModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
 using TRobot.ECU.UI.ViewModels;
-using TRobot.MU.Service;
 using TRobot.MU.UI.Models;
 using System.Linq;
 using System;
+using TRobot.Communication.Services.Monitoring;
+using TRobot.Communication.Services;
 
 namespace TRobot.MU.UI.ViewModels
 {
     class MainWindowViewModel: BaseViewModel
     {
         public ObservableCollection<RobotMonitoringItem> RobotMonitoringItems { get; private set; }
-        private RobotDescartesTrajectoryMonitoringServiceHost trajectoryMonitoringServiceHost;
+        private IServiceHostProvider serviceHostProvider;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IServiceHostProvider serviceHostProvider)
         {
-            trajectoryMonitoringServiceHost = new RobotDescartesTrajectoryMonitoringServiceHost();
+            this.serviceHostProvider = serviceHostProvider;
             RobotMonitoringItems = new ObservableCollection<RobotMonitoringItem>();
 
-            trajectoryMonitoringServiceHost.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
-            trajectoryMonitoringServiceHost.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
+            if (serviceHostProvider.Service is IRobotTrajectoryMonitoringService)
+            {
+                IRobotTrajectoryMonitoringService robotTrajectoryMonitoringService = (IRobotTrajectoryMonitoringService) serviceHostProvider.Service;
+
+                robotTrajectoryMonitoringService.RobotTrajectorySet += OnServiceRobotTrajectorySet;
+                robotTrajectoryMonitoringService.RobotPositionUpdated += OnServiceRobotPositionUpdated;
+            }            
         }
 
         private void OnServiceRobotPositionUpdated(object sender, RobotPositionUpdatedEventArguments e)
@@ -67,7 +73,7 @@ namespace TRobot.MU.UI.ViewModels
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            trajectoryMonitoringServiceHost.Close();
+            serviceHostProvider.Close();
         }
     }
 }

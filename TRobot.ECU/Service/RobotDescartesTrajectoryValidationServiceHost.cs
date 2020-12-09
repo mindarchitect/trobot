@@ -1,21 +1,25 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Windows;
+using TRobot.Communication.Services;
 using TRobot.Communication.Services.Trajectory;
-using TRobot.Core;
-using TRobot.Core.Robot.Interfaces;
-using TRobot.ECU.UI.Service;
+using Unity;
 
 namespace TRobot.ECU.Service
 {
     public class RobotDescartesTrajectoryValidationServiceHost : IServiceHostProvider
     {
+        public IService Service { get; set; }
+
         private ServiceHost serviceHost;
-        public RobotDescartesTrajectoryValidationServiceHost(DescartesRobotFactory descartesRobotFactory)
-        {                       
+        
+        public RobotDescartesTrajectoryValidationServiceHost(IRobotTrajectoryValidationService robotTrajectoryValidationService)
+        {
+            Service = robotTrajectoryValidationService;
+
             try
             {
-                serviceHost = new ServiceHost(new RobotDescartesTrajectoryValidationService(descartesRobotFactory), new Uri("net.pipe://localhost/validation"));
+                serviceHost = new ServiceHost(new RobotDescartesTrajectoryValidationService(), new Uri("net.pipe://localhost/validation"));
                 serviceHost.Faulted += OnServiceHostFaulted;
                 serviceHost.AddServiceEndpoint(typeof(IRobotTrajectoryValidationService), new NetNamedPipeBinding(), "ValidationService");
                 serviceHost.Open();
@@ -32,7 +36,7 @@ namespace TRobot.ECU.Service
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }            
-        }
+        }        
 
         public void Close()
         {

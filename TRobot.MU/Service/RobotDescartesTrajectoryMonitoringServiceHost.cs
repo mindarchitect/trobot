@@ -1,20 +1,21 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Windows;
+using TRobot.Communication.Services;
 using TRobot.Communication.Services.Monitoring;
-using TRobot.Core.Robot.Interfaces;
 
 namespace TRobot.MU.Service
 {
     public class RobotDescartesTrajectoryMonitoringServiceHost: IServiceHostProvider
     {
-        public IRobotTrajectoryMonitoringService Service { get; private set; }
+        public IService Service { get; set; }
 
         private ServiceHost serviceHost;
-        public RobotDescartesTrajectoryMonitoringServiceHost()
-        { 
-            Service = new RobotDescartesTrajectoryMonitoringService();
-            
+        
+        public RobotDescartesTrajectoryMonitoringServiceHost(IRobotTrajectoryMonitoringService robotTrajectoryMonitoringService)
+        {
+            Service = robotTrajectoryMonitoringService;
+
             try
             {
                 serviceHost = new ServiceHost(Service, new Uri("net.pipe://localhost/monitoring"));

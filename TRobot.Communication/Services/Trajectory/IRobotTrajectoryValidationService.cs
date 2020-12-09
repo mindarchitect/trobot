@@ -1,5 +1,6 @@
 ﻿using System.ServiceModel;
-using TRobot.Communication.Contracts.Data;
+using TRobot.Core;
+using TRobot.Core.Services.Contracts.Data;
 
 namespace TRobot.Communication.Services.Trajectory
 {    
@@ -9,8 +10,14 @@ namespace TRobot.Communication.Services.Trajectory
         Name = "RobotTrajectoryValidationService",
         Namespace = "http://trobot/validation"
     )]
-    public interface IRobotTrajectoryValidationService
+    public interface IRobotTrajectoryValidationService : IService
     {
+        DescartesRobotFactory DescartesRobotFactory
+        {
+            get;
+            set;
+        }
+
         [OperationContract]  
         void ValidateRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
     }

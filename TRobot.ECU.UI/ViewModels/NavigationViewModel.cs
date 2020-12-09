@@ -3,8 +3,7 @@
 namespace TRobot.ECU.UI.ViewModels
 {
     public class NavigationViewModel : BaseViewModel
-    {
-        private DashboardViewControlModel dashboardViewControlModel;
+    {        
         private AddRobotViewControlModel addRobotViewControlModel;
 
         public ICommand AddRobotCommand { get; internal set; }        
@@ -27,10 +26,7 @@ namespace TRobot.ECU.UI.ViewModels
 
 
         public NavigationViewModel()
-        {
-            //AddRobotCommand = new BaseCommand(AddRobotCommand);           
-            dashboardViewControlModel = new DashboardViewControlModel();           
-            SelectedViewModel = dashboardViewControlModel;
+        {            
         }
 
         private void AddRobot(object obj)

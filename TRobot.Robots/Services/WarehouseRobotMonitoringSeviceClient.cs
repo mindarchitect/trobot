@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Windows;
-using TRobot.Communication.Contracts.Data;
+using TRobot.Core.Services.Contracts.Data;
 using TRobot.Communication.Services.Monitoring;
 
 namespace TRobot.Robots.Services

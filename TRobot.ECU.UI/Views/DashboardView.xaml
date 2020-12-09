@@ -11,8 +11,6 @@
         Width="600"
         WindowStartupLocation="CenterOwner">
 
-    
-
     <Window.Resources>
         <!-- Main robots view -->
         <Style TargetType="{x:Type ListBox}" x:Key="RobotsListBoxStyle">

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using TRobot.Core;
 using TRobot.Core.UI.ViewModels;
 using TRobot.ECU.UI.ViewModels;
 
@@ -13,10 +15,13 @@ namespace TRobot.ECU.UI.Views
         {
             InitializeComponent();
 
-            var dashboardViewControlModel = new DashboardViewControlModel();
+            DependencyInjector.AddExtension<ECUDependencyInjectionExtension>();
+            DependencyInjector.RegisterType<DashboardViewControlModel, DashboardViewControlModel>();
+
+            var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewControlModel>();            
             Closing += dashboardViewControlModel.OnWindowClosing;
 
             DataContext = dashboardViewControlModel;
-        }                     
+        }        
     }
 }

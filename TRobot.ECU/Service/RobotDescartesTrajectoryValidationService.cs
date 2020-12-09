@@ -1,17 +1,15 @@
 ﻿using System.ServiceModel;
-using TRobot.Communication.Contracts.Data;
+using TRobot.Core.Services.Contracts.Data;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 
-namespace TRobot.ECU.UI.Service
+namespace TRobot.ECU.Service
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class RobotDescartesTrajectoryValidationService : IRobotTrajectoryValidationService
-    {
-        private DescartesRobotFactory descartesRobotFactory;
-        public RobotDescartesTrajectoryValidationService(DescartesRobotFactory descartesRobotFactory)
-        {
-            this.descartesRobotFactory = descartesRobotFactory;
+    {        
+        public RobotDescartesTrajectoryValidationService()
+        {            
         }
 
         public void ValidateRobotTrajectory(RobotDescartesTrajectory robotTrajectory)
@@ -25,7 +23,7 @@ namespace TRobot.ECU.UI.Service
 
             foreach (var trajectoryPoint in trajectoryPoints)
             {
-                result = trajectoryPoint.X <= descartesRobotFactory.Dimensions.Width && trajectoryPoint.Y <= descartesRobotFactory.Dimensions.Height;
+                result = trajectoryPoint.X <= DescartesRobotFactory.Dimensions.Width && trajectoryPoint.Y <= DescartesRobotFactory.Dimensions.Height;
 
                 if (!result)
                 {
@@ -39,6 +37,12 @@ namespace TRobot.ECU.UI.Service
             OperationContext operationContext = OperationContext.Current;
             IRobotTrajectoryValidationServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryValidationServiceCallback>();
             callback.RobotTrajectoryValidated(robotValidationResult);
+        }
+
+        public DescartesRobotFactory DescartesRobotFactory
+        {
+            get;
+            set;
         }
     }
 }

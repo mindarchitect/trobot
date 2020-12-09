@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using TRobot.Communication.Contracts.Data;
+using TRobot.Core.Services.Contracts.Data;
 using TRobot.Communication.Events;
 
 namespace TRobot.Communication.Services.Monitoring
@@ -11,7 +11,7 @@ namespace TRobot.Communication.Services.Monitoring
         Name = "IRobotTrajectoryMonitoringService",
         Namespace = "http://trobot/monitoring"
     )]
-    public interface IRobotTrajectoryMonitoringService
+    public interface IRobotTrajectoryMonitoringService : IService
     {
         [OperationContract]  
         void SetupRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
