@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TRobot.Core;
 using TRobot.MU.UI.ViewModels;
 
 namespace MonitoringUnit.UI
@@ -12,7 +13,7 @@ namespace MonitoringUnit.UI
         {
             InitializeComponent();
 
-            var mainWindowViewModel = new MainWindowViewModel();
+            var mainWindowViewModel = DependencyInjector.Retrieve<MainWindowViewModel>();
             Closing += mainWindowViewModel.OnWindowClosing;
 
             DataContext = mainWindowViewModel;            

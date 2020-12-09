@@ -12,7 +12,6 @@ namespace TRobot.MU.UI.Models
         private Color color;
         private string title;
         private PointCollection trajectory;
-
         public Point StartPoint
         {
             get

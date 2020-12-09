@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using TRobot.Core;
+using TRobot.MU;
+using TRobot.MU.UI.ViewModels;
 
 namespace MonitoringUnit.UI
 {
@@ -13,5 +10,12 @@ namespace MonitoringUnit.UI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            DependencyInjector.AddExtension<ManagementUnitDependencyInjectionExtension>();
+            DependencyInjector.Register<MainWindowViewModel, MainWindowViewModel>();
+        }
     }
 }
