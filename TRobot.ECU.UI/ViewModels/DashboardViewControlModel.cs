@@ -24,11 +24,8 @@ namespace TRobot.ECU.UI.ViewModels
 
             if (serviceHostProvider.Service is IRobotTrajectoryValidationService)
             {
-                IRobotTrajectoryValidationService robotTrajectoryValidationService = (IRobotTrajectoryValidationService) serviceHostProvider.Service;
-
-                //var descartesRobotFactory = new DescartesRobotFactory("Test robot factory", new Size(300, 300));
-                var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
-                robotTrajectoryValidationService.DescartesRobotFactory = descartesRobotFactory;
+                IRobotTrajectoryValidationService robotTrajectoryValidationService = (IRobotTrajectoryValidationService) serviceHostProvider.Service;                
+                var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();                
 
                 var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
                 warehouseRobot1.Title = "Warehouse Robot 1";
@@ -38,6 +35,7 @@ namespace TRobot.ECU.UI.ViewModels
 
                 descartesRobotFactory.Robots.Add(warehouseRobot1);
                 descartesRobotFactory.Robots.Add(warehouseRobot2);
+
                 RobotFactories.Add(descartesRobotFactory);
             }
         }

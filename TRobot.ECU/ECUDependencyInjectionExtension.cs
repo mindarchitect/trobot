@@ -12,7 +12,8 @@ namespace TRobot.ECU
     {
         protected override void Initialize()
         {        
-            DependencyInjector.RegisterType<DescartesRobotFactory>(new object[] { new DescartesRobotFactory("Test robot factory", new Size(300, 300)) });
+            DependencyInjector.RegisterInstance(new DescartesRobotFactory("Test robot factory", new Size(300, 300)));
+
             DependencyInjector.RegisterType<IRobotTrajectoryValidationService, RobotDescartesTrajectoryValidationService>();
             DependencyInjector.RegisterType<IServiceHostProvider, RobotDescartesTrajectoryValidationServiceHost>();
         }

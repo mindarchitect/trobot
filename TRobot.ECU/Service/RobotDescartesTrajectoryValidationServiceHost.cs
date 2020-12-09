@@ -19,7 +19,7 @@ namespace TRobot.ECU.Service
 
             try
             {
-                serviceHost = new ServiceHost(new RobotDescartesTrajectoryValidationService(), new Uri("net.pipe://localhost/validation"));
+                serviceHost = new ServiceHost(robotTrajectoryValidationService, new Uri("net.pipe://localhost/validation"));
                 serviceHost.Faulted += OnServiceHostFaulted;
                 serviceHost.AddServiceEndpoint(typeof(IRobotTrajectoryValidationService), new NetNamedPipeBinding(), "ValidationService");
                 serviceHost.Open();

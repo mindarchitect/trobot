@@ -2,6 +2,7 @@
 using TRobot.Core.Services.Contracts.Data;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
+using Unity;
 
 namespace TRobot.ECU.Service
 {
@@ -39,6 +40,7 @@ namespace TRobot.ECU.Service
             callback.RobotTrajectoryValidated(robotValidationResult);
         }
 
+        [Dependency]
         public DescartesRobotFactory DescartesRobotFactory
         {
             get;
