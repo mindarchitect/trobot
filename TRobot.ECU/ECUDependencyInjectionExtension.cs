@@ -15,7 +15,7 @@ namespace TRobot.ECU
             DependencyInjector.RegisterInstance(new DescartesRobotFactory("Test robot factory", new Size(300, 300)));
 
             DependencyInjector.RegisterType<IRobotTrajectoryValidationService, RobotDescartesTrajectoryValidationService>();
-            DependencyInjector.RegisterType<IServiceHostProvider, RobotDescartesTrajectoryValidationServiceHost>();
+            DependencyInjector.RegisterType<IServiceHostProvider<IRobotTrajectoryValidationService>, RobotDescartesTrajectoryValidationServiceHost>();
         }
     }
 }

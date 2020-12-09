@@ -16,28 +16,24 @@ namespace TRobot.ECU.UI.ViewModels
     public class DashboardViewControlModel : BaseViewModel
     {
         private ObservableCollection<RobotFactory> robotFactories;
-        private IServiceHostProvider serviceHostProvider;
+        private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;
 
-        public DashboardViewControlModel(IServiceHostProvider serviceHostProvider)
+        public DashboardViewControlModel(IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider)
         {
-            this.serviceHostProvider = serviceHostProvider;
+            this.serviceHostProvider = serviceHostProvider;           
+           
+            var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();                
 
-            if (serviceHostProvider.Service is IRobotTrajectoryValidationService)
-            {
-                IRobotTrajectoryValidationService robotTrajectoryValidationService = (IRobotTrajectoryValidationService) serviceHostProvider.Service;                
-                var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();                
+            var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
+            warehouseRobot1.Title = "Warehouse Robot 1";
 
-                var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
-                warehouseRobot1.Title = "Warehouse Robot 1";
+            var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
+            warehouseRobot2.Title = "Warehouse Robot 2";
 
-                var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
-                warehouseRobot2.Title = "Warehouse Robot 2";
+            descartesRobotFactory.Robots.Add(warehouseRobot1);
+            descartesRobotFactory.Robots.Add(warehouseRobot2);
 
-                descartesRobotFactory.Robots.Add(warehouseRobot1);
-                descartesRobotFactory.Robots.Add(warehouseRobot2);
-
-                RobotFactories.Add(descartesRobotFactory);
-            }
+            RobotFactories.Add(descartesRobotFactory);           
         }
 
         public ObservableCollection<RobotFactory> RobotFactories

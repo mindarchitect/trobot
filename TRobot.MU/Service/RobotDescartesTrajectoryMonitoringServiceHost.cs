@@ -6,9 +6,9 @@ using TRobot.Communication.Services.Monitoring;
 
 namespace TRobot.MU.Service
 {
-    public class RobotDescartesTrajectoryMonitoringServiceHost: IServiceHostProvider
+    public class RobotDescartesTrajectoryMonitoringServiceHost: IServiceHostProvider<IRobotTrajectoryMonitoringService>
     {
-        public IService Service { get; set; }
+        public IRobotTrajectoryMonitoringService Service { get; set; }
 
         private ServiceHost serviceHost;
         

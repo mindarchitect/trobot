@@ -7,9 +7,9 @@ using Unity;
 
 namespace TRobot.ECU.Service
 {
-    public class RobotDescartesTrajectoryValidationServiceHost : IServiceHostProvider
+    public class RobotDescartesTrajectoryValidationServiceHost : IServiceHostProvider<IRobotTrajectoryValidationService>
     {
-        public IService Service { get; set; }
+        public IRobotTrajectoryValidationService Service { get; set; }
 
         private ServiceHost serviceHost;
         

@@ -1,8 +1,8 @@
 ﻿namespace TRobot.Communication.Services
 {
-    public interface IServiceHostProvider
+    public interface IServiceHostProvider<S> where S: IService
     {
-        IService Service { get; set; }
+        S Service { get; set; }
         void Close();
     }
 }

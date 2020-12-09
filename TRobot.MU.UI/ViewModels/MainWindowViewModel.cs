@@ -15,20 +15,15 @@ namespace TRobot.MU.UI.ViewModels
     class MainWindowViewModel: BaseViewModel
     {
         public ObservableCollection<RobotMonitoringItem> RobotMonitoringItems { get; private set; }
-        private IServiceHostProvider serviceHostProvider;
+        private IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider;
 
-        public MainWindowViewModel(IServiceHostProvider serviceHostProvider)
+        public MainWindowViewModel(IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;
             RobotMonitoringItems = new ObservableCollection<RobotMonitoringItem>();
 
-            if (serviceHostProvider.Service is IRobotTrajectoryMonitoringService)
-            {
-                IRobotTrajectoryMonitoringService robotTrajectoryMonitoringService = (IRobotTrajectoryMonitoringService) serviceHostProvider.Service;
-
-                robotTrajectoryMonitoringService.RobotTrajectorySet += OnServiceRobotTrajectorySet;
-                robotTrajectoryMonitoringService.RobotPositionUpdated += OnServiceRobotPositionUpdated;
-            }            
+            serviceHostProvider.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
+            serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;                     
         }
 
         private void OnServiceRobotPositionUpdated(object sender, RobotPositionUpdatedEventArguments e)

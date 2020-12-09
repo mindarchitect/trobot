@@ -1,8 +1,6 @@
 ﻿using System.Windows;
-using TRobot.Communication.Services;
 using TRobot.Core;
 using TRobot.MU;
-using TRobot.MU.Service;
 using TRobot.MU.UI.ViewModels;
 
 namespace MonitoringUnit.UI

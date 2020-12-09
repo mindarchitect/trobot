@@ -11,7 +11,7 @@ namespace TRobot.MU
         protected override void Initialize()
         {
             DependencyInjector.RegisterType<IRobotTrajectoryMonitoringService, RobotDescartesTrajectoryMonitoringService>();
-            DependencyInjector.RegisterType<IServiceHostProvider, RobotDescartesTrajectoryMonitoringServiceHost>();
+            DependencyInjector.RegisterType<IServiceHostProvider<IRobotTrajectoryMonitoringService>, RobotDescartesTrajectoryMonitoringServiceHost>();
         }
     }
 }
