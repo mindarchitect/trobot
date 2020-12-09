@@ -11,10 +11,9 @@ using System;
 
 namespace TRobot.MU.UI.ViewModels
 {
-    public class MainWindowViewModel: BaseViewModel
+    class MainWindowViewModel: BaseViewModel
     {
         public ObservableCollection<RobotMonitoringItem> RobotMonitoringItems { get; private set; }
-
         private RobotDescartesTrajectoryMonitoringServiceHost trajectoryMonitoringServiceHost;
 
         public MainWindowViewModel()

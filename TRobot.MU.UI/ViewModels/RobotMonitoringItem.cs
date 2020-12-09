@@ -5,7 +5,7 @@ using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.MU.UI.Models
 {
-    public class RobotMonitoringItem: BaseViewModel
+    class RobotMonitoringItem: BaseViewModel
     {
         private Point startPosition;
         private Point currentPosition;
