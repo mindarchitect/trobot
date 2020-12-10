@@ -5,6 +5,7 @@ namespace TRobot.Core
     public abstract class AbstractRobot
     {        
         public string Title { get; set; }
+        public string Image { get; set; }
         public Guid Id { get; private set; }       
 
         protected AbstractRobot()

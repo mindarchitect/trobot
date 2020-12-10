@@ -20,7 +20,8 @@ namespace TRobot.Robots
         {            
             Factory = factory;
 
-            Settings = new RobotSettings();            
+            Settings = new RobotSettings();
+            Image = @"~\..\..\Images\robot.jpg";
         }
 
         private ICommand startCommand;
@@ -105,7 +106,8 @@ namespace TRobot.Robots
         public override void Stop()
         {
             Controller?.Terminate();            
-            controlPanel?.Close();            
+            controlPanel?.Close();
+            controlPanel = null;
         } 
 
         internal void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)

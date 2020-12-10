@@ -131,9 +131,9 @@ namespace TRobot.Robots
             var robotAcceleration = Robot.Settings.Acceleration;
             var trajectory = Robot.Controller.Trajectory;
 
-            Vector currentVector = new Vector();
-            Vector resultingVelocityVector = new Vector();
-            Point positionInCurrentVector = new Point(0, 0);
+            var currentVector = new Vector();
+            var resultingVelocityVector = new Vector();
+            var positionInCurrentVector = new Point(0, 0);
 
             bool positionIsInCurrentVector = false;
 
