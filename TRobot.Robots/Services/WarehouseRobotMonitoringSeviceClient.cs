@@ -23,6 +23,7 @@ namespace TRobot.Robots.Services
                 robotTrajectory.RobotId = robotId;
                 robotTrajectory.RobotTitle = robotTitle;
                 robotTrajectory.Trajectory = trajectoryPoints;
+                //robotTrajectory.CurrentPosition = trajectoryPoints[0];
 
                 Channel.SetupRobotTrajectory(robotTrajectory);
             }            

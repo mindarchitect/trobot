@@ -139,7 +139,7 @@ namespace TRobot.ECU.UI.ViewModels
             Application.Current.Shutdown();
         }
 
-        public void OnWindowClosing(object sender, CancelEventArgs e)
+        internal void OnClosing(object sender, CancelEventArgs e)
         {
             serviceHostProvider.Close();
 

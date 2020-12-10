@@ -20,7 +20,10 @@ namespace TRobot.Robots
         {            
             Factory = factory;
 
+            Engine = new WarehouseRobotEngine(this);          
+            Controller = new WarehouseRobotController(this);
             Settings = new RobotSettings();
+
             Image = @"~\..\..\Images\robot.jpg";
         }
 
@@ -60,7 +63,7 @@ namespace TRobot.Robots
             set;
         }
 
-        public double CurrentVelocity
+        internal double CurrentVelocity
         {
             get;
             set;
@@ -91,28 +94,31 @@ namespace TRobot.Robots
 
         public override void Start()
         {
-            Engine = new WarehouseRobotEngine(this);
-            Controller = new WarehouseRobotController(this);
             Controller.Initialize();
-     
+
             if (controlPanel == null)
             {
                 controlPanel = new WarehouseRobotControlPanel(this);
+                controlPanel.Closed += OnWarehouseRobotControlPanelClosed;
             }
-            
+
             controlPanel.Show();
         }      
 
         public override void Stop()
         {
-            Controller?.Terminate();            
-            controlPanel?.Close();
-            controlPanel = null;
+            Controller?.Terminate();
+            controlPanel?.Hide();
         } 
 
         internal void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
         {
             Controller.UploadTrajectory(coordinates);
+        }
+
+        public void OnWarehouseRobotControlPanelClosed(object sender, EventArgs e)
+        {
+            controlPanel = null;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TRobot.ECU.UI.Views
             DependencyInjector.RegisterType<DashboardViewControlModel, DashboardViewControlModel>();
 
             var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewControlModel>();            
-            Closing += dashboardViewControlModel.OnWindowClosing;
+            Closing += dashboardViewControlModel.OnClosing;
 
             DataContext = dashboardViewControlModel;
         }        

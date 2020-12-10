@@ -66,7 +66,7 @@
     <Compile Include="ViewModels\WarehouseRobotControlPanelViewModel.cs" />
     <Compile Include="WarehouseRobot.cs" />
     <Compile Include="WarehouseRobotEngine.cs" />
-    <Page Include="WarehouseRobotControlPanel.xaml">
+    <Page Include="Views\WarehouseRobotControlPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -74,7 +74,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WarehouseRobotControlPanel.xaml.cs">
+    <Compile Include="Views\WarehouseRobotControlPanel.xaml.cs">
       <DependentUpon>WarehouseRobotControlPanel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

@@ -46,8 +46,8 @@ namespace TRobot.Robots
         {
             try
             {
-                warehouseRobotTrajectoryValidationServiceClient.Close();
-                warehouseRobotMonitoringSeviceClient.Close();
+                warehouseRobotTrajectoryValidationServiceClient?.Close();
+                warehouseRobotMonitoringSeviceClient?.Close();
             }
             catch (CommunicationException e)
             {
