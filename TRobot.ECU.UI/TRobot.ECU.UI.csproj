@@ -92,7 +92,6 @@
     </Compile>
     <Compile Include="ViewModels\AddRobotViewControlModel.cs" />
     <Compile Include="ViewModels\DashboardViewControlModel.cs" />
-    <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="Views\AddRobotView.xaml.cs">
       <DependentUpon>AddRobotView.xaml</DependentUpon>
     </Compile>

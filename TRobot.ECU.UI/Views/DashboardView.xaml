@@ -91,7 +91,8 @@
                 <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>
             <MenuItem Header="Tools">
-                <MenuItem Header="Monitor" Command="{Binding StartMonitorCommand}" />
+                <MenuItem Header="Start monitor" Command="{Binding StartMonitorCommand}" />
+                <MenuItem Header="Stop monitor" Command="{Binding StopMonitorCommand}" />
             </MenuItem>
         </Menu>
         <!-- Master Container -->

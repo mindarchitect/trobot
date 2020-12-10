@@ -18,6 +18,8 @@ namespace TRobot.ECU.UI.ViewModels
         private ObservableCollection<RobotFactory> robotFactories;
         private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;
 
+        private Process monitorProcess;
+
         public DashboardViewControlModel(IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;           
@@ -79,6 +81,20 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
+        private ICommand stopMonitorCommand;
+        public ICommand StopMonitorCommand
+        {
+            get
+            {
+                if (stopMonitorCommand == null)
+                {
+                    stopMonitorCommand = new RelayCommand<object>(StopMonitor);
+                }
+
+                return stopMonitorCommand;
+            }
+        }
+
         private ICommand exitApplicationCommand;
         public ICommand ExitApplicationCommand
         {
@@ -100,10 +116,22 @@ namespace TRobot.ECU.UI.ViewModels
 
         private void StartMonitor(object param)
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo("TRobot.MU.UI.exe");                       
-            processStartInfo.WorkingDirectory = Path.GetFullPath(@"..\..\..\TRobot.MU.UI\bin\Debug");
+            if (monitorProcess == null)
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo("TRobot.MU.UI.exe");                
+                processStartInfo.WorkingDirectory = Path.GetFullPath(@"..\..\..\TRobot.MU.UI\bin\Debug");
 
-            Process.Start(processStartInfo);
+                monitorProcess = Process.Start(processStartInfo);
+            }      
+        }
+
+        private void StopMonitor(object param)
+        {
+            if (monitorProcess != null)
+            {                
+                monitorProcess.Kill();
+                monitorProcess = null;
+            }
         }
 
         private void ExitApplication(object param)
