@@ -5,7 +5,6 @@ using System.Windows;
 using TRobot.Core;
 using TRobot.Core.Enums;
 using TRobot.Core.Robot.Events;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace TRobot.Robots
