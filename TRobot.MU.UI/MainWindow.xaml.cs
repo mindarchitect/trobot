@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using TRobot.Core;
 using TRobot.MU.UI.ViewModels;
 
@@ -16,7 +18,10 @@ namespace MonitoringUnit.UI
             var mainWindowViewModel = DependencyInjector.Resolve<MainWindowViewModel>();
             Closing += mainWindowViewModel.OnWindowClosing;
 
-            DataContext = mainWindowViewModel;            
+            DataContext = mainWindowViewModel;
+
+            Uri iconUri = new Uri("pack://application:,,,/Images/monitor.jpg", UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
         }
     }
 }

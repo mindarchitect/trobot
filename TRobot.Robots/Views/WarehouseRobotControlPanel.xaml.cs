@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using TRobot.Robots.ViewModels;
 
 namespace TRobot.Robots
@@ -18,6 +20,9 @@ namespace TRobot.Robots
             Closing += OnClosing;
 
             DataContext = warehouseRobotControlPanelViewModel;
+
+            Uri iconUri = new Uri("pack://application:,,,/Images/control.jpg", UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
         }
 
         public void OnClosing(object sender, CancelEventArgs e)

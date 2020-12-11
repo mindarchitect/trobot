@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using TRobot.Core;
 using TRobot.Core.UI.ViewModels;
 using TRobot.ECU.UI.ViewModels;
@@ -22,6 +23,9 @@ namespace TRobot.ECU.UI.Views
             Closing += dashboardViewControlModel.OnClosing;
 
             DataContext = dashboardViewControlModel;
+
+            Uri iconUri = new Uri("pack://application:,,,/Images/robot.png", UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
         }        
     }
 }
