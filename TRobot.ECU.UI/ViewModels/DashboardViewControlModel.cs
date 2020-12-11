@@ -141,6 +141,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         internal void OnClosing(object sender, CancelEventArgs e)
         {
+            StopMonitor(null);
             serviceHostProvider.Close();
 
             foreach (var robotFactory in robotFactories)

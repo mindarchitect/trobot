@@ -76,22 +76,22 @@ namespace TRobot.Robots
         {            
         }
 
-        internal async void SetupTrajectory()
-        {
-            await Task.Run(() => BuildTrajectory());
-            await Task.Run(() => SetupTrajectoryMonitoring());            
-        }
-
         internal async void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
         {
             if (coordinates.Count < 2)
             {
-                throw new Exception("Trajectory coordinates should containe at least 2 coordinates");
+                throw new Exception("Trajectory coordinates should contain at least 2 coordinates");
             }
 
             Coordinates = coordinates;
 
             await Task.Run(() => ValidateTrajectory());
+        }
+
+        private async void SetupTrajectory()
+        {
+            await Task.Run(() => BuildTrajectory());
+            await Task.Run(() => SetupTrajectoryMonitoring());
         }
 
         public void Start()
@@ -114,7 +114,7 @@ namespace TRobot.Robots
             State = RobotState.Reset;
         }
 
-        internal void BuildTrajectory()
+        private void BuildTrajectory()
         {            
             Trajectory = new LinkedList<Vector>();
 
