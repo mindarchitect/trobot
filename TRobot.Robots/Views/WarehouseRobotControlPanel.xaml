@@ -195,23 +195,22 @@
                 </Button.ToolTip>
             </Button>
         </StackPanel>
-        
-        <DataGrid 
-            Name="TrajectoryDataGrid" 
-            RowHeaderWidth="0" 
-            AutoGenerateColumns="False" 
-            IsReadOnly="False" 
-            Grid.Row="0" 
-            Grid.Column="1" 
-            GridLinesVisibility="None" 
-            ItemsSource="{Binding Path=TrajectoryCoordinates}" 
-            CanUserAddRows="True" 
-            CanUserDeleteRows="True" 
-            CanUserReorderColumns="False" 
-            CanUserResizeRows="False" 
-            Margin="5" 
-            IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}"
-            SelectedItem="{Binding Path=SelectedTrajectoryCoordinatesItem, Mode=OneWayToSource}">
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1" >
+            <DataGrid 
+                Name="TrajectoryDataGrid" 
+                RowHeaderWidth="0" 
+                AutoGenerateColumns="False" 
+                IsReadOnly="False" 
+                GridLinesVisibility="None" 
+                ItemsSource="{Binding Path=TrajectoryCoordinates}" 
+                CanUserAddRows="True" 
+                CanUserDeleteRows="True" 
+                CanUserReorderColumns="False" 
+                CanUserResizeRows="False" 
+                Margin="5" 
+                IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}"
+                SelectedItem="{Binding Path=SelectedTrajectoryCoordinatesItem, Mode=OneWayToSource}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
@@ -229,6 +228,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>            
         </DataGrid>
+     </ScrollViewer>
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" >

@@ -39,15 +39,8 @@
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         Step:
                     </Label>
-                    <TextBox TextAlignment="Center" Style="{StaticResource TextBox}" HorizontalAlignment="Stretch" Margin="5,5,5,5" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}">
-                        <TextBox.Text>
-                            <Binding Path="Step" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validators:NumberValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                    <Label  Content="{Binding Path=Step}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
+                    </Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">

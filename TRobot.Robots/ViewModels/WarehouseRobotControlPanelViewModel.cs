@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,15 +15,15 @@ namespace TRobot.Robots.ViewModels
     public class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
-
-        private DescartesCoordinatesItem selectedTrajectoryCoordinatesItem;               
-
         public WarehouseRobot Robot { get; set; }
+
+        private DescartesCoordinatesItem selectedTrajectoryCoordinatesItem;
 
         private bool trajectoryValidated;
         private RobotState robotState;
 
         private ICommand startStopCommand;
+
         private ICommand uploadSettingsCommand;
         private ICommand resetCommand;
         private ICommand deleteSelectedTrajectoryCoordinatesItemCommand;
@@ -31,7 +32,7 @@ namespace TRobot.Robots.ViewModels
         private uint velocity;
         private uint acceleration;
 
-        public WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
+        internal WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
             Robot = robot;
             Robot.Controller.TrajectoryValidated += OnControllerRobotTrajectoryValidated;
@@ -51,16 +52,6 @@ namespace TRobot.Robots.ViewModels
             RobotState = Robot.Controller.State;
         }
 
-        private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
-        {
-            TrajectoryValidated = e.ValidationResult; 
-            
-            if (!TrajectoryValidated)
-            {
-                MessageBox.Show(string.Format("Trajectroy validation error: {0}", e.ValidationMessage), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-        }
-        
         public ICommand UploadSettingsCommand
         {
             get
@@ -71,7 +62,7 @@ namespace TRobot.Robots.ViewModels
                 }
                 return uploadSettingsCommand;
             }
-        }        
+        }
 
         public ICommand StartStopCommand
         {
@@ -80,7 +71,7 @@ namespace TRobot.Robots.ViewModels
                 startStopCommand = new RelayCommand<object>(StartStopRobot);                                
                 return startStopCommand;
             }
-        }        
+        }
 
         public ICommand ResetCommand
         {
@@ -93,7 +84,7 @@ namespace TRobot.Robots.ViewModels
                 return resetCommand;
             }
         }
-        
+
         public ICommand DeleteSelectedTrajectoryCoordinatesItemCommand
         {
             get
@@ -118,7 +109,7 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        public bool TrajectoryValidated
+        internal bool TrajectoryValidated
         {
             get
             {
@@ -187,6 +178,16 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
+        private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
+        {
+            TrajectoryValidated = e.ValidationResult;
+
+            if (!TrajectoryValidated)
+            {
+                MessageBox.Show(string.Format("Trajectroy validation error: {0}", e.ValidationMessage), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
+
         private bool CanDeleteSelectedTrajectoryCoordinatesItem
         {
             get { return SelectedTrajectoryCoordinatesItem != null; }
@@ -227,9 +228,15 @@ namespace TRobot.Robots.ViewModels
             RobotState = Robot.Controller.State;
         }
 
-        internal void AddTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
+        internal uint GetLatestTrajectoryCoordinatesStepNumber()
+        {
+            return (uint) TrajectoryCoordinates.Count;
+        }
+
+        internal uint AddTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
         {
             TrajectoryCoordinates.Add(descartesCoordinatesItem);
+            return (uint) TrajectoryCoordinates.Count;
         }
 
         private void DeleteTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
