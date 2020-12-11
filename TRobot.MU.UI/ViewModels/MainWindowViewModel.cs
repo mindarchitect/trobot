@@ -9,6 +9,7 @@ using System.Linq;
 using System;
 using TRobot.Communication.Services.Monitoring;
 using TRobot.Communication.Services;
+using System.Windows;
 
 namespace TRobot.MU.UI.ViewModels
 {
@@ -23,7 +24,8 @@ namespace TRobot.MU.UI.ViewModels
             RobotMonitoringItems = new ObservableCollection<RobotMonitoringItem>();
 
             serviceHostProvider.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
-            serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;                     
+            serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
+            serviceHostProvider.Service.RobotPositionReset += OnServiceRobotPositionReset;
         }
 
         private void OnServiceRobotPositionUpdated(object sender, RobotPositionUpdatedEventArguments e)
@@ -37,6 +39,18 @@ namespace TRobot.MU.UI.ViewModels
             }            
         }
 
+        private void OnServiceRobotPositionReset(object sender, RobotPositionResetEventArguments e)
+        {
+            var robotId = e.Robot.RobotId;
+            var item = RobotMonitoringItems.FirstOrDefault(robotMonitoringItem => robotMonitoringItem.Guid == robotId);
+
+            if (item != null)
+            {
+                item.StartPoint = item.Trajectory.First();
+                item.CurrentPosition = new Point(0,0);
+            }
+        }
+
         private void OnServiceRobotTrajectorySet(object sender, TrajectorySetEventArguments e)
         {
             var robotId = e.RobotDescartesTrajectory.RobotId;
@@ -44,9 +58,8 @@ namespace TRobot.MU.UI.ViewModels
 
             if (item != null)
             {
-                item.StartPoint = e.RobotDescartesTrajectory.CurrentPosition;
-                item.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);                
-                item.CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition;
+                item.StartPoint = e.RobotDescartesTrajectory.Trajectory.First();
+                item.Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory);
                 item.Title = e.RobotDescartesTrajectory.RobotTitle;                
             }
             else 
@@ -54,10 +67,9 @@ namespace TRobot.MU.UI.ViewModels
                 var random = new Random();
                 var robotMonitoringItem = new RobotMonitoringItem
                 {
-                    StartPoint = e.RobotDescartesTrajectory.CurrentPosition,
+                    StartPoint = e.RobotDescartesTrajectory.Trajectory.First(),
                     Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory),
                     Color = Color.FromRgb(Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256)), Convert.ToByte(random.Next(256))),
-                    CurrentPosition = e.RobotDescartesTrajectory.CurrentPosition,
                     Guid = e.RobotDescartesTrajectory.RobotId,
                     Title = e.RobotDescartesTrajectory.RobotTitle
                 };

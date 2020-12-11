@@ -9,5 +9,8 @@ namespace TRobot.Communication.Services.Monitoring
 
         [OperationContract(IsOneWay = true)]
         void RobotTrajectoryUpdated();
+
+        [OperationContract(IsOneWay = true)]
+        void RobotPositionReset();
     }
 }

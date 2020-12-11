@@ -12,6 +12,9 @@ namespace TRobot.MU.UI.Models
         private Color color;
         private string title;
         private PointCollection trajectory;
+
+        public Guid Guid { get; set; }
+
         public Point StartPoint
         {
             get
@@ -24,7 +27,7 @@ namespace TRobot.MU.UI.Models
                 OnPropertyChanged("StartPoint");
             }
         }
-        public Guid Guid { get; set; }
+
         public PointCollection Trajectory
         {
             get
@@ -37,6 +40,7 @@ namespace TRobot.MU.UI.Models
                 OnPropertyChanged("Trajectory");
             }
         }        
+
         public Point CurrentPosition
         {
             get
@@ -49,6 +53,7 @@ namespace TRobot.MU.UI.Models
                 OnPropertyChanged("CurrentPosition");
             }
         }
+
         public Color Color
         {
             get
@@ -61,6 +66,7 @@ namespace TRobot.MU.UI.Models
                 OnPropertyChanged("Color");
             }
         }        
+
         public string Title
         {
             get

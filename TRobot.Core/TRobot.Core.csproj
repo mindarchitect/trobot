@@ -73,6 +73,7 @@
     <Compile Include="Robot\Interfaces\IControllable.cs" />
     <Compile Include="Robot\Interfaces\IMovable.cs" />
     <Compile Include="Robot\AbstractRobot.cs" />
+    <Compile Include="Services\Contracts\Data\Robot.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectory.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
   </ItemGroup>

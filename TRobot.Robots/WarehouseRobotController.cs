@@ -38,7 +38,7 @@ namespace TRobot.Robots
             var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);            
             warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));            
 
-            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback);
+            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, RobotPositionResetCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
         }
 
@@ -69,7 +69,7 @@ namespace TRobot.Robots
 
         private void OnEnginePositionChanged(object sender, PositionChangedEventArguments e)
         {
-            warehouseRobotMonitoringSeviceClient.UpdatePosition(robot.Id, e.NewPosition);
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, e.NewPosition);
         }
 
         private void OnEngineVelocityChanged(object sender, VelocityChangedEventArguments e)
@@ -91,9 +91,7 @@ namespace TRobot.Robots
 
             Coordinates = coordinates;
 
-            await Task.Run(() => ValidateTrajectory());
-
-            //Testing         
+            await Task.Run(() => ValidateTrajectory());       
             await Task.Run(() => BuildTrajectory());
         }
 
@@ -112,6 +110,8 @@ namespace TRobot.Robots
         public void Reset()
         {
             robot.Engine.Reset();
+            warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
+
             State = RobotState.Reset;
         }
 
@@ -167,7 +167,7 @@ namespace TRobot.Robots
                 Y = item.Point.Y
             });
 
-            warehouseRobotMonitoringSeviceClient.SetupTrajectory(robot.Id, robot.Title, trajectoryPoints);
+            warehouseRobotMonitoringSeviceClient.SetupRobotTrajectory(robot.Id, robot.Title, trajectoryPoints);
         }
 
         private Vector GetTrajectoryVectors(Point start, Point end)
@@ -186,6 +186,10 @@ namespace TRobot.Robots
 
         private void TrajectoryUpdatedCallback()
         {
-        }               
+        }
+
+        private void RobotPositionResetCallback()
+        {
+        }
     }
 }

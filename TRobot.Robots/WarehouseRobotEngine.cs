@@ -310,7 +310,9 @@ namespace TRobot.Robots
             var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
             UpdateRobotCurrentVelocity(resultingVelocityVector);
 
-            UpdateRobotCurrentPosition(robot.Controller.Coordinates.First().Point);
+            // In monitoring unit, current position property defines an offset to start position
+            // Sending Point(0, 0) resets current position offset
+            UpdateRobotCurrentPosition(new Point(0, 0));
 
             engineTask = null;
         }

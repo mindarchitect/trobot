@@ -7,10 +7,13 @@ namespace TRobot.Robots.Services
     {
         private Action trajectorySetCallback;
         private Action trajectoryUpdatedCallback;
-        internal WarehouseRobotMonitoringServiceCallback(Action trajectorySetCallback, Action trajectoryUpdatedCallback)
+        private Action robotPositionResetCallback;
+
+        internal WarehouseRobotMonitoringServiceCallback(Action trajectorySetCallback, Action trajectoryUpdatedCallback, Action robotPositionResetCallback)
         {
             this.trajectorySetCallback = trajectorySetCallback;
             this.trajectoryUpdatedCallback = trajectoryUpdatedCallback;
+            this.robotPositionResetCallback = robotPositionResetCallback;
         }
 
         public void RobotTrajectorySet()
@@ -21,6 +24,11 @@ namespace TRobot.Robots.Services
         public void RobotTrajectoryUpdated()
         {
             trajectoryUpdatedCallback();
+        }
+
+        public void RobotPositionReset()
+        {
+            robotPositionResetCallback();
         }
     }
 }

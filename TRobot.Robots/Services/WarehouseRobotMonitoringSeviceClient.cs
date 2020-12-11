@@ -15,7 +15,7 @@ namespace TRobot.Robots.Services
         {
         }
 
-        internal void SetupTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
+        internal void SetupRobotTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
         {
             if (InnerChannel.State != CommunicationState.Faulted)
             {
@@ -23,13 +23,12 @@ namespace TRobot.Robots.Services
                 robotTrajectory.RobotId = robotId;
                 robotTrajectory.RobotTitle = robotTitle;
                 robotTrajectory.Trajectory = trajectoryPoints;
-                //robotTrajectory.CurrentPosition = trajectoryPoints[0];
 
                 Channel.SetupRobotTrajectory(robotTrajectory);
             }            
         }
 
-        internal void UpdatePosition(Guid robotId, Point position)
+        internal void UpdateRobotPosition(Guid robotId, Point position)
         {
             if (InnerChannel.State != CommunicationState.Faulted)
             {
@@ -38,6 +37,17 @@ namespace TRobot.Robots.Services
                 robotTrajectoryPosition.CurrentPosition = position;
 
                 Channel.UpdateRobotPosition(robotTrajectoryPosition);
+            }
+        }
+
+        internal void ResetRobotPosition(Guid robotId)
+        {
+            if (InnerChannel.State != CommunicationState.Faulted)
+            {
+                var robot = new Robot();
+                robot.RobotId = robotId;
+
+                Channel.ResetRobotPosition(robot);
             }
         }
     }

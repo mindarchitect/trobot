@@ -11,6 +11,7 @@ namespace TRobot.MU.Service
     {
         public event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
         public event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
+        public event EventHandler<RobotPositionResetEventArguments> RobotPositionReset;
 
         public RobotDescartesTrajectoryMonitoringService()
         {            
@@ -34,6 +35,15 @@ namespace TRobot.MU.Service
             callback.RobotTrajectoryUpdated();
         }
 
+        public void ResetRobotPosition(Robot robot)
+        {
+            OnRobotPositionReset(new RobotPositionResetEventArguments(robot));
+
+            OperationContext operationContext = OperationContext.Current;
+            IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
+            callback.RobotPositionReset();
+        }
+
         protected virtual void OnTrajectorySet(TrajectorySetEventArguments e)
         {
             RobotTrajectorySet?.Invoke(this, e);
@@ -42,6 +52,11 @@ namespace TRobot.MU.Service
         protected virtual void OnRobotPositionUpdated(RobotPositionUpdatedEventArguments e)
         {
             RobotPositionUpdated?.Invoke(this, e);
+        }
+
+        protected virtual void OnRobotPositionReset(RobotPositionResetEventArguments e)
+        {
+            RobotPositionReset?.Invoke(this, e);
         }
     }
 }
