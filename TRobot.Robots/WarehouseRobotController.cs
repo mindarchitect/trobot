@@ -91,8 +91,7 @@ namespace TRobot.Robots
 
             Coordinates = coordinates;
 
-            await Task.Run(() => ValidateTrajectory());       
-            await Task.Run(() => BuildTrajectory());
+            await Task.Run(() => ValidateTrajectory());
         }
 
         public void Start()
@@ -178,6 +177,11 @@ namespace TRobot.Robots
         private void TrajectoryValidatedCallback(RobotValidationResult robotValidationResult)
         {
             OnTrajectoryValidated(new TrajectoryValidatedEventArguments(robotValidationResult.RobotId, robotValidationResult.ValidationResult, robotValidationResult.ValidationMessage));
+
+            if (robotValidationResult.ValidationResult)
+            {
+                SetupTrajectory();
+            }
         }
 
         private void TrajectorySetupCallback()

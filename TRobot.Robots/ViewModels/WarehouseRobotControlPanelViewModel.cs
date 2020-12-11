@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -53,11 +52,7 @@ namespace TRobot.Robots.ViewModels
         {
             TrajectoryValidated = e.ValidationResult; 
             
-            if (TrajectoryValidated)
-            {
-                Robot.Controller.SetupTrajectory();
-            }
-            else
+            if (!TrajectoryValidated)
             {
                 MessageBox.Show(string.Format("Trajectroy validation error: {0}", e.ValidationMessage), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
