@@ -1,0 +1,97 @@
+﻿using System.Windows.Input;
+using TRobot.Core.UI.Commands;
+using TRobot.ECU.Models;
+using TRobot.ECU.UI.ViewModels;
+
+namespace TRobot.Robots.ViewModels
+{
+    class AddDestinationPointViewModel : BaseViewModel
+    {  
+        private ICommand okCommand;
+        private ICommand cancelCommand;
+
+        private uint step;
+        private uint x;
+        private uint y;
+
+        private WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel;
+
+        internal AddDestinationPointViewModel(WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel)
+        {
+            this.warehouseRobotControlPanelViewModel = warehouseRobotControlPanelViewModel;
+        }
+
+        public ICommand OkCommand
+        {
+            get
+            {
+                if (okCommand == null)
+                {
+                    okCommand = new RelayCommand<object>(param => OK());
+                }
+                return okCommand;
+            }
+        }
+
+        public ICommand CancelCommand
+        {
+            get
+            {
+                if (cancelCommand == null)
+                {
+                    cancelCommand = new RelayCommand<object>(param => Cancel());
+                }
+                return cancelCommand;
+            }
+        }
+
+        public uint Step
+        {
+            get
+            {
+                return step;
+            }
+            set
+            {
+                step = value;
+                OnPropertyChanged("Step");
+            }
+        }
+
+        public uint X
+        {
+            get
+            {
+                return x;
+            }
+            set
+            {
+                x = value;
+                OnPropertyChanged("X");
+            }
+        }
+
+        public uint Y
+        {
+            get
+            {
+                return y;
+            }
+            set
+            {
+                y = value;
+                OnPropertyChanged("Y");
+            }
+        }
+
+        private void OK()
+        {
+            warehouseRobotControlPanelViewModel.AddTrajectoryCoordinatesItem(new DescartesCoordinatesItem(step, x, y));
+        }
+
+        private void Cancel()
+        {
+
+        }
+    }
+}

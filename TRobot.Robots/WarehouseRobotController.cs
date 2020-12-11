@@ -109,7 +109,7 @@ namespace TRobot.Robots
         public void Reset()
         {
             robot.Engine.Reset();
-            warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));
 
             State = RobotState.Reset;
         }

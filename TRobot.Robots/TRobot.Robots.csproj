@@ -62,10 +62,18 @@
     <Compile Include="Services\WarehouseRobotMonitoringServiceCallback.cs" />
     <Compile Include="Services\WarehouseRobotTrajectoryValidationServiceCallback.cs" />
     <Compile Include="Services\WarehouseRobotTrajectoryValidationServiceClient.cs" />
+    <Compile Include="ViewModels\AddDestinationPointViewModel.cs" />
+    <Compile Include="Views\AddDestinationPointView.xaml.cs">
+      <DependentUpon>AddDestinationPointView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WarehouseRobotController.cs" />
     <Compile Include="ViewModels\WarehouseRobotControlPanelViewModel.cs" />
     <Compile Include="WarehouseRobot.cs" />
     <Compile Include="WarehouseRobotEngine.cs" />
+    <Page Include="Views\AddDestinationPointView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WarehouseRobotControlPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

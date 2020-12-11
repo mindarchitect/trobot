@@ -7,6 +7,7 @@ using TRobot.Core.Enums;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.Models;
 using TRobot.ECU.UI.ViewModels;
+using TRobot.Robots.Views;
 
 namespace TRobot.Robots.ViewModels
 {
@@ -25,6 +26,7 @@ namespace TRobot.Robots.ViewModels
         private ICommand uploadSettingsCommand;
         private ICommand resetCommand;
         private ICommand deleteSelectedTrajectoryCoordinatesItemCommand;
+        private ICommand addDestinationPointCommand;
 
         private uint velocity;
         private uint acceleration;
@@ -102,17 +104,17 @@ namespace TRobot.Robots.ViewModels
                 }
                 return deleteSelectedTrajectoryCoordinatesItemCommand;
             }
-        }        
+        }
 
-        private void StartStopRobot(object state)
+        public ICommand AddDestinationPointCommand
         {
-            if ((bool)state)
+            get
             {
-                StartRobot();                
-            }
-            else
-            {
-                StopRobot();                
+                if (addDestinationPointCommand == null)
+                {
+                    addDestinationPointCommand = new RelayCommand<object>(param => AddDestinationPoint());
+                }
+                return addDestinationPointCommand;
             }
         }
 
@@ -195,6 +197,18 @@ namespace TRobot.Robots.ViewModels
             Robot.UploadTrajectory(TrajectoryCoordinates);            
         }
 
+        private void StartStopRobot(object state)
+        {
+            if ((bool)state)
+            {
+                StartRobot();
+            }
+            else
+            {
+                StopRobot();
+            }
+        }
+
         private void StartRobot()
         {
             Robot.Controller.Start();
@@ -213,9 +227,20 @@ namespace TRobot.Robots.ViewModels
             RobotState = Robot.Controller.State;
         }
 
+        internal void AddTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
+        {
+            TrajectoryCoordinates.Add(descartesCoordinatesItem);
+        }
+
         private void DeleteTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
         {
             TrajectoryCoordinates.Remove(descartesCoordinatesItem);
+        }
+
+        private void AddDestinationPoint()
+        {
+            var addDestinationPointView = new AddDestinationPointView(this);
+            addDestinationPointView.Show();
         }
 
         private void TrajectoryDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

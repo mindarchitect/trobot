@@ -1,7 +1,7 @@
 ﻿<Application x:Class="MonitoringUnit.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MonitoringUnit.UI"
+             xmlns:local="clr-namespace:TRobot.MU.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>        
         <DrawingBrush x:Key="GridBrushResource" Opacity="0.25" Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">

@@ -233,7 +233,7 @@
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" >
             <!-- Add destination point button -->
-            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPoint}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
+            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
                 Add destination point
                 <Button.ToolTip>
                     <TextBlock>Add destination point</TextBlock>
