@@ -46,7 +46,6 @@ namespace TRobot.MU.UI.ViewModels
 
             if (item != null)
             {
-                item.StartPoint = item.Trajectory.First();
                 item.CurrentPosition = new Point(0,0);
             }
         }
