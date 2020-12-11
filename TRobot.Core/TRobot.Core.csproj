@@ -76,6 +76,7 @@
     <Compile Include="Services\Contracts\Data\Robot.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectory.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
+    <Compile Include="Simulation\ISimulationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

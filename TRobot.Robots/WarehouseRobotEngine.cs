@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TRobot.Robots
 {
-    internal class WarehouseRobotEngine: IControllable
+    internal class WarehouseRobotEngine: RobotEngine, IControllable
     {
         private WarehouseRobot robot;        
 
@@ -74,6 +74,9 @@ namespace TRobot.Robots
 
             DriveX = new RobotDimensionalDrive(Dimension.X);
             DriveY = new RobotDimensionalDrive(Dimension.Y);
+
+            Drives.Add(DriveX);
+            Drives.Add(DriveY);
 
             engineTaskControllingEvent = new ManualResetEvent(false);
         }

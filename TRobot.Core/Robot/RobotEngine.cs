@@ -2,9 +2,9 @@
 
 namespace TRobot.Core
 {
-    public class RobotEngine : Engine, IControllable
+    public class RobotEngine : Engine
     {
-        public List<IControllable> Drives
+        protected List<Drive> Drives
         {
             get;
             private set;
@@ -12,17 +12,7 @@ namespace TRobot.Core
 
         protected RobotEngine()
         {
-            Drives = new List<IControllable>();
-        }
-
-        public virtual void Start()
-        {
-            Drives.ForEach((drive) => drive.Start());
-        }
-
-        public virtual void Stop()
-        {
-            Drives.ForEach((drive) => drive.Stop());
-        }        
+            Drives = new List<Drive>();
+        }    
     }
 }
