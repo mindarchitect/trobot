@@ -13,7 +13,7 @@ namespace TRobot.Robots.Services
         public WarehouseRobotMonitoringSeviceClient(object callbackInstance, Binding binding, EndpointAddress remoteAddress)
         : base(callbackInstance, binding, remoteAddress)
         {
-        }
+        }       
 
         internal void SetupRobotTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
         {

@@ -23,14 +23,15 @@ namespace TRobot.Robots
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
-        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;        
+        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
+        public event EventHandler<EventArgs> MonitoringServiceClientStateChanged;
 
         internal WarehouseRobotController(WarehouseRobot robot)
         {
             this.robot = robot;
 
             this.robot.Engine.VelocityChanged += OnEngineVelocityChanged;
-            this.robot.Engine.PositionChanged += OnEnginePositionChanged;            
+            this.robot.Engine.PositionChanged += OnEnginePositionChanged;
         }
 
         public void Initialize()
@@ -40,6 +41,12 @@ namespace TRobot.Robots
 
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, RobotPositionResetCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
+
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += InnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += InnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += InnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Closed += InnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += InnerChannelStateChanged;
         }
 
         public void Terminate()
@@ -47,7 +54,7 @@ namespace TRobot.Robots
             try
             {
                 warehouseRobotTrajectoryValidationServiceClient?.Close();
-                warehouseRobotMonitoringSeviceClient?.Close();
+                warehouseRobotMonitoringSeviceClient?.Close();                
             }
             catch (CommunicationException e)
             {
@@ -86,6 +93,11 @@ namespace TRobot.Robots
             Coordinates = coordinates;
 
             await Task.Run(() => ValidateTrajectory());
+        }
+
+        internal CommunicationState GetWarehouseRobotMonitoringSeviceConnectionState()
+        {
+            return warehouseRobotMonitoringSeviceClient.State;
         }
 
         private async void SetupTrajectory()
@@ -140,12 +152,7 @@ namespace TRobot.Robots
                 {
                 }                
             }                      
-        }  
-
-        protected virtual void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
-        {            
-            TrajectoryValidated?.Invoke(this, e);
-        }        
+        }               
 
         private void ValidateTrajectory()
         {
@@ -194,6 +201,16 @@ namespace TRobot.Robots
 
         private void RobotPositionResetCallback()
         {
+        }
+
+        private void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
+        {
+            TrajectoryValidated?.Invoke(this, e);
+        }
+
+        private void InnerChannelStateChanged(object sender, EventArgs e)
+        {
+            MonitoringServiceClientStateChanged?.Invoke(this, e);
         }
     }
 }

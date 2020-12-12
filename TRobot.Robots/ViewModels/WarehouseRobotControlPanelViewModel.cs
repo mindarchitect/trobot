@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,12 +32,13 @@ namespace TRobot.Robots.ViewModels
 
         private uint velocity;
         private uint acceleration;
+        private string connectionState;
 
         internal WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
             Robot = robot;
             Robot.Controller.TrajectoryValidated += OnControllerRobotTrajectoryValidated;
-               
+
             // Just for testing  
             TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>();
 
@@ -50,6 +52,7 @@ namespace TRobot.Robots.ViewModels
             Acceleration = 2;
 
             RobotState = Robot.Controller.State;
+            Robot.Controller.MonitoringServiceClientStateChanged += Controller_MonitoringServiceClientStateChanged;
         }
 
         public ICommand UploadSettingsCommand
@@ -68,7 +71,7 @@ namespace TRobot.Robots.ViewModels
         {
             get
             {
-                startStopCommand = new RelayCommand<object>(StartStopRobot);                                
+                startStopCommand = new RelayCommand<object>(StartStopRobot);
                 return startStopCommand;
             }
         }
@@ -109,6 +112,7 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
+        [DefaultValue(false)]
         internal bool TrajectoryValidated
         {
             get
@@ -178,6 +182,19 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
+        public string ConnectionState
+        {
+            get
+            {
+                return connectionState;
+            }
+            set
+            {
+                connectionState = value;
+                OnPropertyChanged("ConnectionState");
+            }
+        }
+
         private void OnControllerRobotTrajectoryValidated(object sender, TrajectoryValidatedEventArguments e)
         {
             TrajectoryValidated = e.ValidationResult;
@@ -195,7 +212,7 @@ namespace TRobot.Robots.ViewModels
 
         private void UploadRobotSettings()
         {
-            Robot.UploadTrajectory(TrajectoryCoordinates);            
+            Robot.UploadTrajectory(TrajectoryCoordinates);
         }
 
         private void StartStopRobot(object state)
@@ -223,20 +240,20 @@ namespace TRobot.Robots.ViewModels
         }
 
         private void ResetRobot()
-        {            
+        {
             Robot.Controller.Reset();
             RobotState = Robot.Controller.State;
         }
 
         internal uint GetLatestTrajectoryCoordinatesStepNumber()
         {
-            return (uint) TrajectoryCoordinates.Count;
+            return (uint)TrajectoryCoordinates.Count;
         }
 
         internal uint AddTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
         {
             TrajectoryCoordinates.Add(descartesCoordinatesItem);
-            return (uint) TrajectoryCoordinates.Count;
+            return (uint)TrajectoryCoordinates.Count;
         }
 
         private void DeleteTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)
@@ -251,9 +268,14 @@ namespace TRobot.Robots.ViewModels
         }
 
         private void TrajectoryDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {            
+        {
             DataGrid grid = (DataGrid)sender;
-            grid.CommitEdit(DataGridEditingUnit.Row, true);                        
+            grid.CommitEdit(DataGridEditingUnit.Row, true);
+        }
+
+        private void Controller_MonitoringServiceClientStateChanged(object sender, EventArgs e)
+        {
+            ConnectionState = Robot.Controller.GetWarehouseRobotMonitoringSeviceConnectionState().ToString();
         }
     }
 }

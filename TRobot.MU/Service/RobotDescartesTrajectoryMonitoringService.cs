@@ -35,6 +35,7 @@ namespace TRobot.MU.Service
             callback.RobotTrajectoryUpdated();
         }
 
+        [Obsolete]
         public void ResetRobotPosition(Robot robot)
         {
             OnRobotPositionReset(new RobotPositionResetEventArguments(robot));

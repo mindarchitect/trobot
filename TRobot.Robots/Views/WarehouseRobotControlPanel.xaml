@@ -9,12 +9,8 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Warehouse robot control panel"        
-        Height="190"
-        MinWidth="900"
-        MaxWidth="900"
-        ResizeMode="NoResize"
-        >  
-
+        Height="190"       
+        ResizeMode="NoResize">  
     <Window.Resources>
         <Style TargetType="{x:Type ToggleButton}"
            x:Key="ToggleButtonStyle">            
@@ -40,7 +36,6 @@
         <Style x:Key="Label" TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="5,5,5,5" />
             <Setter Property="Padding" Value="5,5,5,5" />
-            
         </Style>
 
         <Style x:Key="TextBox" TargetType="{x:Type TextBox}">
@@ -124,8 +119,8 @@
     <!-- Main window grid -->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="330" MaxWidth="330" />
-            <ColumnDefinition MinWidth="500" />        
+            <ColumnDefinition MinWidth="300" MaxWidth="330" />
+            <ColumnDefinition Width="300" />        
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -211,29 +206,29 @@
                 Margin="5" 
                 IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}"
                 SelectedItem="{Binding Path=SelectedTrajectoryCoordinatesItem, Mode=OneWayToSource}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Step" MinWidth="100" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="X" MinWidth="100" Width="*" Binding="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Y" MinWidth="100" Width="*" Binding="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Delete" 
-                                    Command="{Binding Path=DataContext.DeleteSelectedTrajectoryCoordinatesItemCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-                                    CommandParameter="{Binding}"
-                                    IsEnabled="True"
-                            />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>            
-        </DataGrid>
-     </ScrollViewer>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Step" MinWidth="50" Binding="{Binding Step, StringFormat='Step #0', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="X" MinWidth="50" Width="*" Binding="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Y" MinWidth="50" Width="*" Binding="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" 
+                                        Command="{Binding Path=DataContext.DeleteSelectedTrajectoryCoordinatesItemCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding}"
+                                        IsEnabled="True"
+                                />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
 
         <!-- Function Buttons -->
-        <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" >
-            <!-- Add destination point button -->
-            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}">
+        <StackPanel Grid.Row="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <Label  Content="{Binding Path=ConnectionState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,52,5" HorizontalContentAlignment="Left" Width="100" />
+            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" HorizontalAlignment="Right" >
                 Add destination point
                 <Button.ToolTip>
                     <TextBlock>Add destination point</TextBlock>

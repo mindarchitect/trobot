@@ -39,8 +39,7 @@
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         Step:
                     </Label>
-                    <Label  Content="{Binding Path=Step}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
-                    </Label>
+                    <Label  Content="{Binding Path=Step}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
