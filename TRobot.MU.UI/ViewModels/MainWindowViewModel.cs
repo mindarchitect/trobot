@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
 using TRobot.ECU.UI.ViewModels;
-using TRobot.MU.UI.Models;
 using System.Linq;
 using System;
 using TRobot.Communication.Services.Monitoring;

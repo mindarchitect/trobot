@@ -42,6 +42,9 @@ namespace TRobot.Robots
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, RobotPositionResetCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
 
+            // TODO
+            // Investigate Reset button issue when event handlers are activated
+
             /*warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += InnerChannelStateChanged;
             warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += InnerChannelStateChanged;
             warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += InnerChannelStateChanged;
@@ -112,10 +115,9 @@ namespace TRobot.Robots
         public void Reset()
         {
             robot.Engine.Reset();
-            //warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
-            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));            
-
             State = RobotState.Reset;
+            //warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));                        
         }
 
         private void BuildTrajectory()

@@ -227,7 +227,7 @@
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" Orientation="Horizontal" >
-            <Label  Content="{Binding Path=ConnectionState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="7,5,55,5" HorizontalContentAlignment="Left" Width="100" />
+            <Label  Content="{Binding Path=CommunicationState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="7,5,55,5" HorizontalContentAlignment="Left" Width="100" />
             <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" HorizontalAlignment="Right" >
                 Add destination point
                 <Button.ToolTip>

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using TRobot.ECU.UI.ViewModels;
 
-namespace TRobot.MU.UI.Models
+namespace TRobot.MU.UI.ViewModels
 {
     class RobotMonitoringItemViewModel: BaseViewModel
     {
