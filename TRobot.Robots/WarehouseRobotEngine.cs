@@ -93,9 +93,8 @@ namespace TRobot.Robots
                 if (!engineTaskStatus.HasValue || engineTaskStatus.Value != TaskStatus.RanToCompletion)
                 {
                     cancellationTokenSource = new CancellationTokenSource();
-                    engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);
-                }
-                
+                    engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);                    
+                }               
             }            
         }
 
@@ -108,13 +107,14 @@ namespace TRobot.Robots
         {                        
             if (engineTask?.IsCompleted ?? true)
             {                
-                ResetRobot();                               
+                ResetRobotDrives();                               
             }
             else
             {
                 cancellationTokenSource.Cancel();
                 engineTaskControllingEvent.Set();
-            }        
+                engineTask = null;
+            }
         }                     
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
@@ -139,11 +139,11 @@ namespace TRobot.Robots
 
             bool positionIsInCurrentVector = false;
 
-            double YDriveVelocity = 0;
-            double XDriveVelocity = 0;
+            double xDriveVelocity = 0;
+            double yDriveVelocity = 0;
 
-            double YDriveAcceleration = 0;
-            double XDriveAcceleration = 0;
+            double xDriveAcceleration = 0;
+            double yDriveAcceleration = 0;            
              
             for (LinkedListNode<Vector> node = trajectory.First; node != null;)
             {
@@ -157,11 +157,11 @@ namespace TRobot.Robots
                 var x = Math.Cos(arctangRadians);
                 var y = Math.Sin(arctangRadians);
 
-                XDriveVelocity = (robotVelocity * x) / RefreshFactor;
-                YDriveVelocity = (robotVelocity * y) / RefreshFactor;
+                xDriveVelocity = (robotVelocity * x) / RefreshFactor;
+                yDriveVelocity = (robotVelocity * y) / RefreshFactor;
 
-                XDriveAcceleration = (robotAcceleration * x) / RefreshFactor;
-                YDriveAcceleration = (robotAcceleration * y) / RefreshFactor;
+                xDriveAcceleration = (robotAcceleration * x) / RefreshFactor;
+                yDriveAcceleration = (robotAcceleration * y) / RefreshFactor;
 
                 // Stop each drive before changing vector
                 DriveX.Velocity = 0;
@@ -172,16 +172,12 @@ namespace TRobot.Robots
                     engineTaskControllingEvent.WaitOne();
                     if (cancellationTokenSource.Token.IsCancellationRequested)
                     {
-                        ResetRobot();
+                        ResetRobotDrives();
                         return;
                     }
 
-                    //Create separate therad for each drive + resources synchronization                                       
-
-                    DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
-                    DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
-
-                    resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+                    //Create separate thread for each drive + resources synchronization
+                    resultingVelocityVector = UpdateRobotDrives(xDriveVelocity, yDriveVelocity, xDriveAcceleration, yDriveAcceleration);
                     UpdateRobotCurrentVelocity(resultingVelocityVector);
 
                     positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
@@ -207,21 +203,18 @@ namespace TRobot.Robots
                 engineTaskControllingEvent.WaitOne();
                 if (cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    ResetRobot();
+                    ResetRobotDrives();
                     return;
                 }
 
-                DriveX.Velocity = CalculateDriveVelocity(XDriveVelocity, XDriveAcceleration, DriveX.Velocity);
-                DriveY.Velocity = CalculateDriveVelocity(YDriveVelocity, YDriveAcceleration, DriveY.Velocity);
-
-                resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
-                UpdateRobotCurrentVelocity(resultingVelocityVector);                    
+                resultingVelocityVector = UpdateRobotDrives(xDriveVelocity, yDriveVelocity, xDriveAcceleration, yDriveAcceleration);
+                UpdateRobotCurrentVelocity(resultingVelocityVector);
 
                 var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                 UpdateRobotCurrentPosition(newPosition);
 
                 Thread.Sleep(tick);
-            }                              
+            }            
         }
 
         private double CalculateDriveVelocity(double driveVelocity, double driveAcceleration, double currentDriveVelocity)
@@ -304,7 +297,18 @@ namespace TRobot.Robots
             }
         }
 
-        private void ResetRobot()
+        private Vector UpdateRobotDrives(double xDriveVelocity, double yDriveVelocity, double xDriveAcceleration, double yDriveAcceleration)
+        {
+            DriveX.Velocity = CalculateDriveVelocity(xDriveVelocity, xDriveAcceleration, DriveX.Velocity);
+            DriveY.Velocity = CalculateDriveVelocity(yDriveVelocity, yDriveAcceleration, DriveY.Velocity);
+
+            var resultingVelocityVector = new Vector(DriveX.Velocity, DriveY.Velocity);
+            UpdateRobotCurrentVelocity(resultingVelocityVector);
+
+            return resultingVelocityVector;
+        }
+
+        private void ResetRobotDrives()
         {
             DriveX.Velocity = 0;
             DriveY.Velocity = 0;
@@ -314,9 +318,7 @@ namespace TRobot.Robots
 
             // In monitoring unit, current position property defines an offset to start position
             // Sending Point(0, 0) resets current position offset
-            UpdateRobotCurrentPosition(new Point(0, 0));
-
-            engineTask = null;
+            UpdateRobotCurrentPosition(new Point(0, 0));            
         }
     }
 }

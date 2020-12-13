@@ -19,7 +19,7 @@ namespace TRobot.Robots.ViewModels
         internal AddDestinationPointViewModel(WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel)
         {
             this.warehouseRobotControlPanelViewModel = warehouseRobotControlPanelViewModel;
-            step = warehouseRobotControlPanelViewModel.GetLatestTrajectoryCoordinatesStepNumber();
+            step = (uint) warehouseRobotControlPanelViewModel.TrajectoryCoordinates.Count;
         }
 
         public ICommand OkCommand

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,7 @@ using TRobot.Robots.Views;
 
 namespace TRobot.Robots.ViewModels
 {
-    public class WarehouseRobotControlPanelViewModel : BaseViewModel
+    class WarehouseRobotControlPanelViewModel : BaseViewModel
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
         public WarehouseRobot Robot { get; set; }
@@ -49,8 +48,8 @@ namespace TRobot.Robots.ViewModels
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 140));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(4, 200, 140));
 
-            Velocity = 30;
-            Acceleration = 2;
+            Velocity = 50;
+            Acceleration = 4;
 
             RobotState = Robot.Controller.State;
             Robot.Controller.MonitoringServiceClientInnerChannelStateChanged += Controller_MonitoringServiceClientStateChanged;
@@ -243,11 +242,6 @@ namespace TRobot.Robots.ViewModels
         {
             Robot.Controller.Reset();
             RobotState = Robot.Controller.State;
-        }
-
-        internal uint GetLatestTrajectoryCoordinatesStepNumber()
-        {
-            return (uint)TrajectoryCoordinates.Count;
         }
 
         internal uint AddTrajectoryCoordinatesItem(DescartesCoordinatesItem descartesCoordinatesItem)

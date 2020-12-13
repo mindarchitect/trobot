@@ -6,9 +6,9 @@ namespace TRobot.Robots.Views
     /// <summary>
     /// Interaktionslogik für AddDestinationPoint.xaml
     /// </summary>
-    public partial class AddDestinationPointView : Window
+    partial class AddDestinationPointView : Window
     {
-        public AddDestinationPointView(WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel)
+        internal AddDestinationPointView(WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel)
         {
             InitializeComponent();
 
