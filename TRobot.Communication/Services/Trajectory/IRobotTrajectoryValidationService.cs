@@ -7,7 +7,7 @@ namespace TRobot.Communication.Services.Trajectory
     [ServiceContract(
         SessionMode = SessionMode.Required,
         CallbackContract = typeof(IRobotTrajectoryValidationServiceCallback),
-        Name = "RobotTrajectoryValidationService",
+        Name = "Validation Service",
         Namespace = "http://trobot/validation"
     )]
     public interface IRobotTrajectoryValidationService : IService

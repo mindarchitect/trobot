@@ -14,17 +14,17 @@ namespace TRobot.Robots
 {
     internal class WarehouseRobotController: IControllable
     {
-        private WarehouseRobot robot;
+        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
+        public event EventHandler<EventArgs> MonitoringServiceClientInnerChannelStateChanged;
+
         internal IList<DescartesCoordinatesItem> Coordinates { get; set; }
         internal LinkedList<Vector> Trajectory { get; set; }
 
         public RobotState State { get; set; } = RobotState.Reset;
 
+        private WarehouseRobot robot;
         private WarehouseRobotTrajectoryValidationServiceClient warehouseRobotTrajectoryValidationServiceClient;
-        private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
-
-        public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
-        public event EventHandler<EventArgs> MonitoringServiceClientInnerChannelStateChanged;
+        private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;        
 
         internal WarehouseRobotController(WarehouseRobot robot)
         {
@@ -114,9 +114,10 @@ namespace TRobot.Robots
 
         public void Reset()
         {
-            robot.Engine.Reset();
-            State = RobotState.Reset;            
-            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));                        
+            robot.Engine.Reset();            
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));
+
+            State = RobotState.Reset;
         }
 
         private void BuildTrajectory()
