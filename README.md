@@ -9,10 +9,10 @@ calculation of a speed and acceleration for each drive independently, acting as 
 ## Key Features
 
   - Robots are organised in virtual robot factories. Robot factory defines logical container or operating space for robot objects and performs various tasks like trajectory validation based on 2 dimensional segments that are set up during robot trajectory configuration.
-  - Robot movement are displayed using Monitor Tool which establisches interprocess communication between Robot factory process and Monitor process using Microfost WCF (Named pipes).
+  - Robot movement are displayed using Monitor Tool which establishes interprocess communication between Robot factory process and Monitor process using Microsoft WCF (Named pipes).
 
 
 ## Running
 
-You can freely download, compile and run this project using Microsoft&copy; Visual Studio 2013 or later. After compilation is done, run the main project **Trobot.ECU.UI**. Select the robot object and press **Start**. For monitoring, go **Tools->Start monitor** which runs Monitor application. Press **Upload settings**. Once trajectory is validated against virtual robot factory, you can press **Start** to run simulation.
+You can freely download, compile and run this project using Microsoft&copy; Visual Studio 2013 or later. After compilation is done, run the main project **Trobot.ECU.UI**. Select the robot and press **Start**. For monitoring, go **Tools->Start monitor** which runs Monitor application. Press **Upload settings**. Once trajectory is validated against virtual robot factory, you can press **Start** to run simulation.
 
