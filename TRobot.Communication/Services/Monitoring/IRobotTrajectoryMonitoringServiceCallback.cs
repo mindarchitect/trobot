@@ -5,12 +5,12 @@ namespace TRobot.Communication.Services.Monitoring
     public interface IRobotTrajectoryMonitoringServiceCallback
     {
         [OperationContract(IsOneWay = true)]
-        void RobotTrajectorySet();
+        void RobotTrajectorySetCallback();
 
         [OperationContract(IsOneWay = true)]
-        void RobotTrajectoryUpdated();
+        void RobotTrajectoryUpdatedCallback();
 
         [OperationContract(IsOneWay = true)]
-        void RobotPositionReset();
+        void TestOperationCallback();
     }
 }

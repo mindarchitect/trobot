@@ -53,7 +53,7 @@ namespace TRobot.Robots.ViewModels
             Acceleration = 2;
 
             RobotState = Robot.Controller.State;
-            Robot.Controller.MonitoringServiceClientStateChanged += Controller_MonitoringServiceClientStateChanged;
+            Robot.Controller.MonitoringServiceClientInnerChannelStateChanged += Controller_MonitoringServiceClientStateChanged;
         }
 
         public ICommand UploadSettingsCommand

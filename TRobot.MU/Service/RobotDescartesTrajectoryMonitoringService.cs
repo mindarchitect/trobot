@@ -11,7 +11,7 @@ namespace TRobot.MU.Service
     {
         public event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
         public event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
-        public event EventHandler<RobotPositionResetEventArguments> RobotPositionReset;
+        public event EventHandler<RobotTestEventArguments> TestEvent;
 
         public RobotDescartesTrajectoryMonitoringService()
         {            
@@ -23,7 +23,7 @@ namespace TRobot.MU.Service
 
             OperationContext operationContext = OperationContext.Current;
             IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
-            callback.RobotTrajectorySet();
+            callback.RobotTrajectorySetCallback();
         }
 
         public void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotPosition)
@@ -32,16 +32,16 @@ namespace TRobot.MU.Service
 
             OperationContext operationContext = OperationContext.Current;
             IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
-            callback.RobotTrajectoryUpdated();
+            callback.RobotTrajectoryUpdatedCallback();
         }
         
-        public void ResetRobotPosition(Robot robot)
+        public void TestOperation(Robot robot)
         {
-            OnRobotPositionReset(new RobotPositionResetEventArguments(robot));
+            OnTestOperationEvent(new RobotTestEventArguments(robot));
 
             OperationContext operationContext = OperationContext.Current;
             IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
-            callback.RobotPositionReset();
+            callback.TestOperationCallback();
         }
 
         protected virtual void OnTrajectorySet(TrajectorySetEventArguments e)
@@ -54,9 +54,9 @@ namespace TRobot.MU.Service
             RobotPositionUpdated?.Invoke(this, e);
         }
 
-        protected virtual void OnRobotPositionReset(RobotPositionResetEventArguments e)
+        protected virtual void OnTestOperationEvent(RobotTestEventArguments e)
         {
-            RobotPositionReset?.Invoke(this, e);
+            TestEvent?.Invoke(this, e);
         }
     }
 }

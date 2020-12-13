@@ -20,10 +20,10 @@ namespace TRobot.Communication.Services.Monitoring
         void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory);
 
         [OperationContract]
-        void ResetRobotPosition(Robot robot);
+        void TestOperation(Robot robot);
 
         event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
         event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
-        event EventHandler<RobotPositionResetEventArguments> RobotPositionReset;
+        event EventHandler<RobotTestEventArguments> TestEvent;
     }
 }

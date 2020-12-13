@@ -40,14 +40,14 @@ namespace TRobot.Robots.Services
             }
         }
 
-        internal void ResetRobotPosition(Guid robotId)
+        internal void TestOperation(Guid robotId)
         {
             if (InnerChannel.State != CommunicationState.Faulted)
             {
                 var robot = new Robot();
                 robot.RobotId = robotId;
 
-                Channel.ResetRobotPosition(robot);
+                Channel.TestOperation(robot);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace TRobot.Robots
         private WarehouseRobotMonitoringSeviceClient warehouseRobotMonitoringSeviceClient;
 
         public event EventHandler<TrajectoryValidatedEventArguments> TrajectoryValidated;
-        public event EventHandler<EventArgs> MonitoringServiceClientStateChanged;
+        public event EventHandler<EventArgs> MonitoringServiceClientInnerChannelStateChanged;
 
         internal WarehouseRobotController(WarehouseRobot robot)
         {
@@ -39,17 +39,17 @@ namespace TRobot.Robots
             var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);            
             warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));            
 
-            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, RobotPositionResetCallback);
+            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, TestOperationCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
 
             // TODO
             // Investigate Reset button issue when event handlers are activated
 
-            /*warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += InnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += InnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += InnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Closed += InnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += InnerChannelStateChanged;*/
+            /*warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Closed += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += MonitorServiceInnerChannelStateChanged;*/
         }
 
         public void Terminate()
@@ -115,8 +115,7 @@ namespace TRobot.Robots
         public void Reset()
         {
             robot.Engine.Reset();
-            State = RobotState.Reset;
-            //warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
+            State = RobotState.Reset;            
             warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));                        
         }
 
@@ -198,9 +197,9 @@ namespace TRobot.Robots
         private void OnEngineVelocityChanged(object sender, VelocityChangedEventArguments e)
         {
         }
-        private void InnerChannelStateChanged(object sender, EventArgs e)
+        private void MonitorServiceInnerChannelStateChanged(object sender, EventArgs e)
         {
-            MonitoringServiceClientStateChanged?.Invoke(this, e);
+            MonitoringServiceClientInnerChannelStateChanged?.Invoke(this, e);
         }
         private void TrajectorySetupCallback()
         {
@@ -210,7 +209,7 @@ namespace TRobot.Robots
         {
         }
 
-        private void RobotPositionResetCallback()
+        private void TestOperationCallback()
         {
         }
     }

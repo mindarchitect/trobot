@@ -3,9 +3,9 @@ using TRobot.Core.Services.Contracts.Data;
 
 namespace TRobot.Communication.Events
 {
-    public class RobotPositionResetEventArguments : EventArgs
+    public class RobotTestEventArguments : EventArgs
     {
-        public RobotPositionResetEventArguments(Robot robot)
+        public RobotTestEventArguments(Robot robot)
         {
             Robot = robot;
         }
