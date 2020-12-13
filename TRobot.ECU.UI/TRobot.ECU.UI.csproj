@@ -90,8 +90,8 @@
     <Compile Include="Controls\RobotControl.xaml.cs">
       <DependentUpon>RobotControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AddRobotViewControlModel.cs" />
-    <Compile Include="ViewModels\DashboardViewControlModel.cs" />
+    <Compile Include="ViewModels\AddRobotViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="Views\AddRobotView.xaml.cs">
       <DependentUpon>AddRobotView.xaml</DependentUpon>
     </Compile>

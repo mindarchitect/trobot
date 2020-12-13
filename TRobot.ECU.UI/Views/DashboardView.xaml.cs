@@ -17,9 +17,9 @@ namespace TRobot.ECU.UI.Views
             InitializeComponent();
 
             DependencyInjector.AddExtension<ECUDependencyInjectionExtension>();
-            DependencyInjector.RegisterType<DashboardViewControlModel, DashboardViewControlModel>();
+            DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();
 
-            var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewControlModel>();            
+            var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewModel>();            
             Closing += dashboardViewControlModel.OnClosing;
 
             DataContext = dashboardViewControlModel;

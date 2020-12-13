@@ -13,11 +13,11 @@ namespace TRobot.Robots
     {
         private WarehouseRobot robot;        
 
-        private static int RefreshFactor = 60;
-        private readonly int tick = (int)Math.Round(((double)1 / RefreshFactor) * 1000);
+        private static readonly int RefreshFactor = 60;
+        private static readonly int Tick = (int)Math.Round(((double)1 / RefreshFactor) * 1000);
 
-        public RobotDimensionalDrive DriveX { get; set; }
-        public RobotDimensionalDrive DriveY { get; set; }
+        private RobotDimensionalDrive DriveX { get; set; }
+        private RobotDimensionalDrive DriveY { get; set; }
 
         public event EventHandler<VelocityChangedEventArguments> VelocityChanged;
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
@@ -26,11 +26,13 @@ namespace TRobot.Robots
         private object accelerationPropertyLock = new object();
         private bool accelerating = true;
 
+        // Synchronisation primitive to control engine task execution thread        
         private ManualResetEvent engineTaskControllingEvent;
+        //Cancelation token for engine task thread
         private CancellationTokenSource cancellationTokenSource;
         private Task engineTask;
 
-        public bool Accelerating
+        private bool Accelerating
         {
             get
             {
@@ -49,7 +51,7 @@ namespace TRobot.Robots
             }
         }
 
-        public WarehouseRobot Robot
+        private WarehouseRobot Robot
         {
             get
             {
@@ -93,13 +95,18 @@ namespace TRobot.Robots
                 if (!engineTaskStatus.HasValue || engineTaskStatus.Value != TaskStatus.RanToCompletion)
                 {
                     cancellationTokenSource = new CancellationTokenSource();
-                    engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);                    
+                    engineTask = Task.Factory.StartNew(SimulateRobotMovement, cancellationTokenSource.Token);
+
+                    // Post task action
+                    // engineTask.ContinueWith((antecedentTask) => 
+                    //{                        
+                    //});
                 }               
             }            
         }
 
         public void Stop()
-        {
+        {            
             Accelerating = false;            
         }
 
@@ -111,8 +118,7 @@ namespace TRobot.Robots
             }
             else
             {
-                cancellationTokenSource.Cancel();
-                engineTaskControllingEvent.Set();
+                cancellationTokenSource.Cancel();                
                 engineTask = null;
             }
         }                     
@@ -191,7 +197,7 @@ namespace TRobot.Robots
                     var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                     UpdateRobotCurrentPosition(newPosition);
 
-                    Thread.Sleep(tick);
+                    Thread.Sleep(Tick);
                 }
 
                 node = node.Next;
@@ -213,7 +219,7 @@ namespace TRobot.Robots
                 var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                 UpdateRobotCurrentPosition(newPosition);
 
-                Thread.Sleep(tick);
+                Thread.Sleep(Tick);
             }            
         }
 
