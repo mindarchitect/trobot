@@ -1,0 +1,92 @@
+﻿<Window x:Class="TRobot.MU.UI.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TRobot.MU.UI.Views"
+        xmlns:viewmodels="clr-namespace:TRobot.MU.UI.ViewModels"
+        mc:Ignorable="d"        
+        Title="Robots Monitoring" 
+        >
+		
+    <Grid Margin="10" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="450" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Column="0" >
+            <!-- Canvas Containing the robot and the path it follows during animation -->
+            <Canvas Background="{StaticResource GridBrushResource}" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ActualWidth, ElementName=parentElementName}" Height="{Binding ActualHeight, ElementName=parentElementName}">
+                <ItemsControl ItemsSource="{Binding Path=RobotMonitoringItems, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Path Stroke="Black" StrokeThickness="1" StrokeDashArray="6 6">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathGeometry.Figures>
+                                                <PathFigureCollection>
+                                                    <PathFigure StartPoint="{Binding StartPoint}" >
+                                                        <PathFigure.Segments>
+                                                            <PathSegmentCollection>
+                                                                <PolyLineSegment Points="{Binding Trajectory}" />
+                                                            </PathSegmentCollection>
+                                                        </PathFigure.Segments>
+                                                    </PathFigure>
+                                                </PathFigureCollection>
+                                            </PathGeometry.Figures>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                </Path>
+                                <Path Stroke="Black" StrokeThickness="1" >
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
+                                    </Path.Fill>
+                                    <Path.Data>
+                                        <EllipseGeometry Center="{Binding Path=StartPoint, Mode=OneWay}" RadiusX="5" RadiusY="5" >
+                                            <EllipseGeometry.Transform>
+                                                <TranslateTransform x:Name="MyTranslateTransform" X="{Binding Path=CurrentPosition.X}" Y="{Binding Path=CurrentPosition.Y}" />
+                                            </EllipseGeometry.Transform>
+                                        </EllipseGeometry>
+                                    </Path.Data>
+                                </Path>                               
+                            </Canvas>
+                        </DataTemplate>                        
+                    </ItemsControl.ItemTemplate>                   
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>                
+            </Canvas>
+        </DockPanel>       
+        <GroupBox Header="Robots" Grid.Column="1" >
+            <ListView Margin="10" ItemsSource="{Binding Path=RobotMonitoringItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Ellipse StrokeThickness="2" Height="20" Width="20" Margin="5">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="{Binding Path=Color, Mode=OneWay}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,5,5" Text="{Binding Path=Title, Mode=OneWay}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding Path=Guid, StringFormat={}({0}), Mode=OneWay}"/>
+                        </DockPanel>                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>                                                            
+            </ListView>
+        </GroupBox>
+    </Grid>
+</Window>

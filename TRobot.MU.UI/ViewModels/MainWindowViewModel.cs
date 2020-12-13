@@ -15,13 +15,13 @@ namespace TRobot.MU.UI.ViewModels
 {
     class MainWindowViewModel: BaseViewModel
     {
-        public ObservableCollection<RobotMonitoringItem> RobotMonitoringItems { get; private set; }
+        public ObservableCollection<RobotMonitoringItemViewModel> RobotMonitoringItems { get; private set; }
         private IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider;
 
         public MainWindowViewModel(IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;
-            RobotMonitoringItems = new ObservableCollection<RobotMonitoringItem>();
+            RobotMonitoringItems = new ObservableCollection<RobotMonitoringItemViewModel>();
 
             serviceHostProvider.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
             serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
@@ -64,7 +64,7 @@ namespace TRobot.MU.UI.ViewModels
             else 
             {
                 var random = new Random();
-                var robotMonitoringItem = new RobotMonitoringItem
+                var robotMonitoringItem = new RobotMonitoringItemViewModel
                 {
                     StartPoint = e.RobotDescartesTrajectory.Trajectory.First(),
                     Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory),

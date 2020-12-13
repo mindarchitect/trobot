@@ -113,7 +113,7 @@ namespace TRobot.Robots.ViewModels
         }
 
         [DefaultValue(false)]
-        internal bool TrajectoryValidated
+        public bool TrajectoryValidated
         {
             get
             {

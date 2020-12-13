@@ -34,8 +34,7 @@ namespace TRobot.MU.Service
             IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
             callback.RobotTrajectoryUpdated();
         }
-
-        [Obsolete]
+        
         public void ResetRobotPosition(Robot robot)
         {
             OnRobotPositionReset(new RobotPositionResetEventArguments(robot));

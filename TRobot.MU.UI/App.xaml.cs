@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 using TRobot.Core;
-using TRobot.MU;
 using TRobot.MU.UI.ViewModels;
 
-namespace MonitoringUnit.UI
+namespace TRobot.MU.UI
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -15,7 +14,6 @@ namespace MonitoringUnit.UI
             base.OnStartup(e);
 
             DependencyInjector.AddExtension<MUDependencyInjectionExtension>();            
-            
             DependencyInjector.RegisterType<MainWindowViewModel, MainWindowViewModel>();
         }
     }
