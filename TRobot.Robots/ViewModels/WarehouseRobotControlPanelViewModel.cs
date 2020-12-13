@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -32,7 +33,7 @@ namespace TRobot.Robots.ViewModels
 
         private uint velocity;
         private uint acceleration;
-        private string connectionState;
+        private CommunicationState communicationState;
 
         internal WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
         {
@@ -181,16 +182,16 @@ namespace TRobot.Robots.ViewModels
             }
         }
 
-        public string ConnectionState
+        public CommunicationState CommunicationState
         {
             get
             {
-                return connectionState;
+                return communicationState;
             }
             set
             {
-                connectionState = value;
-                OnPropertyChanged("ConnectionState");
+                communicationState = value;
+                OnPropertyChanged("CommunicationState");
             }
         }
 
@@ -274,7 +275,7 @@ namespace TRobot.Robots.ViewModels
 
         private void Controller_MonitoringServiceClientStateChanged(object sender, EventArgs e)
         {
-            ConnectionState = Robot.Controller.GetWarehouseRobotMonitoringSeviceConnectionState().ToString();
+            CommunicationState = Robot.Controller.GetWarehouseRobotMonitoringSeviceConnectionState();
         }
     }
 }

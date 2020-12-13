@@ -42,11 +42,11 @@ namespace TRobot.Robots
             var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, RobotPositionResetCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
 
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += InnerChannelStateChanged;
+            /*warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += InnerChannelStateChanged;
             warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += InnerChannelStateChanged;
             warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += InnerChannelStateChanged;
             warehouseRobotMonitoringSeviceClient.InnerChannel.Closed += InnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += InnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += InnerChannelStateChanged;*/
         }
 
         public void Terminate()
@@ -72,16 +72,7 @@ namespace TRobot.Robots
                 warehouseRobotMonitoringSeviceClient.Abort();
                 throw;
             }            
-        }
-
-        private void OnEnginePositionChanged(object sender, PositionChangedEventArguments e)
-        {
-            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, e.NewPosition);
-        }
-
-        private void OnEngineVelocityChanged(object sender, VelocityChangedEventArguments e)
-        {            
-        }
+        }        
 
         internal async void UploadTrajectory(IList<DescartesCoordinatesItem> coordinates)
         {
@@ -121,7 +112,8 @@ namespace TRobot.Robots
         public void Reset()
         {
             robot.Engine.Reset();
-            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));
+            //warehouseRobotMonitoringSeviceClient.ResetRobotPosition(robot.Id);
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, new Point(0,0));            
 
             State = RobotState.Reset;
         }
@@ -189,8 +181,25 @@ namespace TRobot.Robots
             {
                 SetupTrajectory();
             }
+        }        
+
+        private void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
+        {
+            TrajectoryValidated?.Invoke(this, e);
+        }        
+
+        private void OnEnginePositionChanged(object sender, PositionChangedEventArguments e)
+        {
+            warehouseRobotMonitoringSeviceClient.UpdateRobotPosition(robot.Id, e.NewPosition);
         }
 
+        private void OnEngineVelocityChanged(object sender, VelocityChangedEventArguments e)
+        {
+        }
+        private void InnerChannelStateChanged(object sender, EventArgs e)
+        {
+            MonitoringServiceClientStateChanged?.Invoke(this, e);
+        }
         private void TrajectorySetupCallback()
         {
         }
@@ -201,16 +210,6 @@ namespace TRobot.Robots
 
         private void RobotPositionResetCallback()
         {
-        }
-
-        private void OnTrajectoryValidated(TrajectoryValidatedEventArguments e)
-        {
-            TrajectoryValidated?.Invoke(this, e);
-        }
-
-        private void InnerChannelStateChanged(object sender, EventArgs e)
-        {
-            MonitoringServiceClientStateChanged?.Invoke(this, e);
         }
     }
 }
