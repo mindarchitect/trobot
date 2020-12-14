@@ -12,7 +12,7 @@ namespace TRobot.Robots.Views
         {
             InitializeComponent();
 
-            var addDestinationPointViewModel = new AddDestinationPointViewModel(warehouseRobotControlPanelViewModel);
+            var addDestinationPointViewModel = new AddDestinationPointViewModel(this, warehouseRobotControlPanelViewModel);
             DataContext = addDestinationPointViewModel;
         }
     }

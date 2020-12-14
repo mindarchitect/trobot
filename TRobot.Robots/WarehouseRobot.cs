@@ -12,7 +12,7 @@ namespace TRobot.Robots
     public class WarehouseRobot : AbstractRobot, IMovable, IFactoryProvier<DescartesRobotFactory>
     {          
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
-        private WarehouseRobotControlPanel controlPanel;
+        private WarehouseRobotControlPanelView controlPanel;
 
         public RobotSettings Settings { get; set; }       
 
@@ -98,7 +98,7 @@ namespace TRobot.Robots
 
             if (controlPanel == null)
             {
-                controlPanel = new WarehouseRobotControlPanel(this);
+                controlPanel = new WarehouseRobotControlPanelView(this);
                 controlPanel.Closed += OnWarehouseRobotControlPanelClosed;
             }
 

@@ -16,6 +16,7 @@ namespace TRobot.MU.UI.Views
             InitializeComponent();
 
             var mainWindowViewModel = DependencyInjector.Resolve<MainWindowViewModel>();
+            mainWindowViewModel.View = this;
             Closing += mainWindowViewModel.OnWindowClosing;
 
             DataContext = mainWindowViewModel;

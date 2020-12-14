@@ -1,9 +1,9 @@
 ﻿using System.Windows;
-using TRobot.ECU.UI.ViewModels;
+using TRobot.Core.UI.ViewModels;
 
 namespace TRobot.ECU.Models
 {
-    public sealed class DescartesCoordinatesItem : BaseViewModel
+    public sealed class DescartesCoordinatesItem : ViewModel
     {
         private uint step;
         private Point point;

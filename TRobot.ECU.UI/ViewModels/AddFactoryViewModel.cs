@@ -1,6 +1,11 @@
-﻿namespace TRobot.ECU.UI.ViewModels
+﻿using TRobot.ECU.UI.Views;
+
+namespace TRobot.ECU.UI.ViewModels
 {
-    public class AddFactoryViewModel : BaseViewModel
+    public class AddFactoryViewModel : BaseViewModel<AddFactoryView>
     {
+        internal AddFactoryViewModel(AddFactoryView addFactoryView) : base(addFactoryView) 
+        { 
+        }
     }
 }

@@ -9,11 +9,12 @@ using TRobot.Communication.Services;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.Core.UI.Commands;
+using TRobot.ECU.UI.Views;
 using TRobot.Robots;
 
 namespace TRobot.ECU.UI.ViewModels
 {
-    public class DashboardViewModel : BaseViewModel
+    public class DashboardViewModel : BaseViewModel<DashboardView>
     {
         private ObservableCollection<RobotFactory> robotFactories;
         private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;

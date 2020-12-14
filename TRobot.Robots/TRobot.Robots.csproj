@@ -74,7 +74,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WarehouseRobotControlPanel.xaml">
+    <Page Include="Views\WarehouseRobotControlPanelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,8 +82,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\WarehouseRobotControlPanel.xaml.cs">
-      <DependentUpon>WarehouseRobotControlPanel.xaml</DependentUpon>
+    <Compile Include="Views\WarehouseRobotControlPanelView.xaml.cs">
+      <DependentUpon>WarehouseRobotControlPanelView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

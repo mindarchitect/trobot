@@ -13,7 +13,7 @@ using TRobot.Robots.Views;
 
 namespace TRobot.Robots.ViewModels
 {
-    class WarehouseRobotControlPanelViewModel : BaseViewModel
+    class WarehouseRobotControlPanelViewModel : BaseViewModel<WarehouseRobotControlPanelView>
     {
         public ObservableCollection<DescartesCoordinatesItem> TrajectoryCoordinates { get; set; }
         public WarehouseRobot Robot { get; set; }
@@ -34,7 +34,7 @@ namespace TRobot.Robots.ViewModels
         private uint acceleration;
         private CommunicationState communicationState;
 
-        internal WarehouseRobotControlPanelViewModel(WarehouseRobot robot)
+        internal WarehouseRobotControlPanelViewModel(WarehouseRobotControlPanelView warehouseRobotControlPanelView, WarehouseRobot robot) : base(warehouseRobotControlPanelView)
         {
             Robot = robot;
             Robot.Controller.TrajectoryValidated += OnControllerRobotTrajectoryValidated;

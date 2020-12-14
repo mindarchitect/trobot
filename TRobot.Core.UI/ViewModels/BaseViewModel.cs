@@ -1,14 +1,20 @@
-﻿using System.ComponentModel;
+﻿using System.Windows.Controls;
+using TRobot.Core.UI.ViewModels;
 
 namespace TRobot.ECU.UI.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel<V> : ViewModel where V : Control
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        private readonly V view;
+        public V View { get; set; }
 
-        protected virtual void OnPropertyChanged(string propertyName = "")
+        protected BaseViewModel()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected BaseViewModel(V view)
+        {
+            this.view = view;
         }
     }    
 }

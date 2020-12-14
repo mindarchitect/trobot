@@ -1,17 +1,17 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using TRobot.Communication.Events;
-using TRobot.ECU.UI.ViewModels;
 using System.Linq;
 using System;
 using TRobot.Communication.Services.Monitoring;
 using TRobot.Communication.Services;
+using TRobot.MU.UI.Views;
+using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.MU.UI.ViewModels
 {
-    class MainWindowViewModel: BaseViewModel
+    class MainWindowViewModel: BaseViewModel<MainWindowView>
     {
         public ObservableCollection<RobotMonitoringItemViewModel> RobotMonitoringItems { get; private set; }
         private IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider;

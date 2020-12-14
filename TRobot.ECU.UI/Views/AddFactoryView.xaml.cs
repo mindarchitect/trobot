@@ -12,7 +12,7 @@ namespace TRobot.ECU.UI.Views
         {
             InitializeComponent();
 
-            DataContext = new AddFactoryViewModel();
+            DataContext = new AddFactoryViewModel(this);
         }
     }
 }

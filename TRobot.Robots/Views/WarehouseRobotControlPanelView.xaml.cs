@@ -9,14 +9,14 @@ namespace TRobot.Robots
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    partial class WarehouseRobotControlPanel : Window
+    partial class WarehouseRobotControlPanelView : Window
     {
         private WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel;
-        internal WarehouseRobotControlPanel(WarehouseRobot robot)
+        internal WarehouseRobotControlPanelView(WarehouseRobot robot)
         {
             InitializeComponent();
 
-            warehouseRobotControlPanelViewModel = new WarehouseRobotControlPanelViewModel(robot);
+            warehouseRobotControlPanelViewModel = new WarehouseRobotControlPanelViewModel(this, robot);
             Closing += OnClosing;
 
             DataContext = warehouseRobotControlPanelViewModel;

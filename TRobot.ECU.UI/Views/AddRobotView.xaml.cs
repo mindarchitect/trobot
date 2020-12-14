@@ -11,7 +11,7 @@ namespace TRobot.ECU.UI.Views
         public AddRobotView()
         {
             InitializeComponent();
-            DataContext = new AddRobotViewModel();
+            DataContext = new AddRobotViewModel(this);
         }
     }
 }

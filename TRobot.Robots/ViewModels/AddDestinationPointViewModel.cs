@@ -2,10 +2,11 @@
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.Models;
 using TRobot.ECU.UI.ViewModels;
+using TRobot.Robots.Views;
 
 namespace TRobot.Robots.ViewModels
 {
-    class AddDestinationPointViewModel : BaseViewModel
+    class AddDestinationPointViewModel : BaseViewModel<AddDestinationPointView>
     {  
         private ICommand okCommand;
         private ICommand cancelCommand;
@@ -16,10 +17,10 @@ namespace TRobot.Robots.ViewModels
 
         private WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel;
 
-        internal AddDestinationPointViewModel(WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel)
+        internal AddDestinationPointViewModel(AddDestinationPointView addDestinationPointView, WarehouseRobotControlPanelViewModel warehouseRobotControlPanelViewModel) : base(addDestinationPointView)
         {
             this.warehouseRobotControlPanelViewModel = warehouseRobotControlPanelViewModel;
-            step = (uint) warehouseRobotControlPanelViewModel.TrajectoryCoordinates.Count;
+            Step = (uint) warehouseRobotControlPanelViewModel.TrajectoryCoordinates.Count;
         }
 
         public ICommand OkCommand

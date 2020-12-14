@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 using TRobot.Core;
-using TRobot.Core.UI.ViewModels;
 using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.ECU.UI.Views
@@ -10,7 +9,7 @@ namespace TRobot.ECU.UI.Views
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class DashboardView : Window, IView
+    public partial class DashboardView : Window
     {        
         public DashboardView()
         {
@@ -19,7 +18,8 @@ namespace TRobot.ECU.UI.Views
             DependencyInjector.AddExtension<ECUDependencyInjectionExtension>();
             DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();
 
-            var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewModel>();            
+            var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewModel>();
+            dashboardViewControlModel.View = this;
             Closing += dashboardViewControlModel.OnClosing;
 
             DataContext = dashboardViewControlModel;

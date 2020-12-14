@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using TRobot.ECU.UI.ViewModels;
+using TRobot.Core.UI.ViewModels;
 
 namespace TRobot.MU.UI.ViewModels
 {
-    class RobotMonitoringItemViewModel: BaseViewModel
+    class RobotMonitoringItemViewModel: ViewModel
     {
         private Point startPosition;
         private Point currentPosition;
         private Color color;
         private string title;
         private PointCollection trajectory;
+
+        internal RobotMonitoringItemViewModel() 
+        { 
+        }
 
         public Guid Guid { get; set; }
 
