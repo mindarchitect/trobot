@@ -4,7 +4,7 @@ namespace TRobot.ECU.UI.ViewModels
 {
     public class AddRobotViewModel : BaseViewModel<AddRobotView>
     {        
-        public AddRobotViewModel(AddRobotView addRobotView) : base(addRobotView)
+        public AddRobotViewModel()
         {            
         }
     }

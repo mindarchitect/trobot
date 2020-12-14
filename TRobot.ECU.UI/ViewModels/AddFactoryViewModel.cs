@@ -4,8 +4,8 @@ namespace TRobot.ECU.UI.ViewModels
 {
     public class AddFactoryViewModel : BaseViewModel<AddFactoryView>
     {
-        internal AddFactoryViewModel(AddFactoryView addFactoryView) : base(addFactoryView) 
-        { 
+        internal AddFactoryViewModel()
+        {
         }
     }
 }

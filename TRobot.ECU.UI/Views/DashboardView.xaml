@@ -9,7 +9,8 @@
         mc:Ignorable="d"
         Height="300"
         Width="600"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        >
 
     <Window.Resources>
         <!-- Main robots view -->

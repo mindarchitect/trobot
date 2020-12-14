@@ -1,6 +1,5 @@
 ﻿using Unity;
 using Unity.Extension;
-using Unity.Injection;
 using Unity.Lifetime;
 
 namespace TRobot.Core
@@ -13,14 +12,17 @@ namespace TRobot.Core
         {
             UnityContainer.RegisterType<I, T>(new ContainerControlledLifetimeManager());
         }
+
         public static void RegisterInstance<I>(I instance)
         {
             UnityContainer.RegisterInstance(instance, new ContainerControlledLifetimeManager());
         }
+
         public static T Resolve<T>()
         {
             return UnityContainer.Resolve<T>();
         }
+
         public static void AddExtension<T>() where T : UnityContainerExtension
         {
             UnityContainer.AddNewExtension<T>();

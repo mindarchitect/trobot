@@ -13,7 +13,7 @@ namespace TRobot.MU.UI
         {
             base.OnStartup(e);
 
-            DependencyInjector.AddExtension<MUDependencyInjectionExtension>();            
+            DependencyInjector.AddExtension<MUDependencyInjectionExtension>();
             DependencyInjector.RegisterType<MainWindowViewModel, MainWindowViewModel>();
         }
     }

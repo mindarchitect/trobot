@@ -15,17 +15,15 @@ namespace TRobot.ECU.UI.Views
         {
             InitializeComponent();
 
-            DependencyInjector.AddExtension<ECUDependencyInjectionExtension>();
-            DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();
-
             var dashboardViewControlModel = DependencyInjector.Resolve<DashboardViewModel>();
             dashboardViewControlModel.View = this;
+
             Closing += dashboardViewControlModel.OnClosing;
 
             DataContext = dashboardViewControlModel;
 
             Uri iconUri = new Uri("pack://application:,,,/Images/robot.png", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
-        }        
+        }
     }
 }

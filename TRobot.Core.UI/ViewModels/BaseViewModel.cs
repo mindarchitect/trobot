@@ -1,11 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
 using TRobot.Core.UI.ViewModels;
 
 namespace TRobot.ECU.UI.ViewModels
 {
-    public abstract class BaseViewModel<V> : ViewModel where V : Control
+    public abstract class BaseViewModel<V> : ViewModel where V : Window
     {
-        private readonly V view;
         public V View { get; set; }
 
         protected BaseViewModel()

@@ -4,7 +4,6 @@ using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.ECU.Service;
 using Unity.Extension;
-using Unity.Injection;
 
 namespace TRobot.ECU
 {

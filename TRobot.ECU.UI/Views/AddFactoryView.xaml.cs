@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TRobot.Core;
 using TRobot.ECU.UI.ViewModels;
 
 namespace TRobot.ECU.UI.Views
@@ -12,7 +13,10 @@ namespace TRobot.ECU.UI.Views
         {
             InitializeComponent();
 
-            DataContext = new AddFactoryViewModel(this);
+            var addFactoryViewModel = DependencyInjector.Resolve<AddFactoryViewModel>();
+            addFactoryViewModel.View = this;
+
+            DataContext = addFactoryViewModel;
         }
     }
 }
