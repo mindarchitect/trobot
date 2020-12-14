@@ -54,8 +54,8 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
-        private RelayCommand<RobotFactory> newCommand;
-        public RelayCommand<RobotFactory> NewCommand
+        private ICommand newCommand;
+        public ICommand NewCommand
         {
             get
             {
@@ -110,6 +110,20 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
+        private ICommand showDataCommand;
+        public ICommand ShowDataCommand
+        {
+            get
+            {
+                if (showDataCommand == null)
+                {
+                    showDataCommand = new RelayCommand<object>(ShowData);
+                }
+
+                return showDataCommand;
+            }
+        }
+
         private void Add(RobotFactory robotFactory)
         {
             RobotFactories.Add(robotFactory);
@@ -152,6 +166,12 @@ namespace TRobot.ECU.UI.ViewModels
                     robot.Stop();
                 }
             }
+        }
+
+        private void ShowData(object param)
+        {
+            var dataView = new DataView();
+            dataView.Show();
         }
     }
 }

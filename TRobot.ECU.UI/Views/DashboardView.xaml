@@ -45,7 +45,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Style x:Key="Button" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="5,5,5,5" />
+            <Setter Property="Padding" Value="5,5,5,5" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="MaxWidth" Value="200" />
+        </Style>
+
         <DataTemplate x:Key="RobotsTemplate">
             <controls:RobotControl />
         </DataTemplate>
@@ -121,7 +128,10 @@
             </DockPanel>
 
             <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">
-                <Button DockPanel.Dock="Right" >Add Robot</Button>
+                <StackPanel>
+                    <Button Style="{StaticResource Button}" Command="{Binding Path=ShowDataCommand}" >Show data</Button>
+                    <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" >Add Robot</Button>
+                </StackPanel>
             </DockPanel>
         </Grid>
     </DockPanel>
