@@ -10,6 +10,9 @@ namespace TRobot.Data.Entities
         [Required]
         public int Id { get; set; }
         [Required]
+        [ForeignKey("Id")]
+        public int FactoryId { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public string Guid { get; set; }

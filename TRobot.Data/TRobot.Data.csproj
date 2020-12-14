@@ -60,7 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\RobotContext.cs" />
+    <Compile Include="Contexts\ApplicationDatabaseContext.cs" />
+    <Compile Include="Contexts\RobotDatabaseContext.cs" />
     <Compile Include="Entities\RobotEntity.cs" />
     <Compile Include="Entities\RobotFactoryEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

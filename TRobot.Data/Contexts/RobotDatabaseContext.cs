@@ -3,11 +3,10 @@ using TRobot.Data.Entities;
 
 namespace TRobot.Data.Contexts
 {
-    public class RobotContext : DbContext
+    public class RobotDatabaseContext : DbContext
     {
-        public RobotContext() : base("trobot")
+        public RobotDatabaseContext() : base("trobot")
         {
-            Database.CreateIfNotExists();
         }
 
         public DbSet<RobotEntity> Robots { get; set; }

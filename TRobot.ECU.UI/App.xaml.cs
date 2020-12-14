@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using TRobot.Core;
+using TRobot.Data.Contexts;
 using TRobot.ECU.UI.ViewModels;
-using TRobot.ECU.UI.Views;
 
 namespace TRobot.ECU.UI
 {
@@ -20,6 +20,10 @@ namespace TRobot.ECU.UI
             DependencyInjector.RegisterType<AddFactoryViewModel, AddFactoryViewModel>();
             DependencyInjector.RegisterType<AddRobotViewModel, AddRobotViewModel>();
             DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();
+
+            using (new ApplicationDatabaseContext())
+            {
+            }
         }
     }
 }

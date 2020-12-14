@@ -10,13 +10,11 @@ namespace TRobot.ECU.UI.ViewModels
     {
         public DataViewModel()
         {
-            using (var db = new RobotContext())
+            using (var robotDatabaseContext = new RobotDatabaseContext())
             {
-                var robotEntity = new RobotEntity { Id = 0, Name = "Warehouse Robot 1", Guid = Guid.NewGuid().ToString() };
-                db.Robots.Add(robotEntity);
                 try
                 {
-                    db.SaveChanges();
+                    var robots = robotDatabaseContext.Robots;
                 }
                 catch (Exception ex)
                 {
@@ -24,7 +22,6 @@ namespace TRobot.ECU.UI.ViewModels
                     Debug.WriteLine("Inner Exception: {0}", x);
                     throw;
                 }
-
             }
         }
     }
