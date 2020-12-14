@@ -7,6 +7,7 @@ namespace TRobot.Communication.Services.Monitoring
 {    
     [ServiceContract(
         SessionMode = SessionMode.Required,
+        ConfigurationName = "Monitoring Service",        
         CallbackContract = typeof(IRobotTrajectoryMonitoringServiceCallback),
         Name = "Monitoring Service",        
         Namespace = "http://trobot/monitoring"

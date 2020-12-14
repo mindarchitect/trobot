@@ -17,7 +17,7 @@ namespace TRobot.Robots.Services
 
         internal void SetupRobotTrajectory(Guid robotId, string robotTitle, List<Point> trajectoryPoints)
         {
-            if (InnerChannel.State != CommunicationState.Faulted)
+            if (InnerDuplexChannel.State != CommunicationState.Faulted)
             {
                 var robotTrajectory = new RobotDescartesTrajectory();
                 robotTrajectory.RobotId = robotId;
@@ -30,7 +30,7 @@ namespace TRobot.Robots.Services
 
         internal void UpdateRobotPosition(Guid robotId, Point position)
         {
-            if (InnerChannel.State != CommunicationState.Faulted)
+            if (InnerDuplexChannel.State != CommunicationState.Faulted)
             {
                 var robotTrajectoryPosition = new RobotDescartesTrajectoryPosition();
                 robotTrajectoryPosition.RobotId = robotId;
@@ -42,7 +42,7 @@ namespace TRobot.Robots.Services
 
         internal void TestOperation(Guid robotId)
         {
-            if (InnerChannel.State != CommunicationState.Faulted)
+            if (InnerDuplexChannel.State != CommunicationState.Faulted)
             {
                 var robot = new Robot();
                 robot.RobotId = robotId;
