@@ -45,11 +45,11 @@ namespace TRobot.Robots
             // TODO
             // Investigate Reset button issue when event handlers are activated
 
-            /*warehouseRobotMonitoringSeviceClient.InnerChannel.Opening += MonitorServiceInnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Opened += MonitorServiceInnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Closing += MonitorServiceInnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Closed += MonitorServiceInnerChannelStateChanged;
-            warehouseRobotMonitoringSeviceClient.InnerChannel.Faulted += MonitorServiceInnerChannelStateChanged;*/
+            /*warehouseRobotMonitoringSeviceClient.InnerDuplexChannel.Opening += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerDuplexChannel.Opened += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerDuplexChannel.Closing += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerDuplexChannel.Closed += MonitorServiceInnerChannelStateChanged;
+            warehouseRobotMonitoringSeviceClient.InnerDuplexChannel.Faulted += MonitorServiceInnerChannelStateChanged;*/
         }
 
         public void Terminate()
