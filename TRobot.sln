@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRobot.ECU.UI", "TRobot.ECU.UI\TRobot.ECU.UI.csproj", "{D488B4FA-7167-49C6-A9AB-1963673C74FE}"
 EndProject
@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRobot.Simulation", "TRobot.Simulation\TRobot.Simulation.csproj", "{1D19C131-1470-4073-8CEA-92912004515E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRobot.Core.Tests", "TRobot.Core.Tests\TRobot.Core.Tests.csproj", "{81E26FF3-03AC-43E7-A301-1E6B16A35340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,8 +76,15 @@ Global
 		{1D19C131-1470-4073-8CEA-92912004515E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D19C131-1470-4073-8CEA-92912004515E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D19C131-1470-4073-8CEA-92912004515E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E26FF3-03AC-43E7-A301-1E6B16A35340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E26FF3-03AC-43E7-A301-1E6B16A35340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E26FF3-03AC-43E7-A301-1E6B16A35340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E26FF3-03AC-43E7-A301-1E6B16A35340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2B7989E-68F5-4244-983C-66D35D910E8C}
 	EndGlobalSection
 EndGlobal
