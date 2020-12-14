@@ -21,6 +21,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         private Process monitorProcess;
 
+        //public DashboardViewModel(DashboardView dashboardView, IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider) : base(dashboardView)
         public DashboardViewModel(IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;           

@@ -93,7 +93,7 @@ namespace TRobot.Robots.ViewModels
 
         private void Cancel()
         {
-            
+            View.Close();
         }
     }
 }

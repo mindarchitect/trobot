@@ -14,7 +14,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         protected BaseViewModel(V view)
         {
-            this.view = view;
+            View = view;
         }
     }    
 }
