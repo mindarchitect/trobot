@@ -92,6 +92,8 @@ namespace TRobot.Robots
             {
                 TaskStatus? engineTaskStatus = engineTask?.Status;
                 
+                // This condition is required to prevent task from running second time without explicit reset
+                // wich sets task to null
                 if (!engineTaskStatus.HasValue || engineTaskStatus.Value != TaskStatus.RanToCompletion)
                 {
                     cancellationTokenSource = new CancellationTokenSource();
@@ -118,9 +120,10 @@ namespace TRobot.Robots
             }
             else
             {
-                cancellationTokenSource.Cancel();                
-                engineTask = null;
+                cancellationTokenSource.Cancel();                                
             }
+
+            engineTask = null;
         }                     
 
         protected virtual void OnVelocityChanged(VelocityChangedEventArguments e)
@@ -184,8 +187,6 @@ namespace TRobot.Robots
 
                     //Create separate thread for each drive + resources synchronization
                     resultingVelocityVector = UpdateRobotDrives(xDriveVelocity, yDriveVelocity, xDriveAcceleration, yDriveAcceleration);
-                    UpdateRobotCurrentVelocity(resultingVelocityVector);
-
                     positionInCurrentVector = Vector.Add(resultingVelocityVector, positionInCurrentVector);
 
                     positionIsInCurrentVector = (currentVector.Length - ((Vector)positionInCurrentVector).Length) > 0;
@@ -213,8 +214,7 @@ namespace TRobot.Robots
                     return;
                 }
 
-                resultingVelocityVector = UpdateRobotDrives(xDriveVelocity, yDriveVelocity, xDriveAcceleration, yDriveAcceleration);
-                UpdateRobotCurrentVelocity(resultingVelocityVector);
+                resultingVelocityVector = UpdateRobotDrives(xDriveVelocity, yDriveVelocity, xDriveAcceleration, yDriveAcceleration);                
 
                 var newPosition = Vector.Add(resultingVelocityVector, Robot.CurrentPosition);
                 UpdateRobotCurrentPosition(newPosition);

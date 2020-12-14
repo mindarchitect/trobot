@@ -48,7 +48,7 @@ namespace TRobot.Robots.ViewModels
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(3, 120, 140));
             TrajectoryCoordinates.Add(new DescartesCoordinatesItem(4, 200, 140));
 
-            Velocity = 50;
+            Velocity = 30;
             Acceleration = 4;
 
             RobotState = Robot.Controller.State;
