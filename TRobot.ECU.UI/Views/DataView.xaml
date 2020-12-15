@@ -14,6 +14,8 @@
             <Setter Property="MaxWidth" Value="200" />
         </Style>
     </Window.Resources>
-    <Grid>
-    </Grid>
+
+    <StackPanel>
+        <Button Style="{StaticResource Button}" Content="Button" HorizontalAlignment="Left" Margin="576,161,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=GetDataCommand}" />
+    </StackPanel>
 </Window>

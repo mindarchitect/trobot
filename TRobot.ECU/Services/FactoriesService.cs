@@ -2,22 +2,22 @@
 using TRobot.Core.Data.Entities;
 using Unity;
 using System.Threading.Tasks;
-using TRobot.Core.Data;
+using TRobot.Core.Data.Repositories;
 
 namespace TRobot.ECU.Services
 {
-    public class FactoryService : IFactoryService
+    public class FactoriesService : IFactoriesService
     {
         [Dependency]
-        public IAsyncRepository<FactoryEntity> FactoriesRepository { get; set; }
+        public IFactoriesRepository<FactoryEntity> FactoriesRepository { get; set; }
 
-        public FactoryService()
+        public FactoriesService()
         {
         }
 
         public async Task<FactoryEntity> GetFactoryById(int id)
         {
-            return await FactoriesRepository.GetById(id);
+            return await FactoriesRepository.GetFactoryById(id);
         }
     }
 }

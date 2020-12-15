@@ -4,6 +4,7 @@ using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.Core.Data;
 using TRobot.Core.Data.Entities;
+using TRobot.Core.Data.Repositories;
 using TRobot.Core.Services;
 using TRobot.Data;
 using TRobot.ECU.Data.Repositories;
@@ -18,8 +19,8 @@ namespace TRobot.ECU
         {
             DependencyInjector.AddExtension<DataDependencyInjectionExtension>();
 
-            DependencyInjector.RegisterType<IAsyncRepository<FactoryEntity>, FactoryRepository>();
-            DependencyInjector.RegisterType<IFactoryService, FactoryService>();
+            DependencyInjector.RegisterType<IFactoriesRepository<FactoryEntity>, FactoriesRepository>();
+            DependencyInjector.RegisterType<IFactoriesService, FactoriesService>();
             DependencyInjector.RegisterInstance(new DescartesRobotFactory("Test robot factory", new Size(300, 300)));
 
             DependencyInjector.RegisterType<IRobotTrajectoryValidationService, RobotDescartesTrajectoryValidationService>();

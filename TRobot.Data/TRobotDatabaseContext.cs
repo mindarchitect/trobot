@@ -8,11 +8,13 @@ namespace TRobot.Data.Contexts
     {
         public TRobotDatabaseContext() : base("trobot")
         {
-            if (!Database.CreateIfNotExists())
+            string sqliteFilePath = @".\trobot.sqlite";
+
+            if (!File.Exists(sqliteFilePath))
             {
-                string sqlFilePath = @"./../../sql/trobot.sql";
-                if (!File.Exists(sqlFilePath))
+                if (!Database.CreateIfNotExists())
                 {
+                    string sqlFilePath = @"./../../sql/trobot.sql";
                     string script = File.ReadAllText(sqlFilePath);
                     Database.ExecuteSqlCommand(script);
                 }
@@ -22,6 +24,7 @@ namespace TRobot.Data.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FactoryEntity>().ToTable("Factories");
+            modelBuilder.Entity<RobotEntity>().ToTable("Robots");
         }
     }
 }

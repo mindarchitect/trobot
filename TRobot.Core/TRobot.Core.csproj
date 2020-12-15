@@ -58,6 +58,7 @@
     <Compile Include="Data\Entities\FactoryEntity.cs" />
     <Compile Include="Data\Entities\RobotEntity.cs" />
     <Compile Include="Data\IAsyncRepository.cs" />
+    <Compile Include="Data\Repositories\IFactoriesRepository.cs" />
     <Compile Include="DependencyInjector.cs" />
     <Compile Include="Enums\RobotState.cs" />
     <Compile Include="Enums\Dimension.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="Services\Contracts\Data\Robot.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectory.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
-    <Compile Include="Data\Services\IFactoryService.cs" />
+    <Compile Include="Data\Services\IFactoriesService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Simulation\ISimulationProvider.cs" />
   </ItemGroup>
