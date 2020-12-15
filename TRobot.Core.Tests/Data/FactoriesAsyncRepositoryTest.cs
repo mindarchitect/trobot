@@ -8,13 +8,13 @@ using TRobot.Data.Contexts;
 namespace TRobot.Core.Tests
 {
     [TestFixture]
-    public class AsyncRepositoryTest
+    public class FactoriesAsyncRepositoryTest
     {
         [SetUp]
         public void SetUp()
         {
             DependencyInjector.RegisterType<DbContext, TestDatabaseContext>();
-            DependencyInjector.RegisterType<IAsyncRepository<FactoryEntity>, TestAsyncRepository>();
+            DependencyInjector.RegisterType<IAsyncRepository<FactoryEntity>, TestFactoriesAsyncRepository>();
         }
 
         [Test]
@@ -25,7 +25,13 @@ namespace TRobot.Core.Tests
             var factory = testRepository.GetById(1);
             factory.Wait();
             Assert.IsNotNull(factory);
-            Assert.IsInstanceOf<FactoryEntity>(factory);
+            Assert.IsInstanceOf<FactoryEntity>(factory.Result);
+
+            var factoryEntity = factory.Result;
+
+            // Test resulting object
+            Assert.AreEqual(1, factoryEntity.Id);
+            Assert.AreEqual("Warehouse factory", factoryEntity.Name);
         }
     }
 }

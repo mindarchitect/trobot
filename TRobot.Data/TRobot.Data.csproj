@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseContext.cs" />
     <Compile Include="TRobotDatabaseContext.cs" />
     <Compile Include="DataDependencyInjectionExtension.cs" />
     <Compile Include="EFRepository.cs" />

@@ -75,8 +75,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\AsyncRepositoryTest.cs" />
-    <Compile Include="Data\TestAsyncRepository.cs" />
+    <Compile Include="Data\FactoriesAsyncRepositoryTest.cs" />
+    <Compile Include="Data\TestFactoriesAsyncRepository.cs" />
     <Compile Include="Data\TestDatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

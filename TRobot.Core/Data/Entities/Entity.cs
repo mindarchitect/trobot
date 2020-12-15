@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TRobot.Core.Data.Entities
 {
@@ -8,7 +7,8 @@ namespace TRobot.Core.Data.Entities
         [Key]
         [Required]
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        [Required]
+        public string CreatedDate { get; set; }
+        public string ModifiedDate { get; set; }
     }
 }

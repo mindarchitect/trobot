@@ -24,6 +24,7 @@ namespace TRobot.Data.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FactoryEntity>().ToTable("Factories");
+            modelBuilder.Entity<RobotEntity>().ToTable("Robots");
         }
     }
 }
