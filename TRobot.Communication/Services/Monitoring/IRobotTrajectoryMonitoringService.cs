@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using TRobot.Core.Services.Contracts.Data;
 using TRobot.Communication.Events;
+using TRobot.Core.Services;
 
 namespace TRobot.Communication.Services.Monitoring
 {    

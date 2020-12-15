@@ -1,4 +1,4 @@
-﻿namespace TRobot.Communication.Services
+﻿namespace TRobot.Core.Services
 {
     public interface IService
     {

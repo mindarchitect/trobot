@@ -71,7 +71,6 @@
     <Compile Include="Events\RobotPositionResetEventArguments.cs" />
     <Compile Include="Events\RobotPositionUpdatedEventArguments.cs" />
     <Compile Include="Events\TrajectorySetEventArguments.cs" />
-    <Compile Include="Services\IService.cs" />
     <Compile Include="Services\IServiceHostProvider.cs" />
     <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringService.cs" />
     <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringServiceCallback.cs" />

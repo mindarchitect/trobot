@@ -1,4 +1,6 @@
-﻿namespace TRobot.Communication.Services
+﻿using TRobot.Core.Services;
+
+namespace TRobot.Communication.Services
 {
     public interface IServiceHostProvider<S> where S: IService
     {

@@ -1,28 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using TRobot.Data.Contexts;
-using TRobot.Data.Entities;
+﻿using TRobot.Core.Services;
 using TRobot.ECU.UI.Views;
+using Unity;
 
 namespace TRobot.ECU.UI.ViewModels
 {
     class DataViewModel : BaseViewModel<DataView>
     {
-        public DataViewModel()
+        [Dependency]
+        public IFactoryService FactoryService { get; set; }
+
+        public DataViewModel(IFactoryService factoryService)
         {
-            using (var robotDatabaseContext = new RobotDatabaseContext())
-            {
-                try
-                {
-                    var robots = robotDatabaseContext.Robots;
-                }
-                catch (Exception ex)
-                {
-                    var x = ex.InnerException;
-                    Debug.WriteLine("Inner Exception: {0}", x);
-                    throw;
-                }
-            }
+            FactoryService = factoryService;
+            var factory = FactoryService.GetFactoryById(1);
+            var robots = factory.Robots;
         }
     }
 }

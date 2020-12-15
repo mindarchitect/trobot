@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TRobot.Data.Entities
+namespace TRobot.Core.Data.Entities
 {
     [Table("Factories")]
-    public class RobotFactoryEntity
+    public class FactoryEntity
     {
         [Key]
         public int Id { get; set; }
+
         public string Name { get; set; }
-        public virtual ICollection<RobotEntity> Robots { get; private set; } = new ObservableCollection<RobotEntity>();
+
+        [ForeignKey("FactoryId")]
+        public ICollection<RobotEntity> Robots { get; set; }
     }
 }

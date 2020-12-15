@@ -7,10 +7,10 @@ namespace TRobot.Data.Contexts
     {
         public ApplicationDatabaseContext() : base("trobot")
         {
-            if (Database.CreateIfNotExists())
+            if (!Database.CreateIfNotExists())
             {
                 string script = File.ReadAllText(@".\..\..\sql\trobot.sql");
-                Database.ExecuteSqlCommand(script);
+                //Database.ExecuteSqlCommand(script);
             }    
         }
     }
