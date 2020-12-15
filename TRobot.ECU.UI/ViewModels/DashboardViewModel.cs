@@ -20,7 +20,7 @@ namespace TRobot.ECU.UI.ViewModels
     public class DashboardViewModel : BaseViewModel<DashboardView>
     {
         [Dependency]
-        public IFactoriesService FactoryService { get; set; }
+        public IFactoriesService FactoriesService { get; set; }
 
         private ObservableCollection<RobotFactory> robotFactories;
         private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;
@@ -149,7 +149,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         internal async void OnLoaded(object sender, EventArgs e)
         {
-            var factory = await FactoryService.GetFactoryById(1);
+            var factory = await FactoriesService.GetFactoryById(1);
             var factoryRobots = factory.Robots;
 
             var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();

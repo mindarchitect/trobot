@@ -1,10 +1,6 @@
 ﻿using System.Windows;
 using TRobot.Core;
-using TRobot.Core.Services;
-using TRobot.Data.Contexts;
-using TRobot.ECU.Services;
 using TRobot.ECU.UI.ViewModels;
-using Unity.Injection;
 
 namespace TRobot.ECU.UI
 {
@@ -24,10 +20,6 @@ namespace TRobot.ECU.UI
             DependencyInjector.RegisterType<AddRobotViewModel, AddRobotViewModel>();
 
             DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();
-
-            using (new TRobotDatabaseContext())
-            {
-            }
         }
     }
 }
