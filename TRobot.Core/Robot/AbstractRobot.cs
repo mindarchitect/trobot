@@ -8,9 +8,9 @@ namespace TRobot.Core
         public string Image { get; set; }
         public Guid Id { get; private set; }       
 
-        protected AbstractRobot()
+        protected AbstractRobot(Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
         }
 
         public abstract void Start();

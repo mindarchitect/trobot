@@ -30,19 +30,6 @@ namespace TRobot.ECU.UI.ViewModels
         public DashboardViewModel(IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;
-            
-            var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
-
-            var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
-            warehouseRobot1.Title = "Warehouse Robot 1";
-
-            var warehouseRobot2 = new WarehouseRobot(descartesRobotFactory);
-            warehouseRobot2.Title = "Warehouse Robot 2";
-
-            descartesRobotFactory.Robots.Add(warehouseRobot1);
-            descartesRobotFactory.Robots.Add(warehouseRobot2);
-
-            RobotFactories.Add(descartesRobotFactory);           
         }
 
         public ObservableCollection<RobotFactory> RobotFactories
@@ -160,10 +147,21 @@ namespace TRobot.ECU.UI.ViewModels
             Application.Current.Shutdown();
         }
 
-        internal async void OnInitialized(object sender, EventArgs e)
+        internal async void OnLoaded(object sender, EventArgs e)
         {
             var factory = await FactoryService.GetFactoryById(1);
             var factoryRobots = factory.Robots;
+
+            var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
+
+            foreach (var robot in factoryRobots)
+            {
+                var warehouseRobot = new WarehouseRobot(Guid.Parse(robot.Guid), descartesRobotFactory);
+                warehouseRobot.Title = robot.Name;
+                descartesRobotFactory.Robots.Add(warehouseRobot);
+            }
+
+            RobotFactories.Add(descartesRobotFactory);
         }
 
         internal void OnClosing(object sender, CancelEventArgs e)

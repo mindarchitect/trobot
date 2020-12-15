@@ -76,7 +76,7 @@
                          ItemsSource="{Binding Robots}"
                          SelectedIndex="0" >
                     <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">                            
+                        <Style TargetType="ListBoxItem">
                             <Setter Property="Padding" Value="1" />
                             <Setter Property="Margin" Value="1" />
                         </Style>
@@ -120,7 +120,7 @@
             </DockPanel>
 
             <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" >
-                <TabControl ItemsSource="{Binding RobotFactories}" ItemTemplateSelector="{StaticResource HeaderTemplateSelector}" ContentTemplateSelector="{StaticResource ContentTemplateSelector}" SelectedIndex="0" />
+                <TabControl ItemsSource="{Binding RobotFactories}" ItemTemplateSelector="{StaticResource HeaderTemplateSelector}" ContentTemplateSelector="{StaticResource ContentTemplateSelector}" SelectedIndex="1" />
             </DockPanel>
 
             <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" >

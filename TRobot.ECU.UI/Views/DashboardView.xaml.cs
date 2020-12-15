@@ -19,7 +19,7 @@ namespace TRobot.ECU.UI.Views
             dashboardViewControlModel.View = this;
 
             Closing += dashboardViewControlModel.OnClosing;
-            Initialized += dashboardViewControlModel.OnInitialized;
+            Loaded += dashboardViewControlModel.OnLoaded;
 
             DataContext = dashboardViewControlModel;
 

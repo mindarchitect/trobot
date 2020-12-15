@@ -16,7 +16,7 @@ namespace TRobot.Robots
 
         public RobotSettings Settings { get; set; }       
 
-        public WarehouseRobot(DescartesRobotFactory factory)
+        public WarehouseRobot(Guid id, DescartesRobotFactory factory) : base(id)
         {            
             Factory = factory;
 
