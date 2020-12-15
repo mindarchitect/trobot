@@ -1,9 +1,10 @@
-﻿using TRobot.Core.Data.Entities;
+﻿using System.Threading.Tasks;
+using TRobot.Core.Data.Entities;
 
 namespace TRobot.Core.Services
 {
     public interface IFactoryService : IService
     {
-        FactoryEntity GetFactoryById(int Id);
+        Task<FactoryEntity> GetFactoryById(int id);
     }
 }

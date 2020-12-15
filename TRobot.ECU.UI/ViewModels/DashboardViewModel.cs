@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -8,14 +9,19 @@ using System.Windows.Input;
 using TRobot.Communication.Services;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
+using TRobot.Core.Services;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.UI.Views;
 using TRobot.Robots;
+using Unity;
 
 namespace TRobot.ECU.UI.ViewModels
 {
     public class DashboardViewModel : BaseViewModel<DashboardView>
     {
+        [Dependency]
+        public IFactoryService FactoryService { get; set; }
+
         private ObservableCollection<RobotFactory> robotFactories;
         private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;
 
@@ -23,9 +29,9 @@ namespace TRobot.ECU.UI.ViewModels
 
         public DashboardViewModel(IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider)
         {
-            this.serviceHostProvider = serviceHostProvider;           
-           
-            var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();                
+            this.serviceHostProvider = serviceHostProvider;
+            
+            var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
 
             var warehouseRobot1 = new WarehouseRobot(descartesRobotFactory);
             warehouseRobot1.Title = "Warehouse Robot 1";
@@ -152,6 +158,11 @@ namespace TRobot.ECU.UI.ViewModels
         private void ExitApplication(object param)
         {
             Application.Current.Shutdown();
+        }
+
+        internal async void OnInitialized(object sender, EventArgs e)
+        {
+            var factory = await FactoryService.GetFactoryById(1);
         }
 
         internal void OnClosing(object sender, CancelEventArgs e)

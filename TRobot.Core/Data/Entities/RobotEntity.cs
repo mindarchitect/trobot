@@ -4,12 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TRobot.Core.Data.Entities
 {
     [Table("Robots")]
-    public class RobotEntity
+    public class RobotEntity : Entity
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
         [Required]
         public int FactoryId { get; set; }
 

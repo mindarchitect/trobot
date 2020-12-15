@@ -9,11 +9,8 @@ namespace TRobot.ECU.UI.ViewModels
         [Dependency]
         public IFactoryService FactoryService { get; set; }
 
-        public DataViewModel(IFactoryService factoryService)
+        public DataViewModel()
         {
-            FactoryService = factoryService;
-            var factory = FactoryService.GetFactoryById(1);
-            var robots = factory.Robots;
         }
     }
 }

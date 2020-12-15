@@ -1,4 +1,5 @@
-﻿using TRobot.Core;
+﻿using System.Data.Entity;
+using TRobot.Core;
 using TRobot.Data.Contexts;
 using Unity.Extension;
 
@@ -8,7 +9,7 @@ namespace TRobot.Data
     {
         protected override void Initialize()
         {
-            DependencyInjector.RegisterType<FactoriesDatabaseContext, FactoriesDatabaseContext>();
+            DependencyInjector.RegisterType<DbContext, TRobotDatabaseContext>();
         }
     }
 }

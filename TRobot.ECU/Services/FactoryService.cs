@@ -1,28 +1,23 @@
-﻿using System.Linq;
-
-using TRobot.Core.Services;
+﻿using TRobot.Core.Services;
 using TRobot.Core.Data.Entities;
-using TRobot.Data.Contexts;
-using System.Data.Entity;
+using Unity;
+using System.Threading.Tasks;
+using TRobot.Core.Data;
 
 namespace TRobot.ECU.Services
 {
     public class FactoryService : IFactoryService
     {
+        [Dependency]
+        public IAsyncRepository<FactoryEntity> FactoriesRepository { get; set; }
+
         public FactoryService()
         {
         }
 
-        public FactoryEntity GetFactoryById(int id)
+        public async Task<FactoryEntity> GetFactoryById(int id)
         {
-            using (var robotDatabaseContext = new FactoriesDatabaseContext())
-            {
-                var query = robotDatabaseContext.Factories
-                      .Where(factory => factory.Id == id)
-                      .Include(factory => factory.Robots);
-                      
-                return query.FirstOrDefault();
-            }  
+            return await FactoriesRepository.GetById(id);
         }
     }
 }

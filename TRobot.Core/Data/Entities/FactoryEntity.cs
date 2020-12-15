@@ -5,13 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TRobot.Core.Data.Entities
 {
     [Table("Factories")]
-    public class FactoryEntity
+    public class FactoryEntity : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Name { get; set; }
-
         [ForeignKey("FactoryId")]
         public ICollection<RobotEntity> Robots { get; set; }
     }
