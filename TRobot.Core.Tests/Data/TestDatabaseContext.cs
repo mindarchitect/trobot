@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.IO;
 using TRobot.Core.Data.Entities;
 
@@ -8,13 +9,14 @@ namespace TRobot.Data.Contexts
     {
         public TestDatabaseContext() : base("test")
         {
-            string sqliteFilePath = @".\TRobot.Core.Tests\bin\Debug\test.sqlite";
+            string baseDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
+            string databaseFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\test.sqlite"));
 
-            if (!File.Exists(sqliteFilePath))
+            if (!File.Exists(databaseFilePath))
             {
                 if (!Database.CreateIfNotExists())
                 {
-                    string sqlFilePath = @".\TRobot.Core.Tests\sql\trobot.sql";
+                    string sqlFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\..\..\sql\trobot.sql"));
                     string script = File.ReadAllText(sqlFilePath);
                     Database.ExecuteSqlCommand(script);
                 }
