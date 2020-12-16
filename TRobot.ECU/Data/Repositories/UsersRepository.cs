@@ -16,8 +16,9 @@ namespace TRobot.ECU.Data.Repositories
         public Task<UserEntity> GetUserByUserName(string userName)
         {
             return Context.Set<UserEntity>()
-                    .Where(u => u.UserName == userName)
-                    .Include(u => u.Roles).FirstOrDefaultAsync();
+                    .Where(u => u.Username == userName)
+                    .Include(u => u.Roles)
+                    .FirstOrDefaultAsync();
         }
     }
 }

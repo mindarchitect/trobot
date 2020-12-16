@@ -27,6 +27,9 @@ namespace TRobot.Data.Contexts
         {
             modelBuilder.Entity<FactoryEntity>().ToTable("Factories");
             modelBuilder.Entity<RobotEntity>().ToTable("Robots");
+
+            modelBuilder.Entity<UserEntity>().ToTable("Users");
+            modelBuilder.Entity<RoleEntity>().ToTable("Roles");
         }
     }
 }

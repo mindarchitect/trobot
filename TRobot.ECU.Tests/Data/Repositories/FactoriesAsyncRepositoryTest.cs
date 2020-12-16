@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
 using System.Data.Entity;
-using TRobot.Core.Data;
+using TRobot.Core;
 using TRobot.Core.Data.Entities;
-using TRobot.Core.Tests.Data;
-using TRobot.Data.Contexts;
+using TRobot.Core.Data.Repositories;
+using TRobot.ECU.Data.Repositories;
 
-namespace TRobot.Core.Tests
+namespace TRobot.ECU.Tests.Data.Repositories
 {
     [TestFixture]
     public class FactoriesAsyncRepositoryTest
@@ -14,13 +14,13 @@ namespace TRobot.Core.Tests
         public void SetUp()
         {
             DependencyInjector.RegisterType<DbContext, TestDatabaseContext>();
-            DependencyInjector.RegisterType<IAsyncRepository<FactoryEntity>, TestFactoriesAsyncRepository>();
+            DependencyInjector.RegisterType<IFactoriesRepository, FactoriesRepository>();
         }
 
         [Test]
         public void GetByIdTest()
         {
-            var testRepository = DependencyInjector.Resolve<IAsyncRepository<FactoryEntity>>();
+            var testRepository = DependencyInjector.Resolve<IFactoriesRepository>();
             Assert.IsNotNull(testRepository);
             var factory = testRepository.GetById(1);
             factory.Wait();

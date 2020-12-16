@@ -5,11 +5,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Themes -->
-                <ResourceDictionary Source="Styles/BlueThemeResourceDictionary.xaml" />
-                <ResourceDictionary Source="Styles/CoreResourceDictionary.xaml" />
-                <ResourceDictionary Source="Styles/DataWindowResourceDictionary.xaml" />
-                <ResourceDictionary Source="Styles/UserControlResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
