@@ -19,10 +19,10 @@ CREATE TABLE "Factories" (
 
 CREATE TABLE "Users" (
 	"Id"	INTEGER NOT NULL UNIQUE,
-	"Username"	TEXT NOT NULL,
+	"UserName"	TEXT NOT NULL,
 	"Password"	TEXT NOT NULL,
-	"Firstname"	TEXT NOT NULL,
-	"Lastname"	TEXT NOT NULL,
+	"FirstName"	TEXT NOT NULL,
+	"LastName"	TEXT NOT NULL,
 	"CreatedDate" TEXT NOT NULL,
 	"ModifiedDate" TEXT,
 	PRIMARY KEY("Id" AUTOINCREMENT)
@@ -42,13 +42,13 @@ CREATE TABLE "UserRoles" (
 	"RoleId"	TEXT NOT NULL,
 	"CreatedDate" TEXT NOT NULL,
 	"ModifiedDate" TEXT,
-	PRIMARY KEY("Id" AUTOINCREMENT)
-	FOREIGN KEY("UserId") REFERENCES "Users"("Id")
+	PRIMARY KEY("Id" AUTOINCREMENT),
+	FOREIGN KEY("UserId") REFERENCES "Users"("Id"),
 	FOREIGN KEY("RoleId") REFERENCES "Roles"("Id")
 );
 
-INSERT INTO "Users" ("Id", "Username", "Password", "Firstname" , "Lastname", "CreatedDate") VALUES( 1, "User1", "User1", "First name", "Last name", "2020-12-15 12:00:00:000");
-INSERT INTO "Users" ("Id", "Username", "Password", "Firstname" , "Lastname", "CreatedDate") VALUES( 2, "User2", "User1", "First name", "Last name", "2020-12-15 12:00:00:000");
+INSERT INTO "Users" ("Id", "UserName", "Password", "FirstName" , "LastName", "CreatedDate") VALUES( 1, "User1", "User1", "First name", "Last name", "2020-12-15 12:00:00:000");
+INSERT INTO "Users" ("Id", "UserName", "Password", "FirstName" , "LastName", "CreatedDate") VALUES( 2, "User2", "User1", "First name", "Last name", "2020-12-15 12:00:00:000");
 
 INSERT INTO "Roles" ("Id", "Name", "CreatedDate") VALUES( 1, "Role 1",	"2020-12-15 12:00:00:000");
 INSERT INTO "Roles" ("Id", "Name", "CreatedDate") VALUES( 2, "Role 2",	"2020-12-15 12:00:00:000");

@@ -31,7 +31,7 @@ namespace TRobot.ECU.Tests.Data.Repositories
 
             // Test resulting object
             Assert.AreEqual(1, userEntity.Id);
-            Assert.AreEqual("User1", userEntity.Username);
+            Assert.AreEqual("User1", userEntity.UserName);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace TRobot.ECU.Tests.Data.Repositories
 
             // Test resulting object
             Assert.AreEqual(1, userEntity.Id);
-            Assert.AreEqual("User1", userEntity.Username);
+            Assert.AreEqual("User1", userEntity.UserName);
             Assert.AreEqual(2, userEntity.Roles.Count);
         }
     }
