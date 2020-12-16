@@ -71,6 +71,7 @@
     <Compile Include="Services\FactoriesService.cs" />
     <Compile Include="Services\RobotDescartesTrajectoryValidationService.cs" />
     <Compile Include="Services\RobotDescartesTrajectoryValidationServiceHost.cs" />
+    <Compile Include="Services\SecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TRobot.Communication\TRobot.Communication.csproj">

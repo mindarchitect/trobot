@@ -180,8 +180,9 @@ namespace TRobot.ECU.UI.ViewModels
 
         private void ShowData(object param)
         {
-            var dataView = new DataView();
-            dataView.Show();
+            //var dataView = new DataView();
+            var loginView = new LoginView();
+            loginView.Show();
         }
     }
 }

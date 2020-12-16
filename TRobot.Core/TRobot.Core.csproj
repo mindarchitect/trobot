@@ -83,6 +83,7 @@
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectory.cs" />
     <Compile Include="Services\Contracts\Data\RobotDescartesTrajectoryPosition.cs" />
     <Compile Include="Data\Services\IFactoriesService.cs" />
+    <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Simulation\ISimulationProvider.cs" />
   </ItemGroup>
