@@ -94,7 +94,7 @@
                     <Grid Grid.Column="2" Name="LocalLoginGrid" Visibility="Visible" Width="380">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                             <Image Source="Images/employees-server.png" Height="64" Width="64" Margin="0,20,0,0" />
-                            <Label Content="Local Login" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
+                            <Label Content="Login" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
                             <Grid Margin="0,0,0,8">
                                 <TextBlock Margin="4,1,2,0" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" Height="22" Text="Username" Foreground="{StaticResource UserControlButtonIsPressedBrush}"
                                            Visibility="{Binding ElementName=LocalUserNameTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />

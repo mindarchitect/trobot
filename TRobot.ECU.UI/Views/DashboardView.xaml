@@ -10,6 +10,7 @@
         Height="300"
         Width="600"
         WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
         >
 
     <Window.Resources>
