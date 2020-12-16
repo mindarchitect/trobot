@@ -10,7 +10,7 @@
         Background="{DynamicResource WindowBackgroundBrush}" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize">
     <Window.Resources>
         <!--<Storyboard x:Key="FadeIn">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="window">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Window">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.4"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
