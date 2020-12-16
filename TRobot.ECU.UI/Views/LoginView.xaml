@@ -64,7 +64,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Visibility="Visible" Name="AzureLoginGrid" Width="380">
+                    <Grid Grid.Column="0" Visibility="Collapsed" Name="AzureLoginGrid" Width="380">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                             <Image Source="Images/cloud-user.png" Height="64" Width="64" Margin="0,20,0,0" />
                             <Label Content="Azure Login" Margin="0,4,0,12" HorizontalAlignment="Center" Foreground="{DynamicResource MainBlackFontColor}" FontFamily="Segoe UI Semilight" FontSize="26"></Label>
@@ -88,7 +88,7 @@
                             <Button Name="AzureLoginButton" Content="Login" Width="220" Height="36" TabIndex="3" Margin="0,0,0,32"/>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Column="1" Name="SplitGrid" Width="20" Visibility="Visible">
+                    <Grid Grid.Column="1" Name="SplitGrid" Width="20" Visibility="Collapsed">
                         <StackPanel Height="326" Width="1" Background="{StaticResource MainWindowSplitBorderBrush}" Margin="0,40,0,40"></StackPanel>
                     </Grid>
                     <Grid Grid.Column="2" Name="LocalLoginGrid" Visibility="Visible" Width="380">
