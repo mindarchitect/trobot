@@ -7,7 +7,7 @@ using TRobot.Core.Data.Repositories;
 
 namespace TRobot.ECU.Data.Repositories
 {
-    public class FactoriesRepository : EFRepository<FactoryEntity>, IFactoriesRepository<FactoryEntity>
+    public class FactoriesRepository : EFRepository<FactoryEntity>, IFactoriesRepository
     {
         public FactoriesRepository(DbContext context) : base(context)
         {

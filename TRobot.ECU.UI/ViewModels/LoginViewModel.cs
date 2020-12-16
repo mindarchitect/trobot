@@ -12,21 +12,50 @@ namespace TRobot.ECU.UI.ViewModels
         [Dependency]
         public ISecurityService SecurityService { get; set; }
 
+        private string userName;
+        private string password;
+
         public LoginViewModel()
         {
         }
 
-        private ICommand loginCommand;
-        public ICommand LoginCommand
+        public string UserName
         {
             get
             {
-                if (loginCommand == null)
+                return userName;
+            }
+            set
+            {
+                userName = value;
+                OnPropertyChanged("UserName");
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+
+        private ICommand loginUserCommand;
+        public ICommand LoginUserCommand
+        {
+            get
+            {
+                if (loginUserCommand == null)
                 {
-                    loginCommand = new RelayCommand<object>(LoginUser);
+                    loginUserCommand = new RelayCommand<object>(LoginUser);
                 }
 
-                return loginCommand;
+                return loginUserCommand;
             }
         }
 
@@ -102,7 +131,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         internal async void LoginUser(object param)
         {
-            var result = await SecurityService.LoginUser("test", "test");            
+            var result = await SecurityService.LoginUser(userName, password);            
         }
 
         private void ToolbarClose(object param)

@@ -19,10 +19,12 @@ namespace TRobot.ECU
         {
             DependencyInjector.AddExtension<DataDependencyInjectionExtension>();
 
-            DependencyInjector.RegisterType<ISecurityService, SecurityService>();
+            DependencyInjector.RegisterType<IFactoriesRepository, FactoriesRepository>();
+            DependencyInjector.RegisterType<IUsersRepository, UsersRepository>();
 
-            DependencyInjector.RegisterType<IFactoriesRepository<FactoryEntity>, FactoriesRepository>();
+            DependencyInjector.RegisterType<ISecurityService, SecurityService>();
             DependencyInjector.RegisterType<IFactoriesService, FactoriesService>();
+
             DependencyInjector.RegisterInstance(new DescartesRobotFactory("Test robot factory", new Size(300, 300)));
 
             DependencyInjector.RegisterType<IRobotTrajectoryValidationService, RobotDescartesTrajectoryValidationService>();

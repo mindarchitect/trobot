@@ -9,7 +9,7 @@ namespace TRobot.ECU.Services
     public class FactoriesService : IFactoriesService
     {
         [Dependency]
-        public IFactoriesRepository<FactoryEntity> FactoriesRepository { get; set; }
+        public IFactoriesRepository FactoriesRepository { get; set; }
 
         public FactoriesService()
         {

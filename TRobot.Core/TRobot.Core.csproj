@@ -57,7 +57,10 @@
     <Compile Include="Data\Entities\Entity.cs" />
     <Compile Include="Data\Entities\FactoryEntity.cs" />
     <Compile Include="Data\Entities\RobotEntity.cs" />
+    <Compile Include="Data\Entities\RoleEntity.cs" />
+    <Compile Include="Data\Entities\UserEntity.cs" />
     <Compile Include="Data\Repositories\IAsyncRepository.cs" />
+    <Compile Include="Data\Repositories\IUsersRepository.cs" />
     <Compile Include="Data\Repositories\IFactoriesRepository.cs" />
     <Compile Include="DependencyInjector.cs" />
     <Compile Include="Enums\RobotState.cs" />
