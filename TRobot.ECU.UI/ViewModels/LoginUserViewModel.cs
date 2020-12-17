@@ -13,54 +13,72 @@ namespace TRobot.ECU.UI.ViewModels
         [Dependency]
         public ISecurityService SecurityService { get; set; }
 
-        private string username;
+        private string userName;
         private string password;
 
         public LoginUserViewModel()
-        {
-            
+        {            
         }
 
-        public string Username
+        public string UserName
         {
             get
             {
-                return username;
+                return userName;
             }
             set
             {
-                username = value;
+                userName = value;
                 OnPropertyChanged("Username");
             }
         }
 
-        private ICommand loginUserCommand;
-        public ICommand LoginUserCommand
+        private ICommand okCommand;
+        public ICommand OKCommand
         {
             get
             {
-                if (loginUserCommand == null)
+                if (okCommand == null)
                 {
-                    loginUserCommand = new RelayCommand<object>(LoginUser);
+                    okCommand = new RelayCommand<object>(OK);
                 }
 
-                return loginUserCommand;
+                return okCommand;
+            }
+        }
+
+        private ICommand cancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                if (cancelCommand == null)
+                {
+                    cancelCommand = new RelayCommand<object>(Cancel);
+                }
+
+                return cancelCommand;
             }
         }
 
         internal void OnLoaded(object sender, EventArgs e)
         {
-            //View.PasswordBox.PasswordChanged += LocalPasswordBox_PasswordChanged;
-        }
-
-        internal async void LoginUser(object param)
-        {
-            var result = await SecurityService.LoginUser(username, password);            
+            View.PasswordBox.PasswordChanged += LocalPasswordBox_PasswordChanged;
         }
 
         private void LocalPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            //password = View.LocalPasswordBox.Password;
+            password = View.PasswordBox.Password;
+        }
+
+        private async void OK(object param)
+        {
+           var result = await SecurityService.LoginUser(userName, password);
+        }
+
+        private void Cancel(object param)
+        {
+            View.Close();
         }
     }
 }

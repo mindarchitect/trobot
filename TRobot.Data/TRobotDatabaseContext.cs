@@ -30,6 +30,16 @@ namespace TRobot.Data.Contexts
 
             modelBuilder.Entity<UserEntity>().ToTable("Users");
             modelBuilder.Entity<RoleEntity>().ToTable("Roles");
+
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(u => u.Roles)
+                .WithMany(r => r.Users)
+                .Map(mc =>
+                {
+                    mc.MapLeftKey("UserId");
+                    mc.MapRightKey("RoleId");
+                    mc.ToTable("UserRoles");
+                });
         }
     }
 }

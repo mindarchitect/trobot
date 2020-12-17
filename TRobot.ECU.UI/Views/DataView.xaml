@@ -5,17 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TRobot.ECU.UI.Views"
         mc:Ignorable="d"
-        Title="DataView" Height="450" Width="800">
-    <Window.Resources>
-        <Style x:Key="Button" TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="5,5,5,5" />
-            <Setter Property="Padding" Value="5,5,5,5" />
-            <Setter Property="MinWidth" Value="80" />
-            <Setter Property="MaxWidth" Value="200" />
-        </Style>
-    </Window.Resources>
-
+        Title="DataView" WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight" >
     <StackPanel>
-        <Button Style="{StaticResource Button}" Content="Button" HorizontalAlignment="Left" Margin="576,161,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=GetDataCommand}" />
+        <Button Style="{StaticResource Button}" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Path=GetDataCommand}" />
     </StackPanel>
 </Window>

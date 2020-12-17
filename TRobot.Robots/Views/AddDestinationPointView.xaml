@@ -1,17 +1,13 @@
 ﻿<Window x:Class="TRobot.Robots.Views.AddDestinationPointView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:core="clr-namespace:TRobot.Core.Enums;assembly=TRobot.Core"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"        
-        xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
-        xmlns:local="clr-namespace:TRobot.Robots.Views"
+        xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Add destination point"        
-        ResizeMode="NoResize"
-        >
+        ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="TextBox" TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="5,5,5,5" />

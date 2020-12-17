@@ -11,55 +11,14 @@
         SizeToContent="WidthAndHeight">
     <Window.Resources>
         <!-- Main robots view -->
-        <Style TargetType="{x:Type ListBox}" x:Key="RobotsListBoxStyle">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Style for an individual generic item -->
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border SnapsToDevicePixels="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#445B6249" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="Button" TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="5,5,5,5" />
-            <Setter Property="Padding" Value="5,5,5,5" />
-            <Setter Property="MinWidth" Value="80" />
-            <Setter Property="MaxWidth" Value="200" />
-        </Style>
-
         <DataTemplate x:Key="RobotsTemplate">
             <controls:RobotControl />
         </DataTemplate>
-
         <DataTemplate x:Key="NewTabButtonContentTemplate">
         </DataTemplate>
-
         <DataTemplate x:Key="NewTabButtonHeaderTemplate">
             <Button Content="+" Command="{Binding Path=DataContext.Add}"/>
         </DataTemplate>
-
         <DataTemplate x:Key="ItemContentTemplate">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <ListBox IsSynchronizedWithCurrentItem="True"
@@ -80,7 +39,6 @@
                 </ListBox>
             </ScrollViewer>
         </DataTemplate>
-
         <DataTemplate x:Key="ItemHeaderTemplate">
             <TextBlock Text="{Binding Name}" />
         </DataTemplate>
