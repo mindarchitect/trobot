@@ -16,7 +16,7 @@ namespace TRobot.Data.Contexts
             {
                 if (!Database.CreateIfNotExists())
                 {
-                    string sqlFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\..\..\sql\trobot.sql"));
+                    string sqlFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\..\..\Scripts\trobot.sql"));
                     string script = File.ReadAllText(sqlFilePath);
                     Database.ExecuteSqlCommand(script);
                 }

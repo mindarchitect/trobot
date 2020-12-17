@@ -213,7 +213,7 @@
     <Resource Include="Images\cloud-user.png" />
     <Resource Include="Images\employees-server.png" />
     <Resource Include="Images\gears.png" />
-    <Content Include="sql\trobot.sql" />
+    <Content Include="Scripts\trobot.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
