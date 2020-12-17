@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.IO;
 using TRobot.Core.Data.Entities;
 
-namespace TRobot.ECU.Tests.Data
+namespace TRobot.Data.Tests
 {
     public class TestDatabaseContext : DbContext
     {
@@ -16,7 +16,7 @@ namespace TRobot.ECU.Tests.Data
             {
                 if (!Database.CreateIfNotExists())
                 {
-                    string sqlFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\..\..\Data\Scripts\trobot.sql"));
+                    string sqlFilePath = Path.GetFullPath(Path.Combine(baseDirectoryPath, @".\..\..\Scripts\trobot.sql"));
                     string script = File.ReadAllText(sqlFilePath);
                     Database.ExecuteSqlCommand(script);
                 }

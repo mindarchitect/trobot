@@ -19,12 +19,18 @@
                     <TextBox Style="{StaticResource TextBox}" HorizontalAlignment="Right" Margin="5,5,5,5" Width="100">
                         <TextBox.Text>
                             <Binding Path="UserName" UpdateSourceTrigger="PropertyChanged">
-                                <!--<Binding.ValidationRules>
-                                    <validators:NumberValidationRule />
-                                </Binding.ValidationRules>-->
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <StackPanel>
+                                <!-- Placeholder for the TextBox itself -->
+                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">

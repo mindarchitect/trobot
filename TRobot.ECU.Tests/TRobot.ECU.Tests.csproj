@@ -83,13 +83,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\Repositories\FactoriesAsyncRepositoryTest.cs" />
-    <Compile Include="Data\Repositories\UsersAsyncRepositoryTest.cs" />
-    <Compile Include="Data\TestDatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,9 +102,6 @@
       <Project>{4eaa1121-00f5-4938-a3d4-976bdf6f70ae}</Project>
       <Name>TRobot.ECU</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\sql\trobot.sql" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

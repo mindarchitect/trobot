@@ -5,7 +5,7 @@ using TRobot.Core.Data.Entities;
 using TRobot.Core.Data.Repositories;
 using TRobot.Data.Repositories;
 
-namespace TRobot.ECU.Tests.Data.Repositories
+namespace TRobot.Data.Tests
 {
     [TestFixture]
     public class UsersAsyncRepositoryTest
