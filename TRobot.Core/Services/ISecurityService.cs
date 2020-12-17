@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using TRobot.Core.Data.Entities;
+using TRobot.Core.Services.Models;
 
 namespace TRobot.Core.Services
 {
     public interface ISecurityService
     {
-        Task<UserEntity> LoginUser(string username, string password);
+        Task<ServiceResponse> LoginUser(string username, string password);
     }
 }

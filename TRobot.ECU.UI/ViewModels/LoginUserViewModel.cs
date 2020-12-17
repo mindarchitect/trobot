@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using TRobot.Core.Data.Entities;
 using TRobot.Core.Services;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.UI.Views;
@@ -74,6 +76,17 @@ namespace TRobot.ECU.UI.ViewModels
         private async void OK(object param)
         {
            var result = await SecurityService.LoginUser(userName, password);
+
+            if (result.ErrorMessage != null)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                var userEntity = (UserEntity) result.Result;
+                var userRoles = string.Join(", ", userEntity.Roles.Select(role => role.ToString()).ToArray());
+                MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("User {0} is successfuly authenticated with roles:\n{1}", userEntity.UserName, userRoles), "Success", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
         }
 
         private void Cancel(object param)

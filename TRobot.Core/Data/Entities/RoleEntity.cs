@@ -12,5 +12,10 @@ namespace TRobot.Core.Data.Entities
 
         [ForeignKey("UserId")]
         public ICollection<UserEntity> Users { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -88,6 +88,7 @@
     <Compile Include="Data\Services\IFactoriesService.cs" />
     <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\Models\ServiceResponse.cs" />
     <Compile Include="Simulation\ISimulationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
