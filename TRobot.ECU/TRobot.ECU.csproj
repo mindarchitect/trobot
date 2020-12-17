@@ -63,8 +63,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Repositories\FactoriesRepository.cs" />
-    <Compile Include="Data\Repositories\UsersRepository.cs" />
     <Compile Include="Factory\RobotBuilder.cs" />
     <Compile Include="ECUDependencyInjectionExtension.cs" />
     <Compile Include="Models\DescartesCoordinatesItem.cs" />

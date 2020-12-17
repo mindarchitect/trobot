@@ -3,7 +3,7 @@ using System.Data.Entity;
 using TRobot.Core;
 using TRobot.Core.Data.Entities;
 using TRobot.Core.Data.Repositories;
-using TRobot.ECU.Data.Repositories;
+using TRobot.Data.Repositories;
 
 namespace TRobot.ECU.Tests.Data.Repositories
 {

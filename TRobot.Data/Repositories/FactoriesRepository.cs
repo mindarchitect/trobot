@@ -1,11 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using TRobot.Core.Data.Entities;
-using TRobot.Data;
 using System.Linq;
 using TRobot.Core.Data.Repositories;
 
-namespace TRobot.ECU.Data.Repositories
+namespace TRobot.Data.Repositories
 {
     public class FactoriesRepository : EFRepository<FactoryEntity>, IFactoriesRepository
     {

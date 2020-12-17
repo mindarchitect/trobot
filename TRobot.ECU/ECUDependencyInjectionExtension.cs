@@ -2,12 +2,10 @@
 using TRobot.Communication.Services;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
-using TRobot.Core.Data;
-using TRobot.Core.Data.Entities;
 using TRobot.Core.Data.Repositories;
 using TRobot.Core.Services;
 using TRobot.Data;
-using TRobot.ECU.Data.Repositories;
+using TRobot.Data.Repositories;
 using TRobot.ECU.Services;
 using Unity.Extension;
 

@@ -3,9 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TRobot.Core.Data.Entities;
 using TRobot.Core.Data.Repositories;
-using TRobot.Data;
 
-namespace TRobot.ECU.Data.Repositories
+namespace TRobot.Data.Repositories
 {
     public class UsersRepository : EFRepository<UserEntity>, IUsersRepository
     {
