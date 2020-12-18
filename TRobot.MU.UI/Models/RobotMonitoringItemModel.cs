@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Media;
 using TRobot.Core.UI.ViewModels;
 
-namespace TRobot.MU.UI.ViewModels
+namespace TRobot.MU.UI.Models
 {
-    class RobotMonitoringItemViewModel: ViewModel
+    class RobotMonitoringItemModel: ViewModel
     {
         private Point startPosition;
         private Point currentPosition;
@@ -13,7 +13,7 @@ namespace TRobot.MU.UI.ViewModels
         private string title;
         private PointCollection trajectory;
 
-        internal RobotMonitoringItemViewModel() 
+        internal RobotMonitoringItemModel() 
         { 
         }
 

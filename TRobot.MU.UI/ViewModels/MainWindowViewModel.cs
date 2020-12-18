@@ -8,18 +8,19 @@ using TRobot.Communication.Services.Monitoring;
 using TRobot.Communication.Services;
 using TRobot.MU.UI.Views;
 using TRobot.ECU.UI.ViewModels;
+using TRobot.MU.UI.Models;
 
 namespace TRobot.MU.UI.ViewModels
 {
     class MainWindowViewModel: BaseViewModel<MainWindowView>
     {
-        public ObservableCollection<RobotMonitoringItemViewModel> RobotMonitoringItems { get; private set; }
+        public ObservableCollection<RobotMonitoringItemModel> RobotMonitoringItems { get; private set; }
         private IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider;
 
         public MainWindowViewModel(IServiceHostProvider<IRobotTrajectoryMonitoringService> serviceHostProvider)
         {
             this.serviceHostProvider = serviceHostProvider;
-            RobotMonitoringItems = new ObservableCollection<RobotMonitoringItemViewModel>();
+            RobotMonitoringItems = new ObservableCollection<RobotMonitoringItemModel>();
 
             serviceHostProvider.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
             serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
@@ -61,7 +62,7 @@ namespace TRobot.MU.UI.ViewModels
             else 
             {
                 var random = new Random();
-                var robotMonitoringItem = new RobotMonitoringItemViewModel
+                var robotMonitoringItem = new RobotMonitoringItemModel
                 {
                     StartPoint = e.RobotDescartesTrajectory.Trajectory.First(),
                     Trajectory = new PointCollection(e.RobotDescartesTrajectory.Trajectory),
