@@ -4,33 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
-        xmlns:local="clr-namespace:TRobot.ECU.UI.Views"
+        xmlns:local="clr-namespace:TRobot.ECU.UI"
         mc:Ignorable="d"
         Title="Login"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
     <StackPanel>
         <GroupBox Header="User" Margin="5,5,5,5" >
-            <StackPanel>
+            <StackPanel >
                 <StackPanel Orientation="Horizontal">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         User name:
                     </Label>
-                    <TextBox Style="{StaticResource TextBox}" HorizontalAlignment="Right" Margin="5,5,5,5" Width="100">
-                        <TextBox.Text>
-                            <Binding Path="UserName" UpdateSourceTrigger="PropertyChanged">
-                            </Binding>
-                        </TextBox.Text>
+                    <TextBox  Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" HorizontalAlignment="Right" Margin="5,5,5,5" Width="100">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <!-- Placeholder for the TextBox itself -->
+                                    <AdornedElementPlaceholder/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Foreground" Value="Red"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static local:Severity.WARNING}">
+                                                                    <Setter Property="Foreground" Value="Orange"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
                     </TextBox>
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <StackPanel>
-                                <!-- Placeholder for the TextBox itself -->
-                                <AdornedElementPlaceholder x:Name="textBox"/>
-                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">

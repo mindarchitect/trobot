@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TRobot.Core.Data.Entities;
 using TRobot.Core.Services;
@@ -15,24 +16,11 @@ namespace TRobot.ECU.UI.ViewModels
         [Dependency]
         public ISecurityService SecurityService { get; set; }
 
-        private string userName;
-        private string password;
+        public LoginUserModel LoginUserModel { get; set; }
 
         public LoginUserViewModel()
-        {            
-        }
-
-        public string UserName
         {
-            get
-            {
-                return userName;
-            }
-            set
-            {
-                userName = value;
-                OnPropertyChanged("Username");
-            }
+            LoginUserModel = new LoginUserModel();
         }
 
         private ICommand okCommand;
@@ -65,17 +53,20 @@ namespace TRobot.ECU.UI.ViewModels
 
         internal void OnLoaded(object sender, EventArgs e)
         {
-            View.PasswordBox.PasswordChanged += LocalPasswordBox_PasswordChanged;
+            View.PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
         }
 
-        private void LocalPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            password = View.PasswordBox.Password;
+            var passwordBox = (PasswordBox) sender;
+            LoginUserModel.Password = passwordBox.Password;
+            //Password = passwordBox.Password;
         }
 
         private async void OK(object param)
         {
-           var result = await SecurityService.LoginUser(userName, password);
+            var result = await SecurityService.LoginUser(LoginUserModel.UserName, LoginUserModel.Password);
+            //var result = await SecurityService.LoginUser(UserName, Password);
 
             if (result.ErrorMessage != null)
             {

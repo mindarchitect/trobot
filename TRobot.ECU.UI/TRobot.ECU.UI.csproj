@@ -88,6 +88,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomErrorType.cs" />
+    <Compile Include="Models\LoginUserModel.cs" />
+    <Compile Include="Severity.cs" />
     <Compile Include="ViewModels\AddFactoryViewModel.cs" />
     <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\LoginUserViewModel.cs" />
