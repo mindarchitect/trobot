@@ -12,27 +12,27 @@
     <StackPanel>
         <GroupBox Header="User" Margin="5,5,5,5" >
             <StackPanel >
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         User name:
                     </Label>
-                    <TextBox  Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" HorizontalAlignment="Right" Margin="5,5,5,5" Width="100">
+                    <TextBox  Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="5,5,5,5" Width="100" VerticalAlignment="Top">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <StackPanel>
                                     <!-- Placeholder for the TextBox itself -->
-                                    <AdornedElementPlaceholder/>
+                                    <AdornedElementPlaceholder />
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}">
+                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static local:Severity.WARNING}">
                                                                     <Setter Property="Foreground" Value="Orange"/>
-                                                                </DataTrigger>
+                                                                </DataTrigger>                                                                
                                                             </Style.Triggers>
                                                         </Style>
                                                     </TextBlock.Style>
