@@ -1,6 +1,6 @@
 ﻿using TRobot.Core.UI.Models;
 
-namespace TRobot.ECU.UI
+namespace TRobot.Core.UI.Models
 {
     public class CustomErrorType : Model
     {

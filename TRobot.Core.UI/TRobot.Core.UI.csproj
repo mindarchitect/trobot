@@ -34,6 +34,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -59,7 +60,10 @@
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\MarginConverter.cs" />
     <Compile Include="Converters\TextInputToVisibilityConverter.cs" />
+    <Compile Include="Models\CustomErrorType.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Severity.cs" />
+    <Compile Include="Models\ValidatableModel.cs" />
     <Compile Include="Validators\NumberValidationRule.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

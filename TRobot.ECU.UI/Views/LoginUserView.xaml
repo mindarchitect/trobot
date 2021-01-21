@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
         xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
+        xmlns:models="clr-namespace:TRobot.Core.UI.Models;assembly=TRobot.Core.UI"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TRobot.ECU.UI"
         mc:Ignorable="d"
@@ -37,7 +38,7 @@
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static local:Severity.WARNING}">
+                                                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static models:Severity.WARNING}">
                                                                     <Setter Property="Foreground" Value="Orange"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
