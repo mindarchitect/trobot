@@ -1,13 +1,11 @@
-﻿using TRobot.Core.UI.Models;
-
-namespace TRobot.Core.UI.Models
+﻿namespace TRobot.Core.UI.Models
 {
     public class CustomErrorType : Model
     {
         private string validationMessage;
-        private Severity severity;
+        private ValidationErrorSeverity severity;
 
-        public CustomErrorType(string validationMessage, Severity severity)
+        public CustomErrorType(string validationMessage, ValidationErrorSeverity severity)
         {
             ValidationMessage = validationMessage;
             Severity = severity;
@@ -26,7 +24,7 @@ namespace TRobot.Core.UI.Models
             }
         }
 
-        public Severity Severity
+        public ValidationErrorSeverity Severity
         {
             get
             {

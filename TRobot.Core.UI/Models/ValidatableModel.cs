@@ -40,7 +40,7 @@ namespace TRobot.Core.UI.Models
                 validationErrors.Add(propertyName, new List<CustomErrorType>());
                 foreach (ValidationResult validationResult in validationResults)
                 {
-                    validationErrors[propertyName].Add(new CustomErrorType(validationResult.ErrorMessage, Severity.ERROR));
+                    validationErrors[propertyName].Add(new CustomErrorType(validationResult.ErrorMessage, ValidationErrorSeverity.ERROR));
                 }
             }
 
@@ -62,7 +62,7 @@ namespace TRobot.Core.UI.Models
             ICollection<CustomErrorType> validationErrorsList =
                   (from validationAttribute in propertyInfo.GetCustomAttributes(true).OfType<ValidationAttribute>()
                    where !validationAttribute.IsValid(value)
-                   select new CustomErrorType(validationAttribute.FormatErrorMessage(string.Empty), Severity.ERROR))
+                   select new CustomErrorType(validationAttribute.FormatErrorMessage(string.Empty), ValidationErrorSeverity.ERROR))
                    .ToList();
 
             validationErrors.Add(propertyName, validationErrorsList);
@@ -83,11 +83,11 @@ namespace TRobot.Core.UI.Models
                     string property = validationResult.MemberNames.ElementAt(0);
                     if (validationErrors.ContainsKey(property))
                     {
-                        validationErrors[property].Add(new CustomErrorType(validationResult.ErrorMessage, Severity.ERROR));
+                        validationErrors[property].Add(new CustomErrorType(validationResult.ErrorMessage, ValidationErrorSeverity.ERROR));
                     }
                     else
                     {
-                        validationErrors.Add(property, new List<CustomErrorType> { new CustomErrorType(validationResult.ErrorMessage, Severity.ERROR) });
+                        validationErrors.Add(property, new List<CustomErrorType> { new CustomErrorType(validationResult.ErrorMessage, ValidationErrorSeverity.ERROR) });
                     }
                 }
             }

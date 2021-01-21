@@ -62,7 +62,7 @@
     <Compile Include="Converters\TextInputToVisibilityConverter.cs" />
     <Compile Include="Models\CustomErrorType.cs" />
     <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\Severity.cs" />
+    <Compile Include="Models\ValidationErrorSeverity.cs" />
     <Compile Include="Models\ValidatableModel.cs" />
     <Compile Include="Validators\NumberValidationRule.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace TRobot.Core.UI.Models
 {
-    public enum Severity
+    public enum ValidationErrorSeverity
     {
         WARNING,
         ERROR

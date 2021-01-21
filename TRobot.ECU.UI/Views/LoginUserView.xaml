@@ -38,7 +38,7 @@
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static models:Severity.WARNING}">
+                                                                <DataTrigger Binding="{Binding ErrorContent.ValidationErrorSeverity}" Value="{x:Static models:ValidationErrorSeverity.WARNING}">
                                                                     <Setter Property="Foreground" Value="Orange"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
