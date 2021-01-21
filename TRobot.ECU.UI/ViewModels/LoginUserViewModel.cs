@@ -60,13 +60,11 @@ namespace TRobot.ECU.UI.ViewModels
         {
             var passwordBox = (PasswordBox) sender;
             LoginUserModel.Password = passwordBox.Password;
-            //Password = passwordBox.Password;
         }
 
         private async void OK(object param)
         {
             var result = await SecurityService.LoginUser(LoginUserModel.UserName, LoginUserModel.Password);
-            //var result = await SecurityService.LoginUser(UserName, Password);
 
             if (result.ErrorMessage != null)
             {

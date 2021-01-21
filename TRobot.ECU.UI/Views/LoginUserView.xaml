@@ -4,35 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:validators="clr-namespace:TRobot.Core.UI.Validators;assembly=TRobot.Core.UI"
+        xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TRobot.ECU.UI"
         mc:Ignorable="d"
         Title="Login"
         WindowStartupLocation="CenterOwner"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <converters:MarginConverter x:Key="MarginConverter" />
+    </Window.Resources>
     <StackPanel>
         <GroupBox Header="User" Margin="5,5,5,5" >
             <StackPanel >
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="50,0,50,0">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         User name:
                     </Label>
-                    <TextBox  Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="5,5,5,5" Width="100" VerticalAlignment="Top">
+                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="100" VerticalAlignment="Stretch">
+                        <!--<TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="100" VerticalAlignment="Top">-->
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
-                                <StackPanel>
+                                <StackPanel Margin="0,25,0,0" Width="160">
                                     <!-- Placeholder for the TextBox itself -->
-                                    <AdornedElementPlaceholder />
+                                    <!--<AdornedElementPlaceholder />-->
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" >
+                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" Margin="0,5,0,0" TextWrapping="Wrap" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static local:Severity.WARNING}">
                                                                     <Setter Property="Foreground" Value="Orange"/>
-                                                                </DataTrigger>                                                                
+                                                                </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </TextBlock.Style>
@@ -45,12 +52,11 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="50,0,50,0">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         Password:
                     </Label>
-                    <PasswordBox Name="PasswordBox" Margin="12,5,5,5" Width="100" HorizontalAlignment="Center">
-                    </PasswordBox>
+                    <PasswordBox Name="PasswordBox" Margin="12,5,5,5" Width="100" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Style="{StaticResource PasswordBox}" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
@@ -61,7 +67,7 @@
                     <TextBlock>OK</TextBlock>
                 </Button.ToolTip>
             </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=CancelCommand}" Margin="5, 5, 5, 5">
+            <Button Style="{StaticResource Button}" Command="{Binding Path=CancelCommand}" Margin="5,5,5,5">
                 Cancel
                 <Button.ToolTip>
                     <TextBlock>Cancel</TextBlock>

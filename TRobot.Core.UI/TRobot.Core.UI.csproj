@@ -57,6 +57,7 @@
     <Compile Include="Converters\BooleanValueConverter.cs" />
     <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\MarginConverter.cs" />
     <Compile Include="Converters\TextInputToVisibilityConverter.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Validators\NumberValidationRule.cs" />

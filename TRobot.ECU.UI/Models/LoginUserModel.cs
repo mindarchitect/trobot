@@ -14,10 +14,11 @@ namespace TRobot.ECU.UI.ViewModels
 
         private string userName;
         private string password;
+        private int errorsCount;
 
-        [Required(ErrorMessage = "You must enter a username.")]
+        [Required(ErrorMessage = "You must enter a username")]
         [StringLength(10, MinimumLength = 4, ErrorMessage = "The username must be between 4 and 10 characters long")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The username must only contain letters (a-z, A-Z).")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "The username must only contain letters and numbers")]
         public string UserName
         {
             get
@@ -44,6 +45,19 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
+        public int ErrorsCount
+        {
+            get
+            {
+                return errorsCount;
+            }
+            set
+            {
+                errorsCount = value;
+                OnPropertyChanged("ErrorsCount");
+            }
+        }
+
         protected void ValidateModelProperty(object value, string propertyName)
         {
             if (validationErrors.ContainsKey(propertyName))
@@ -61,6 +75,8 @@ namespace TRobot.ECU.UI.ViewModels
                     validationErrors[propertyName].Add(new CustomErrorType(validationResult.ErrorMessage, Severity.ERROR));
                 }
             }
+
+            ErrorsCount = validationResults.Count;
 
             RaiseErrorsChanged(propertyName);
         }
@@ -82,6 +98,7 @@ namespace TRobot.ECU.UI.ViewModels
                    .ToList();
 
             validationErrors.Add(propertyName, validationErrorsList);
+            ErrorsCount = validationErrorsList.Count;
             RaiseErrorsChanged(propertyName);
         }
 
@@ -106,6 +123,8 @@ namespace TRobot.ECU.UI.ViewModels
                     }
                 }
             }
+
+            ErrorsCount = validationResults.Count;
 
             //Raise the ErrorsChanged for all properties explicitly
             RaiseErrorsChanged("UserName");
