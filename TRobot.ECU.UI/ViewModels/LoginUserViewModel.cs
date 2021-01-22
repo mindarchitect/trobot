@@ -64,23 +64,28 @@ namespace TRobot.ECU.UI.ViewModels
 
         private async void OK(object param)
         {
-            var result = await SecurityService.LoginUser(LoginUserModel.UserName, LoginUserModel.Password);
+            LoginUserModel.ValidateModel();
 
-            if (result.ErrorMessage != null)
+            if (!LoginUserModel.HasErrors)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
-            }
-            else
-            {
-                var userEntity = (UserEntity) result.Result;
-                var userRoles = string.Join(", ", userEntity.Roles.Select(role => role.ToString()).ToArray());
-                MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("User {0} is successfuly authenticated with roles:\n{1}", userEntity.UserName, userRoles), "Success", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                var result = await SecurityService.LoginUser(LoginUserModel.UserName, LoginUserModel.Password);
 
-                var dashboardView = new DashboardView();
-                dashboardView.Show();
+                if (result.ErrorMessage != null)
+                {
+                    MessageBoxResult messageBoxResult = MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                }
+                else
+                {
+                    var userEntity = (UserEntity)result.Result;
+                    var userRoles = string.Join(", ", userEntity.Roles.Select(role => role.ToString()).ToArray());
+                    MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("User {0} is successfuly authenticated with roles:\n{1}", userEntity.UserName, userRoles), "Success", MessageBoxButton.OKCancel, MessageBoxImage.Information);
 
-                View.Close();
-            }
+                    var dashboardView = new DashboardView();
+                    dashboardView.Show();
+
+                    View.Close();
+                }
+            }   
         }
 
         private void Cancel(object param)

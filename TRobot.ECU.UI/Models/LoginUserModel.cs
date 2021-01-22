@@ -20,7 +20,8 @@ namespace TRobot.ECU.UI.ViewModels
             set
             {
                 userName = value;
-                ValidateModelPropertyLinq(userName, "UserName");
+                //ValidateModelPropertyLinq(userName, "UserName");
+                ValidateModelProperty(userName, "UserName");
                 OnPropertyChanged("UserName"); 
             }
         }

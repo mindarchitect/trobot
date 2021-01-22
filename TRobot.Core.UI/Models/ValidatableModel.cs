@@ -11,8 +11,9 @@ namespace TRobot.Core.UI.Models
     {
         private readonly Dictionary<string, ICollection<CustomErrorType>> validationErrors = new Dictionary<string, ICollection<CustomErrorType>>();
 
+        private bool valid;
         private int errorsCount;
-
+        
         public int ErrorsCount
         {
             get
@@ -23,6 +24,19 @@ namespace TRobot.Core.UI.Models
             {
                 errorsCount = value;
                 OnPropertyChanged("ErrorsCount");
+            }
+        }
+
+        public bool Valid
+        {
+            get
+            {
+                return valid;
+            }
+            set
+            {
+                valid = value;
+                OnPropertyChanged("Valid");
             }
         }
 
@@ -43,8 +57,9 @@ namespace TRobot.Core.UI.Models
                     validationErrors[propertyName].Add(new CustomErrorType(validationResult.ErrorMessage, ValidationErrorSeverity.ERROR));
                 }
             }
-
+            
             ErrorsCount = validationResults.Count;
+            Valid = ErrorsCount > 0;
 
             RaiseErrorsChanged(propertyName);
         }
@@ -60,17 +75,20 @@ namespace TRobot.Core.UI.Models
             PropertyInfo propertyInfo = GetType().GetProperty(propertyName);
 
             ICollection<CustomErrorType> validationErrorsList =
-                  (from validationAttribute in propertyInfo.GetCustomAttributes(true).OfType<ValidationAttribute>()
+                  (from validationAttribute in propertyInfo.GetCustomAttributes().OfType<ValidationAttribute>()
                    where !validationAttribute.IsValid(value)
                    select new CustomErrorType(validationAttribute.FormatErrorMessage(string.Empty), ValidationErrorSeverity.ERROR))
                    .ToList();
 
             validationErrors.Add(propertyName, validationErrorsList);
+
             ErrorsCount = validationErrorsList.Count;
+            Valid = ErrorsCount > 0;
+
             RaiseErrorsChanged(propertyName);
         }
 
-        protected void ValidateModel()
+        public void ValidateModel()
         {
             validationErrors.Clear();
             ICollection<ValidationResult> validationResults = new List<ValidationResult>();
@@ -93,6 +111,7 @@ namespace TRobot.Core.UI.Models
             }
 
             ErrorsCount = validationResults.Count;
+            Valid = ErrorsCount > 0;
 
             //Raise the ErrorsChanged for all properties explicitly
             RaiseErrorsChanged("UserName");

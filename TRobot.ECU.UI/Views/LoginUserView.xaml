@@ -15,15 +15,16 @@
         ResizeMode="NoResize">
     <Window.Resources>
         <converters:MarginConverter x:Key="MarginConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Window.Resources>
     <StackPanel>
         <GroupBox Header="User" Margin="5,5,5,5" >
             <StackPanel >
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="50,0,50,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="5,0,5,0">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         User name:
                     </Label>
-                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="100" VerticalAlignment="Stretch">
+                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">
                         <!--<TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="100" VerticalAlignment="Top">-->
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -53,16 +54,16 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="50,0,50,0">
+                <StackPanel Orientation="Horizontal" Margin="5,0,5,0">
                     <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
                         Password:
                     </Label>
-                    <PasswordBox Name="PasswordBox" Margin="12,5,5,5" Width="100" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Style="{StaticResource PasswordBox}" />
+                    <PasswordBox Name="PasswordBox" Margin="12,5,5,5" Width="160" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Style="{StaticResource PasswordBox}" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal"  Margin="0,0,0,0" HorizontalAlignment="Right">
-            <Button Style="{StaticResource Button}" Command="{Binding Path=OKCommand}" >
+            <Button Style="{StaticResource Button}" Command="{Binding Path=OKCommand}" IsEnabled="{Binding LoginUserModel.Valid, Converter={StaticResource InverseBooleanConverter}}" >
                 OK
                 <Button.ToolTip>
                     <TextBlock>OK</TextBlock>
