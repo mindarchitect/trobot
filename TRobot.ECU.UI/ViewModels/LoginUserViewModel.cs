@@ -21,6 +21,7 @@ namespace TRobot.ECU.UI.ViewModels
         public LoginUserViewModel()
         {
             LoginUserModel = new LoginUserModel();
+            LoginUserModel.Image = @"~\..\..\Images\robot.png";
         }
 
         private ICommand okCommand;
