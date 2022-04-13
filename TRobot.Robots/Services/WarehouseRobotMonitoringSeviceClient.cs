@@ -24,19 +24,37 @@ namespace TRobot.Robots.Services
                 robotTrajectory.RobotTitle = robotTitle;
                 robotTrajectory.Trajectory = trajectoryPoints;
 
-                Channel.SetupRobotTrajectory(robotTrajectory);
-            }            
+                try
+                {
+                    Channel.SetupRobotTrajectory(robotTrajectory);
+                }
+                catch (EndpointNotFoundException e)
+                {
+                    MessageBox.Show(string.Format("{0}\n\n{1}", e.Message, "Please, launch trajectory monitoring tool!"), "Channel is in faulted state", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Channel is in faulted state.\nPlease, restart robot control panel!", "Setup robot trajectory operation error", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         internal void ClearTrajectory(Guid robotId)
         {
             if (InnerDuplexChannel.State != CommunicationState.Faulted)
             {
-                Channel.ClearRobotTrajectory(robotId);
+                try
+                {
+                    Channel.ClearRobotTrajectory(robotId);
+                }
+                catch (EndpointNotFoundException e)
+                {
+                    MessageBox.Show(string.Format("{0}\n\n{1}", e.Message, "Please, launch trajectory monitoring tool!"), "Channel is in faulted state", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             else
             {
-                MessageBox.Show(string.Format("Channel is in faulted state: {0}", Channel.ToString()), "Clear trajectroy error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Channel is in faulted state.\nPlease, restart robot control panel!", "Clear trajectory operation error", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -48,7 +66,18 @@ namespace TRobot.Robots.Services
                 robotTrajectoryPosition.RobotId = robotId;
                 robotTrajectoryPosition.CurrentPosition = position;
 
-                Channel.UpdateRobotPosition(robotTrajectoryPosition);
+                try
+                {
+                    Channel.UpdateRobotPosition(robotTrajectoryPosition);
+                }
+                catch (EndpointNotFoundException e)
+                {
+                    MessageBox.Show(string.Format("{0}\n\n{1}", e.Message, "Please, launch trajectory monitoring tool!"), "Channel is in faulted state", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Channel is in faulted state.\nPlease, restart robot control panel!", "Update robot position operation error", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
