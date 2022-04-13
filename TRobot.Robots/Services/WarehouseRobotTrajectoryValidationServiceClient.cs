@@ -27,8 +27,8 @@ namespace TRobot.Robots.Services
             }
             else
             {                
-                MessageBox.Show(string.Format("Channel is in faulted state: {0}", Channel.ToString()), "Trajectroy validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(string.Format("Channel is in faulted state: {0}", Channel.ToString()), "Trajectory validation error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-        }        
+        }
     }
 }

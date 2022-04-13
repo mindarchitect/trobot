@@ -116,6 +116,11 @@ namespace TRobot.Robots
             Controller.UploadTrajectory(coordinates);
         }
 
+        internal void ClearTrajectory()
+        {
+            Controller.ClearTrajectory();
+        }
+
         public void OnWarehouseRobotControlPanelClosed(object sender, EventArgs e)
         {
             controlPanel = null;

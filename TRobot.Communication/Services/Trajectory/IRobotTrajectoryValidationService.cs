@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using TRobot.Core;
 using TRobot.Core.Services;
 using TRobot.Core.Services.Contracts.Data;

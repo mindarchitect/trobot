@@ -26,6 +26,8 @@ namespace TRobot.Robots.ViewModels
         private ICommand startStopCommand;
 
         private ICommand uploadSettingsCommand;
+        private ICommand clearSettingsCommand;
+
         private ICommand resetCommand;
         private ICommand deleteSelectedTrajectoryCoordinatesItemCommand;
         private ICommand addDestinationPointCommand;
@@ -64,6 +66,18 @@ namespace TRobot.Robots.ViewModels
                     uploadSettingsCommand = new RelayCommand<object>(param => UploadRobotSettings());
                 }
                 return uploadSettingsCommand;
+            }
+        }
+
+        public ICommand ClearSettingsCommand
+        {
+            get
+            {
+                if (clearSettingsCommand == null)
+                {
+                    clearSettingsCommand = new RelayCommand<object>(param => ClearRobotSettings());
+                }
+                return clearSettingsCommand;
             }
         }
 
@@ -212,6 +226,11 @@ namespace TRobot.Robots.ViewModels
         private void UploadRobotSettings()
         {
             Robot.UploadTrajectory(TrajectoryCoordinates);
+        }
+
+        private void ClearRobotSettings()
+        {
+            Robot.ClearTrajectory();
         }
 
         private void StartStopRobot(object state)

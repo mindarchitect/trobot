@@ -28,6 +28,18 @@ namespace TRobot.Robots.Services
             }            
         }
 
+        internal void ClearTrajectory(Guid robotId)
+        {
+            if (InnerDuplexChannel.State != CommunicationState.Faulted)
+            {
+                Channel.ClearRobotTrajectory(robotId);
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Channel is in faulted state: {0}", Channel.ToString()), "Clear trajectroy error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
+
         internal void UpdateRobotPosition(Guid robotId, Point position)
         {
             if (InnerDuplexChannel.State != CommunicationState.Faulted)

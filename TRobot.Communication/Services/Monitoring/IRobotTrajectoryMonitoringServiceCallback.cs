@@ -8,6 +8,9 @@ namespace TRobot.Communication.Services.Monitoring
         void RobotTrajectorySetCallback();
 
         [OperationContract(IsOneWay = true)]
+        void RobotTrajectoryCleanedCallback();
+
+        [OperationContract(IsOneWay = true)]
         void RobotTrajectoryUpdatedCallback();
 
         [OperationContract(IsOneWay = true)]
