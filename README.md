@@ -15,7 +15,8 @@ calculation of a speed and acceleration for each drive independently, acting as 
 ## Running
 
 You can freely download, compile and run this project using Microsoft&copy; Visual Studio 2013 or later. After compilation is done, run the main project **Trobot.ECU.UI**. Select the robot and press **Start**. For monitoring, go **Tools->Start monitor** which runs Monitor application. Press **Upload settings**. Once trajectory is validated against virtual robot factory, you can press **Start** to run simulation.
-  Username: User1
-  Password: User1
+
+Username: User1\
+Password: User1
 
 
