@@ -39,7 +39,7 @@ namespace TRobot.Robots
             var warehouseRobotTrajectoryValidationServiceCallback = new WarehouseRobotTrajectoryValidationServiceCallback(TrajectoryValidatedCallback);            
             warehouseRobotTrajectoryValidationServiceClient = new WarehouseRobotTrajectoryValidationServiceClient(warehouseRobotTrajectoryValidationServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/validation/ValidationService"));            
 
-            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryUpdatedCallback, TestOperationCallback);
+            var warehouseRobotMonitoringServiceCallback = new WarehouseRobotMonitoringServiceCallback(TrajectorySetupCallback, TrajectoryCleanedCallback, TrajectoryUpdatedCallback, TestOperationCallback);
             warehouseRobotMonitoringSeviceClient = new WarehouseRobotMonitoringSeviceClient(warehouseRobotMonitoringServiceCallback, new NetNamedPipeBinding(), new EndpointAddress("net.pipe://localhost/monitoring/MonitoringService"));
 
             // TODO
@@ -87,6 +87,11 @@ namespace TRobot.Robots
             Coordinates = coordinates;
 
             await Task.Run(() => ValidateTrajectory());
+        }
+
+        internal void ClearTrajectory()
+        {
+            warehouseRobotMonitoringSeviceClient.ClearTrajectory(robot.Id);
         }
 
         internal CommunicationState GetWarehouseRobotMonitoringSeviceConnectionState()
@@ -201,6 +206,10 @@ namespace TRobot.Robots
             MonitoringServiceClientInnerChannelStateChanged?.Invoke(this, e);
         }
         private void TrajectorySetupCallback()
+        {
+        }
+
+        private void TrajectoryCleanedCallback()
         {
         }
 

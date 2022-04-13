@@ -9,6 +9,7 @@ namespace TRobot.MU.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class RobotDescartesTrajectoryMonitoringService : IRobotTrajectoryMonitoringService
     {
+        public event EventHandler<TrajectoryCleanedEventArguments> RobotTrajectoryCleaned;
         public event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
         public event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
         public event EventHandler<RobotTestEventArguments> TestEvent;
@@ -34,7 +35,16 @@ namespace TRobot.MU.Service
             IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
             callback.RobotTrajectoryUpdatedCallback();
         }
-        
+
+        public void ClearRobotTrajectory(Guid robotId)
+        {
+            OnTrajectoryCleaned(new TrajectoryCleanedEventArguments(robotId));
+
+            OperationContext operationContext = OperationContext.Current;
+            IRobotTrajectoryMonitoringServiceCallback callback = operationContext.GetCallbackChannel<IRobotTrajectoryMonitoringServiceCallback>();
+            callback.RobotTrajectoryCleanedCallback();
+        }
+
         public void TestOperation(Robot robot)
         {
             OnTestOperationEvent(new RobotTestEventArguments(robot));
@@ -47,6 +57,11 @@ namespace TRobot.MU.Service
         protected virtual void OnTrajectorySet(TrajectorySetEventArguments e)
         {
             RobotTrajectorySet?.Invoke(this, e);
+        }
+
+        protected virtual void OnTrajectoryCleaned(TrajectoryCleanedEventArguments e)
+        {
+            RobotTrajectoryCleaned?.Invoke(this, e);
         }
 
         protected virtual void OnRobotPositionUpdated(RobotPositionUpdatedEventArguments e)

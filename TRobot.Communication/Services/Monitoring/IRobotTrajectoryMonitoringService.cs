@@ -19,11 +19,15 @@ namespace TRobot.Communication.Services.Monitoring
         void SetupRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
 
         [OperationContract]
+        void ClearRobotTrajectory(Guid robotId);
+
+        [OperationContract]
         void UpdateRobotPosition(RobotDescartesTrajectoryPosition robotTrajectory);
 
         [OperationContract]
         void TestOperation(Robot robot);
 
+        event EventHandler<TrajectoryCleanedEventArguments> RobotTrajectoryCleaned;
         event EventHandler<TrajectorySetEventArguments> RobotTrajectorySet;
         event EventHandler<RobotPositionUpdatedEventArguments> RobotPositionUpdated;
         event EventHandler<RobotTestEventArguments> TestEvent;

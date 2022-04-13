@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Events\RobotPositionResetEventArguments.cs" />
     <Compile Include="Events\RobotPositionUpdatedEventArguments.cs" />
+    <Compile Include="Events\TrajectoryCleanedEventArguments.cs" />
     <Compile Include="Events\TrajectorySetEventArguments.cs" />
     <Compile Include="Services\IServiceHostProvider.cs" />
     <Compile Include="Services\Monitoring\IRobotTrajectoryMonitoringService.cs" />

@@ -8,8 +8,7 @@
         xmlns:converters="clr-namespace:TRobot.Core.UI.Converters;assembly=TRobot.Core.UI"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Warehouse robot control panel"        
-        Height="190"       
+        Title="Warehouse robot control panel"              
         ResizeMode="NoResize">  
     <Window.Resources>
         <Style TargetType="{x:Type ToggleButton}"
@@ -176,19 +175,27 @@
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" HorizontalAlignment="Left">
-            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStopCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />            
-            <Button Style="{StaticResource Button}" Command="{Binding Path=ResetCommand}" IsEnabled="{Binding Path=TrajectoryValidated}" >
+            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStopCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" VerticalAlignment="Bottom" />            
+            <Button Style="{StaticResource Button}" Command="{Binding Path=ResetCommand}" IsEnabled="{Binding Path=TrajectoryValidated}" VerticalAlignment="Bottom" >
                 Reset
                 <Button.ToolTip>
                     <TextBlock>Reset</TextBlock>
                 </Button.ToolTip>
             </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettingsCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
-                Upload settings
-                <Button.ToolTip>
-                    <TextBlock>Upload settings</TextBlock>
-                </Button.ToolTip>
-            </Button>
+            <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" HorizontalAlignment="Right" Orientation="Vertical">
+                <Button Style="{StaticResource Button}" Command="{Binding Path=UploadSettingsCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
+                    Upload settings
+                    <Button.ToolTip>
+                        <TextBlock>Upload settings</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+                <Button Style="{StaticResource Button}" Command="{Binding Path=ClearSettingsCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" Margin="50, 5, 5, 5">
+                    Clear settings
+                    <Button.ToolTip>
+                        <TextBlock>Upload settings</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
         </StackPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1" >
@@ -228,7 +235,7 @@
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" Orientation="Horizontal" >
             <Label  Content="{Binding Path=CommunicationState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="7,5,55,5" HorizontalContentAlignment="Left" Width="100" />
-            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" HorizontalAlignment="Right" >
+            <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
                 Add destination point
                 <Button.ToolTip>
                     <TextBlock>Add destination point</TextBlock>

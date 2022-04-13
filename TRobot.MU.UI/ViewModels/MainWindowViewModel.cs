@@ -23,6 +23,7 @@ namespace TRobot.MU.UI.ViewModels
             RobotMonitoringItems = new ObservableCollection<RobotMonitoringItemModel>();
 
             serviceHostProvider.Service.RobotTrajectorySet += OnServiceRobotTrajectorySet;
+            serviceHostProvider.Service.RobotTrajectoryCleaned += OnServiceRobotTrajectoryCleaned;
             serviceHostProvider.Service.RobotPositionUpdated += OnServiceRobotPositionUpdated;
             serviceHostProvider.Service.TestEvent += OnTestEventHanler;
         }
@@ -73,6 +74,17 @@ namespace TRobot.MU.UI.ViewModels
 
                 RobotMonitoringItems.Add(robotMonitoringItem);
             }            
+        }
+
+        private void OnServiceRobotTrajectoryCleaned(object sender, TrajectoryCleanedEventArguments e)
+        {
+            var robotId = e.RobotId;
+            var item = RobotMonitoringItems.FirstOrDefault(robotMonitoringItem => robotMonitoringItem.Guid == robotId);
+
+            if (item != null)
+            {
+                RobotMonitoringItems.Remove(item);
+            }
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
