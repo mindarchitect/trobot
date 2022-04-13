@@ -8,6 +8,8 @@ namespace TRobot.ECU.UI.ViewModels
         private string userName;
         private string password;
 
+        public string Image { get; set; }
+
         [Required(ErrorMessage = "You must enter a username")]
         [StringLength(10, MinimumLength = 4, ErrorMessage = "The username must be between 4 and 10 characters long")]
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "The username must only contain letters and numbers")]

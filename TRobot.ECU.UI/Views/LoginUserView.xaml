@@ -9,7 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TRobot.ECU.UI"
         mc:Ignorable="d"
-        Title="Login"
+        Title="Login TRobot 1.0"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
@@ -20,21 +20,20 @@
     <StackPanel>
         <GroupBox Header="User" Margin="5,5,5,5" >
             <StackPanel >
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="5,0,5,0">
-                    <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
-                        User name:
-                    </Label>
-                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">
-                        <!--<TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="100" VerticalAlignment="Top">-->
+                <Image Source="{Binding LoginUserModel.Image}" Width="60" Height="60" HorizontalAlignment="Center" Margin="5,5,5,0"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Margin="10,10,10,10">
+                    <!--<TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">-->
+                    <!--<materialDesign:Card Padding="32" Margin="16">-->
+                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" materialDesign:HintAssist.Hint="Enter user name" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
-                                <StackPanel Margin="0,25,0,0" Width="160">
+                                <StackPanel Margin="0,40,0,20" Width="160">
                                     <!-- Placeholder for the TextBox itself -->
                                     <!--<AdornedElementPlaceholder />-->
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" Margin="0,5,0,0" TextWrapping="Wrap" >
+                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" Margin="0,5,0,5" TextWrapping="Wrap" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
@@ -53,23 +52,18 @@
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
                     </TextBox>
+                    <PasswordBox Name="PasswordBox" Margin="5,10,5,5" Width="160" VerticalAlignment="Stretch" VerticalContentAlignment="Center" materialDesign:HintAssist.Hint="Enter password" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="5,0,5,0">
-                    <Label  Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="5,5,0,5">
-                        Password:
-                    </Label>
-                    <PasswordBox Name="PasswordBox" Margin="12,5,5,5" Width="160" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Style="{StaticResource PasswordBox}" />
-                </StackPanel>
+                <Button Style="{DynamicResource MaterialDesignFlatLightBgButton}" Command="{Binding Path=OKCommand}" IsEnabled="{Binding LoginUserModel.Valid, Converter={StaticResource InverseBooleanConverter}}" Margin="0,10,0,10" HorizontalAlignment="Center" Width="160" >
+                    OK
+                    <Button.ToolTip>
+                        <TextBlock>OK</TextBlock>
+                    </Button.ToolTip>
+                </Button>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal"  Margin="0,0,0,0" HorizontalAlignment="Right">
-            <Button Style="{StaticResource Button}" Command="{Binding Path=OKCommand}" IsEnabled="{Binding LoginUserModel.Valid, Converter={StaticResource InverseBooleanConverter}}" >
-                OK
-                <Button.ToolTip>
-                    <TextBlock>OK</TextBlock>
-                </Button.ToolTip>
-            </Button>
-            <Button Style="{StaticResource Button}" Command="{Binding Path=CancelCommand}" Margin="5,5,5,5">
+            <Button Style="{DynamicResource MaterialDesignFlatLightBgButton}" Command="{Binding Path=CancelCommand}" Margin="5,5,5,5" HorizontalAlignment="Right" HorizontalContentAlignment="Center">
                 Cancel
                 <Button.ToolTip>
                     <TextBlock>Cancel</TextBlock>
