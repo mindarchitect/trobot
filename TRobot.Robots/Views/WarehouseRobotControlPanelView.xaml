@@ -9,23 +9,23 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Warehouse robot control panel"              
-        ResizeMode="NoResize">  
+        ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="{x:Type ToggleButton}"
-           x:Key="ToggleButtonStyle">            
+           x:Key="ToggleButtonStyle">
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Content" Value="Stop" />                    
+                    <Setter Property="Content" Value="Stop" />
                 </Trigger>
                 <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Content" Value="Start" />                    
-                </Trigger>                
+                    <Setter Property="Content" Value="Start" />
+                </Trigger>
             </Style.Triggers>
             <Setter Property="Margin" Value="5,5,5,5" />
             <Setter Property="Padding" Value="5,5,5,5" />
             <Setter Property="MinWidth" Value="80" />
             <Setter Property="MaxWidth" Value="200" />
-        </Style>        
+        </Style>
 
         <Style x:Key="ReadOnlyText" TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="0,5,5,0" />
@@ -55,10 +55,10 @@
             <Setter Property="Margin" Value="5,5,5,5" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center" />            
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="10pt" />
             <Setter Property="Padding" Value="5,5,5,5" />
-        </Style>        
+        </Style>
 
         <Style x:Key="CommandButtonPanel" TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Horizontal" />
@@ -66,14 +66,14 @@
         </Style>
 
         <Style x:Key="DestinationPointItemsHeader" TargetType="{x:Type Grid}">
-            <Setter Property="Margin" Value="10,10,10,10" />            
+            <Setter Property="Margin" Value="10,10,10,10" />
         </Style>
 
         <Style x:Key="DestinationPointItems" TargetType="{x:Type ItemsControl}">
             <Setter Property="Margin" Value="10,40,10,10" />
-            <Setter Property="Template">               
+            <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ItemsControl}">                      
+                    <ControlTemplate TargetType="{x:Type ItemsControl}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel IsItemsHost="True" />
                         </ScrollViewer>
@@ -81,7 +81,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <converters:EnumBooleanConverter x:Key="EnumBooleanConverter" />
 
@@ -92,7 +92,7 @@
                     <ColumnDefinition Width="40*" />
                     <ColumnDefinition Width="40*" />
                 </Grid.ColumnDefinitions>
-                <TextBox Text="{Binding Path=Step, StringFormat='Step #0'}" Grid.Column="0" TextAlignment="Center" />                
+                <TextBox Text="{Binding Path=Step, StringFormat='Step #0'}" Grid.Column="0" TextAlignment="Center" />
                 <TextBox Grid.Column="1" TextAlignment="Center">
                     <TextBox.Text>
                         <Binding Path="Point.X" UpdateSourceTrigger="PropertyChanged">
@@ -104,7 +104,7 @@
                 </TextBox>
                 <TextBox Grid.Column="2" TextAlignment="Center">
                     <TextBox.Text>
-                        <Binding Path="Point.Y" UpdateSourceTrigger="PropertyChanged">                            
+                        <Binding Path="Point.Y" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:NumberValidationRule />
                             </Binding.ValidationRules>
@@ -119,7 +119,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="300" MaxWidth="330" />
-            <ColumnDefinition Width="300" />        
+            <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -137,7 +137,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />                    
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" HorizontalAlignment="Left">
@@ -170,12 +170,12 @@
                 <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource Label}" HorizontalAlignment="Left">
                     points/sec2
                 </Label>
-            </Grid>           
+            </Grid>
         </GroupBox>
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource CommandButtonPanel}" HorizontalAlignment="Left">
-            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStopCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" VerticalAlignment="Bottom" />            
+            <ToggleButton IsChecked="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Started}}" Style="{StaticResource ToggleButtonStyle}" IsEnabled="{Binding Path=TrajectoryValidated}" Command="{Binding StartStopCommand}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" VerticalAlignment="Bottom" />
             <Button Style="{StaticResource Button}" Command="{Binding Path=ResetCommand}" IsEnabled="{Binding Path=TrajectoryValidated}" VerticalAlignment="Bottom" >
                 Reset
                 <Button.ToolTip>
@@ -234,7 +234,7 @@
 
         <!-- Function Buttons -->
         <StackPanel Grid.Row="2" Grid.Column="1" Style="{StaticResource CommandButtonPanel}" Orientation="Horizontal" >
-            <Label  Content="{Binding Path=CommunicationState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="7,5,55,5" HorizontalContentAlignment="Left" Width="100" />
+            <Label  Content="{Binding Path=CommunicationState}" Style="{StaticResource Label}" HorizontalAlignment="Left" Margin="7,0,55,5" HorizontalContentAlignment="Left" Width="100" VerticalAlignment="Bottom" Height="28" />
             <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" IsEnabled="{Binding Path=RobotState, Converter={StaticResource EnumBooleanConverter}, ConverterParameter={x:Static core:RobotState.Reset}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
                 Add destination point
                 <Button.ToolTip>
@@ -242,5 +242,5 @@
                 </Button.ToolTip>
             </Button>
         </StackPanel>
-    </Grid>    
+    </Grid>
 </Window>
