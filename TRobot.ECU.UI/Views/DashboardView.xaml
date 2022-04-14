@@ -8,7 +8,8 @@
         xmlns:viewmodels="clr-namespace:TRobot.ECU.UI.ViewModels"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight" 
+    >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -61,6 +62,10 @@
                 <MenuItem Header="Start monitor" Command="{Binding StartMonitorCommand}" />
                 <MenuItem Header="Stop monitor" Command="{Binding StopMonitorCommand}" />
             </MenuItem>
+            <MenuItem Header="Robots">
+                <MenuItem Header="Add robot factory" Command="{Binding AddRobotFactoryCommand}" />
+                <MenuItem Header="Add robot" Command="{Binding AddRobotCommand}" />
+            </MenuItem>
         </Menu>
         <!-- Master Container -->
         <Grid Margin="10">
@@ -83,14 +88,10 @@
             </DockPanel>
 
             <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,10" >
-                <Label DockPanel.Dock="Left" Margin="0,0,10,0">Properties:</Label>
+                <Label DockPanel.Dock="Left" Margin="10,0,10,0">Properties:</Label>
             </DockPanel>
 
-            <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">
-                <StackPanel>
-                    <Button Style="{StaticResource Button}" Command="{Binding Path=ShowDataCommand}" >Show data</Button>
-                    <Button Style="{StaticResource Button}" Command="{Binding Path=AddDestinationPointCommand}" >Add Robot</Button>
-                </StackPanel>
+            <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="15,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100">            
             </DockPanel>
         </Grid>
     </DockPanel>
