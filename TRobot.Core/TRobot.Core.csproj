@@ -76,6 +76,7 @@
     <Compile Include="Robot\RobotDimensionalDrive.cs" />
     <Compile Include="Robot\RobotEngine.cs" />
     <Compile Include="Robot\Engine.cs" />
+    <Compile Include="Robot\RobotSettings.cs" />
     <Compile Include="Robot\RobotWheelTransmission.cs" />
     <Compile Include="Robot\Transmission.cs" />
     <Compile Include="Robot\Events\VelocityChangedEventArguments.cs" />

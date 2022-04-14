@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
+using TRobot.Core.Robot;
 using TRobot.Core.Robot.Events;
 using TRobot.Core.UI.Commands;
 using TRobot.Core.UI.Models;
