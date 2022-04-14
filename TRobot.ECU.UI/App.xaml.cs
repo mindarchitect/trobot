@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using TRobot.Core;
 using TRobot.ECU.UI.ViewModels;
+using TRobot.Robots;
 
 namespace TRobot.ECU.UI
 {

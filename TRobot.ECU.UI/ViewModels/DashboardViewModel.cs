@@ -9,19 +9,13 @@ using System.Windows.Input;
 using TRobot.Communication.Services;
 using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
-using TRobot.Core.Services;
 using TRobot.Core.UI.Commands;
 using TRobot.ECU.UI.Views;
-using TRobot.Robots;
-using Unity;
 
 namespace TRobot.ECU.UI.ViewModels
 {
     public class DashboardViewModel : BaseViewModel<DashboardView>
     {
-        [Dependency]
-        public IFactoriesService FactoriesService { get; set; }
-
         private ObservableCollection<RobotFactory> robotFactories;
         private IServiceHostProvider<IRobotTrajectoryValidationService> serviceHostProvider;
 
@@ -149,18 +143,9 @@ namespace TRobot.ECU.UI.ViewModels
 
         internal async void OnLoaded(object sender, EventArgs e)
         {
-            var factory = await FactoriesService.GetFactoryById(1);
-            var factoryRobots = factory.Robots;
-
+            // For demo purposes all factories are descartes factories, should be defined in database            
             var descartesRobotFactory = DependencyInjector.Resolve<DescartesRobotFactory>();
-
-            foreach (var robot in factoryRobots)
-            {
-                var warehouseRobot = new WarehouseRobot(Guid.Parse(robot.Guid), descartesRobotFactory);
-                warehouseRobot.Title = robot.Name;
-                descartesRobotFactory.Robots.Add(warehouseRobot);
-            }
-
+            await descartesRobotFactory.BuildRobots();
             RobotFactories.Add(descartesRobotFactory);
         }
 

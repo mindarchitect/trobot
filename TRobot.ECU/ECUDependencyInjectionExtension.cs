@@ -22,7 +22,6 @@ namespace TRobot.ECU
 
             DependencyInjector.RegisterType<ISecurityService, SecurityService>();
             DependencyInjector.RegisterType<IFactoriesService, FactoriesService>();
-
             DependencyInjector.RegisterInstance(new DescartesRobotFactory("Test robot factory", new Size(300, 300)));
 
             DependencyInjector.RegisterType<IRobotTrajectoryValidationService, RobotDescartesTrajectoryValidationService>();

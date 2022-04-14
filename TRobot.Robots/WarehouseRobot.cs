@@ -5,21 +5,20 @@ using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.Robot.Events;
 using TRobot.Core.UI.Commands;
-using TRobot.ECU.Models;
+using TRobot.Core.UI.Models;
 
 namespace TRobot.Robots
 {
-    public class WarehouseRobot : AbstractRobot, IMovable, IFactoryProvier<DescartesRobotFactory>
-    {          
+    //public class WarehouseRobot : AbstractRobot, IMovable, IFactoryProvier<DescartesRobotFactory>
+    public class WarehouseRobot : AbstractRobot, IMovable
+    {
         public event EventHandler<PositionChangedEventArguments> PositionChanged;
         private WarehouseRobotControlPanelView controlPanel;
 
         public RobotSettings Settings { get; set; }       
 
-        public WarehouseRobot(Guid id, DescartesRobotFactory factory) : base(id)
+        public WarehouseRobot(Guid id) : base(id)
         {            
-            Factory = factory;
-
             Engine = new WarehouseRobotEngine(this);          
             Controller = new WarehouseRobotController(this);
             Settings = new RobotSettings();
@@ -68,12 +67,6 @@ namespace TRobot.Robots
             get;
             set;
         }             
-
-        public DescartesRobotFactory Factory
-        {
-            get;
-            set;
-        }
 
         internal WarehouseRobotEngine Engine
         {

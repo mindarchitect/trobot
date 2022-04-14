@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using TRobot.Core.UI.Commands;
-using TRobot.ECU.Models;
+using TRobot.Core.UI.Models;
 using TRobot.ECU.UI.ViewModels;
 using TRobot.Robots.Views;
 

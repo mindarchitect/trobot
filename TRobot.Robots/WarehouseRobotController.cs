@@ -7,7 +7,7 @@ using TRobot.Communication.Services.Trajectory;
 using TRobot.Core;
 using TRobot.Core.Enums;
 using TRobot.Core.Robot.Events;
-using TRobot.ECU.Models;
+using TRobot.Core.UI.Models;
 using TRobot.Robots.Services;
 
 namespace TRobot.Robots
