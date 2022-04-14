@@ -8,6 +8,6 @@
         Title="DataView" WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight" >
     <StackPanel>
-        <Button Style="{StaticResource Button}" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Path=GetDataCommand}" />
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Path=GetDataCommand}" />
     </StackPanel>
 </Window>

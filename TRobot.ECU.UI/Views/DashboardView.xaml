@@ -10,18 +10,22 @@
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
     <Window.Resources>
-        <!-- Main robots view -->
-        <DataTemplate x:Key="RobotsTemplate">
-            <controls:RobotControl />
-        </DataTemplate>
-        <DataTemplate x:Key="NewTabButtonContentTemplate">
-        </DataTemplate>
-        <DataTemplate x:Key="NewTabButtonHeaderTemplate">
-            <Button Content="+" Command="{Binding Path=DataContext.Add}"/>
-        </DataTemplate>
-        <DataTemplate x:Key="ItemContentTemplate">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <ListBox IsSynchronizedWithCurrentItem="True"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Views/DashboardView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="RobotsTemplate">
+                <controls:RobotControl />
+            </DataTemplate>
+            <DataTemplate x:Key="NewTabButtonContentTemplate">
+            </DataTemplate>
+            <DataTemplate x:Key="NewTabButtonHeaderTemplate">
+                <Button Content="+" Command="{Binding Path=DataContext.Add}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="ItemContentTemplate">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ListBox IsSynchronizedWithCurrentItem="True"
                          Name="FactoryRobots"
                          Margin="5"
                          Padding="5"
@@ -30,24 +34,26 @@
                          ItemTemplate="{StaticResource RobotsTemplate}"
                          ItemsSource="{Binding Robots}"
                          SelectedIndex="0" >
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Padding" Value="1" />
-                            <Setter Property="Margin" Value="1" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
-            </ScrollViewer>
-        </DataTemplate>
-        <DataTemplate x:Key="ItemHeaderTemplate">
-            <TextBlock Text="{Binding Name}" />
-        </DataTemplate>
-
-        <local:TemplateSelector x:Key="HeaderTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonHeaderTemplate}" ItemTemplate="{StaticResource ItemHeaderTemplate}"/>
-        <local:TemplateSelector x:Key="ContentTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonContentTemplate}" ItemTemplate="{StaticResource ItemContentTemplate}"/>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="1" />
+                                <Setter Property="Margin" Value="1" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </ScrollViewer>
+            </DataTemplate>
+            <DataTemplate x:Key="ItemHeaderTemplate">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+            
+            <local:TemplateSelector x:Key="HeaderTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonHeaderTemplate}" ItemTemplate="{StaticResource ItemHeaderTemplate}"/>
+            <local:TemplateSelector x:Key="ContentTemplateSelector" NewButtonTemplate="{StaticResource NewTabButtonContentTemplate}" ItemTemplate="{StaticResource ItemContentTemplate}"/>
+            <!--<Image x:Key="LoginImage" Source="/Resources/Images/login.png" Stretch="Uniform" />-->
+        </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu Style="{StaticResource MainMenu}" DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
             </MenuItem>

@@ -77,7 +77,7 @@ namespace TRobot.ECU.UI.ViewModels
                 }
                 else
                 {
-                    var userEntity = (UserEntity)result.Result;
+                    var userEntity = (UserEntity) result.Result;
                     var userRoles = string.Join(", ", userEntity.Roles.Select(role => role.ToString()).ToArray());
                     MessageBoxResult messageBoxResult = MessageBox.Show(String.Format("User {0} is successfuly authenticated with roles:\n{1}", userEntity.UserName, userRoles), "Success", MessageBoxButton.OKCancel, MessageBoxImage.Information);
 
