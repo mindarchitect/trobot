@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using TRobot.Core;
 using TRobot.Core.Robot.Events;
 using TRobot.Core.UI.Commands;
 using TRobot.Core.UI.Models;
+using TRobot.Robots.ViewModels;
 
 namespace TRobot.Robots
 {
@@ -22,6 +24,12 @@ namespace TRobot.Robots
             Engine = new WarehouseRobotEngine(this);          
             Controller = new WarehouseRobotController(this);
             Settings = new RobotSettings();
+
+            if (controlPanel == null)
+            {
+                controlPanel = new WarehouseRobotControlPanelView(this);
+                controlPanel.Closed += OnWarehouseRobotControlPanelClosed;
+            }
 
             Image = @"~\..\..\Images\robot.jpg";
         }
@@ -88,13 +96,6 @@ namespace TRobot.Robots
         public override void Start()
         {
             Controller.Initialize();
-
-            if (controlPanel == null)
-            {
-                controlPanel = new WarehouseRobotControlPanelView(this);
-                controlPanel.Closed += OnWarehouseRobotControlPanelClosed;
-            }
-
             controlPanel.Show();
         }      
 
@@ -117,6 +118,15 @@ namespace TRobot.Robots
         public void OnWarehouseRobotControlPanelClosed(object sender, EventArgs e)
         {
             controlPanel = null;
+        }
+
+        public void SetTrajectoryCoordinateItems(List<DescartesCoordinatesItem> trajectoryCoordinateItems)
+        {
+            if (controlPanel != null)
+            {
+                var warehouseRobotControlPanelViewModel = (WarehouseRobotControlPanelViewModel) controlPanel.DataContext;
+                warehouseRobotControlPanelViewModel.TrajectoryCoordinates = new ObservableCollection<DescartesCoordinatesItem>(trajectoryCoordinateItems);                
+            }
         }
     }
 }
