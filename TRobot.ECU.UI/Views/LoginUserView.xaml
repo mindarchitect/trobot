@@ -11,35 +11,48 @@
         mc:Ignorable="d"
         Title="Login TRobot 1.0"
         WindowStartupLocation="CenterOwner"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize">
+        SizeToContent="Height"
+        ResizeMode="NoResize" Width="450">
     <Window.Resources>
-        <converters:MarginConverter x:Key="MarginConverter" />
-        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Views/LoginUserView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:MarginConverter x:Key="MarginConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <!--<Image x:Key="LoginImage" Source="/Resources/Images/login.png" Stretch="Uniform" />-->
+        </ResourceDictionary>
     </Window.Resources>
-    <StackPanel>
-        <GroupBox Header="User" Margin="5,5,5,5" >
-            <StackPanel >
-                <Image Source="{Binding LoginUserModel.Image}" Width="60" Height="60" HorizontalAlignment="Center" Margin="5,5,5,0"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="User" Margin="5,5,5,5" >
+            <StackPanel>
+                <Image Source="{Binding LoginUserModel.Image}" Width="60" Height="60" HorizontalAlignment="Center" Margin="0,5,0,5"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Margin="10,10,10,10">
                     <!--<TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Style="{StaticResource TextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">-->
                     <!--<materialDesign:Card Padding="32" Margin="16">-->
-                    <TextBox Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" materialDesign:HintAssist.Hint="Enter user name" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}" Width="160" VerticalAlignment="Stretch">
+                    <TextBox Style="{StaticResource LoginUserViewUserNameTextBox}" Text="{Binding LoginUserModel.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" materialDesign:HintAssist.Hint="Enter user name" Margin="{Binding LoginUserModel.ErrorsCount, Converter={StaticResource MarginConverter}}">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
-                                <StackPanel Margin="0,40,0,20" Width="160">
+                                <StackPanel Margin="0,40,0,20">
                                     <!-- Placeholder for the TextBox itself -->
                                     <!--<AdornedElementPlaceholder />-->
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" Margin="0,5,0,5" TextWrapping="Wrap" >
+                                                <TextBlock Text="{Binding ErrorContent.ValidationMessage}" Margin="0,5,0,0" TextWrapping="Wrap" HorizontalAlignment="Stretch" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="Red"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ErrorContent.ValidationErrorSeverity}" Value="{x:Static models:ValidationErrorSeverity.WARNING}">
-                                                                    <Setter Property="Foreground" Value="Orange"/>
+                                                                    <Setter Property="Foreground" Value="Blue"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
@@ -52,17 +65,17 @@
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
                     </TextBox>
-                    <PasswordBox Name="PasswordBox" Margin="5,10,5,5" Width="160" VerticalAlignment="Stretch" VerticalContentAlignment="Center" materialDesign:HintAssist.Hint="Enter password" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" />
+                    <PasswordBox Name="PasswordBox" Style="{StaticResource LoginUserViewPasswordBox}" materialDesign:HintAssist.Hint="Enter password" />
                 </StackPanel>
-                <Button Style="{DynamicResource MaterialDesignFlatLightBgButton}" Command="{Binding Path=OKCommand}" IsEnabled="{Binding LoginUserModel.Valid, Converter={StaticResource InverseBooleanConverter}}" Margin="0,10,0,10" HorizontalAlignment="Center" Width="160" >
-                    OK
+                <Button Style="{StaticResource LoginUserViewLoginButton}" Command="{Binding Path=OKCommand}" IsEnabled="{Binding LoginUserModel.Valid, Converter={StaticResource InverseBooleanConverter}}" >
+                    Login
                     <Button.ToolTip>
-                        <TextBlock>OK</TextBlock>
+                        <TextBlock>Login</TextBlock>
                     </Button.ToolTip>
                 </Button>
             </StackPanel>
         </GroupBox>
-        <StackPanel Orientation="Horizontal"  Margin="0,0,0,0" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Style="{DynamicResource MaterialDesignFlatLightBgButton}" Command="{Binding Path=CancelCommand}" Margin="5,5,5,5" HorizontalAlignment="Right" HorizontalContentAlignment="Center">
                 Cancel
                 <Button.ToolTip>
@@ -70,5 +83,5 @@
                 </Button.ToolTip>
             </Button>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>
