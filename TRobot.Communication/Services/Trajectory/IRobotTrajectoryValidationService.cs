@@ -14,12 +14,6 @@ namespace TRobot.Communication.Services.Trajectory
     )]
     public interface IRobotTrajectoryValidationService : IService
     {
-        DescartesRobotFactory DescartesRobotFactory
-        {
-            get;
-            set;
-        }
-
         [OperationContract]  
         void ValidateRobotTrajectory(RobotDescartesTrajectory robotTrajectory);
     }

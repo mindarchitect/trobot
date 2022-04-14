@@ -61,6 +61,7 @@
     <Compile Include="Converters\MarginConverter.cs" />
     <Compile Include="Converters\TextInputToVisibilityConverter.cs" />
     <Compile Include="Models\CustomErrorType.cs" />
+    <Compile Include="Models\DescartesCoordinatesItem.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\ValidationErrorSeverity.cs" />
     <Compile Include="Models\ValidatableModel.cs" />

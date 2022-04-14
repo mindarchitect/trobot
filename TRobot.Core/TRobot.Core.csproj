@@ -65,7 +65,6 @@
     <Compile Include="DependencyInjector.cs" />
     <Compile Include="Enums\RobotState.cs" />
     <Compile Include="Enums\Dimension.cs" />
-    <Compile Include="RobotFactory\DescartesrRobotFactory.cs" />
     <Compile Include="RobotFactory\RobotFactory.cs" />
     <Compile Include="Robot\Drive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

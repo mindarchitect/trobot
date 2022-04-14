@@ -63,6 +63,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DescartesrRobotFactory.cs" />
     <Compile Include="Factory\RobotBuilder.cs" />
     <Compile Include="ECUDependencyInjectionExtension.cs" />
     <Compile Include="Models\DescartesCoordinatesItem.cs" />
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\TRobot.Data\TRobot.Data.csproj">
       <Project>{348E1BEA-F7ED-4E86-B47B-4C0690C0C304}</Project>
       <Name>TRobot.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TRobot.Robots\TRobot.Robots.csproj">
+      <Project>{10a60827-61f0-469a-833e-22fdb139b216}</Project>
+      <Name>TRobot.Robots</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
