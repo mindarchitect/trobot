@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="DataView" WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight" >
-    <StackPanel>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Path=GetDataCommand}" />
+    <StackPanel>        
     </StackPanel>
 </Window>

@@ -97,17 +97,31 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
-        private ICommand showDataCommand;
-        public ICommand ShowDataCommand
+        private ICommand addRobotFactoryCommand;
+        public ICommand AddRobotFactoryCommand
         {
             get
             {
-                if (showDataCommand == null)
+                if (addRobotFactoryCommand == null)
                 {
-                    showDataCommand = new RelayCommand<object>(ShowData);
+                    addRobotFactoryCommand = new RelayCommand<object>(AddRobotFactory);
                 }
 
-                return showDataCommand;
+                return addRobotFactoryCommand;
+            }
+        }
+
+        private ICommand addRobotCommand;
+        public ICommand AddRobotCommand
+        {
+            get
+            {
+                if (addRobotCommand == null)
+                {
+                    addRobotCommand = new RelayCommand<object>(AddRobot);
+                }
+
+                return addRobotCommand;
             }
         }
 
@@ -163,11 +177,14 @@ namespace TRobot.ECU.UI.ViewModels
             }
         }
 
-        private void ShowData(object param)
+        private void AddRobotFactory(object param)
         {
-            //var dataView = new DataView();
-            var loginUserView = new LoginUserView();
-            loginUserView.Show();
+            
+        }
+
+        private void AddRobot(object param)
+        {
+
         }
     }
 }
