@@ -67,7 +67,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RobotSettings.cs" />
     <Compile Include="Services\WarehouseRobotMonitoringSeviceClient.cs" />
     <Compile Include="Services\WarehouseRobotMonitoringServiceCallback.cs" />
     <Compile Include="Services\WarehouseRobotTrajectoryValidationServiceCallback.cs" />

@@ -1,4 +1,4 @@
-﻿namespace TRobot.Robots
+﻿namespace TRobot.Core.Robot
 {
     public class RobotSettings
     {
