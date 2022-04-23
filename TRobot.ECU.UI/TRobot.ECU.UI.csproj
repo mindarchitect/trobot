@@ -110,11 +110,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\LoginUserModel.cs" />
-    <Compile Include="ViewModels\AddFactoryViewModel.cs" />
+    <Compile Include="ViewModels\AddRobotFactoryViewModel.cs" />
     <Compile Include="ViewModels\DataViewModel.cs" />
     <Compile Include="ViewModels\LoginUserViewModel.cs" />
-    <Compile Include="Views\AddFactoryView.xaml.cs">
-      <DependentUpon>AddFactoryView.xaml</DependentUpon>
+    <Compile Include="Views\AddRobotFactoryView.xaml.cs">
+      <DependentUpon>AddRobotFactoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataView.xaml.cs">
       <DependentUpon>DataView.xaml</DependentUpon>
@@ -139,7 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AddFactoryView.xaml">
+    <Page Include="Views\AddRobotFactoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

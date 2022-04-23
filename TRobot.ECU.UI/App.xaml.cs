@@ -18,7 +18,7 @@ namespace TRobot.ECU.UI
 
             DependencyInjector.RegisterType<LoginUserViewModel, LoginUserViewModel>();
             DependencyInjector.RegisterType<DataViewModel, DataViewModel>();
-            DependencyInjector.RegisterType<AddFactoryViewModel, AddFactoryViewModel>();
+            DependencyInjector.RegisterType<AddRobotFactoryViewModel, AddRobotFactoryViewModel>();
             DependencyInjector.RegisterType<AddRobotViewModel, AddRobotViewModel>();
 
             DependencyInjector.RegisterType<DashboardViewModel, DashboardViewModel>();

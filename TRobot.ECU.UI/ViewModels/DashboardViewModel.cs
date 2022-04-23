@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.IO;
 using System.Windows;
 using System.Windows.Data;
@@ -132,6 +133,12 @@ namespace TRobot.ECU.UI.ViewModels
 
         private void StartMonitor(object param)
         {
+            var isRunning = Process.GetProcessesByName("TRobot.MU.UI.exe").Any();
+            if (!isRunning)
+            {
+                monitorProcess = null;
+            }
+
             if (monitorProcess == null)
             {
                 ProcessStartInfo processStartInfo = new ProcessStartInfo("TRobot.MU.UI.exe");                
@@ -143,7 +150,7 @@ namespace TRobot.ECU.UI.ViewModels
 
         private void StopMonitor(object param)
         {
-            if (monitorProcess != null)
+            if (monitorProcess != null && !monitorProcess.HasExited)
             {                
                 monitorProcess.Kill();
                 monitorProcess = null;
