@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Elokon.Eloprotect.Core.Services
+namespace TRobot.Core.Services
 {
     public interface ICommunicationService : IService
     {

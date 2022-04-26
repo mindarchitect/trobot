@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Unity;
 
-namespace TRobot.Core.Services
+namespace TRobot.Robots.Services
 {
     public class CommunicationService : ICommunicationService
     {
@@ -39,11 +39,11 @@ namespace TRobot.Core.Services
 
             var serialPortSettings = new SerialPortSettings();
 
-            serialPortSettings.PortName = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.SerialPort;
+            /*serialPortSettings.PortName = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.SerialPort;
             serialPortSettings.BaudRate = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.BaudRate;
             serialPortSettings.Parity = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.Parity;
             serialPortSettings.DataBits = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.DataBits;
-            serialPortSettings.StopBits = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.StopBits;
+            serialPortSettings.StopBits = ControllerDeviceConfigurationService.ControllerDeviceDataModel.ControllerDeviceConnectionSettingsModel.StopBits;*/
 
             communicationProvider = new SerialPortCommunicationProvider(serialPortSettings);
             communicationProvider.ReadTimeout = TIMEOUT;
